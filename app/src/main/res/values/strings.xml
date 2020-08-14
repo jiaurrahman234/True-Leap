@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">True Leap</string>
+    <string name="email">Email Id</string>
+    <string name="passowrd">Password</string>
+<!--    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="phone">Phone No.</string>
+-->
+    <string name="login">Login</string>
+    <!--<string name="hint_name">Full Name</string>
+    <string name="hint_email">E-mail Address</string>
+    <string name="hint_phone">Phone Number</string>
+    <string name="message">Feedback</string>
+    <string name="show_pwd">Show Password</string>
+    <string name="hide_pwd">Hide Password</string>
+    <string name="forgot">Forgot password?</string>
+    <string name="closebutton">Close Button for Activity</string>
+    <string name="newUser">Not Registered yet? Register here.</string>
+    <string name="fullName">Full Name</string>
+    <string name="mobileNumber">Mobile Number</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="terms_conditions">By clicking SignUp you agree all the Terms and Conditions.</string>
+    <string name="signUp">Sign Up</string>
+    <string name="already_user">Already have Account? Login here.</string>
+    <string name="submit">SUBMIT</string>
+    <string name="action_Cart">Cart</string>
+    <string name="action_Filter">Filter</string>
+    <string name="title_home">Home</string>
+    <string name="title_booking">My Orders</string>
+    <string name="title_help">Get in Touch</string>
+    <string name="title_profile">Profile</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="resend_otp">Resend OTP </string>
+    <string name="otp_verify">Enter OTP </string>
+    <string name="verify_otp_btn">Verify</string>
+    <string name="welcome_message">Online Supermarket</string>
+    <string name="map_distance_direction_api">AIzaSyCFPlGDgQvKKsS_c8VrVCV7xIcolbqbpbw</string>
+    <string name="rs">\u20B9</string>
+    <string name="rs_plus">+\u20B9</string>
+    <string name="rs_minus">-\u20B9</string>
+    <string name="google_maps_key">AIzaSyDbefp6RmZ5HY4wnfRsByWVICa6fC-Sww0</string>
+    <string name="required_field">required</string>
+    <string name="available_promotions">Available Promotions</string>-->
 </resources>

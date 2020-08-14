@@ -38,7 +38,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    implementation 'com.android.support:design:29.1.1'
     /*firebase*/
     implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
@@ -48,6 +48,11 @@ dependencies {
     /*retrofit*/
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
+    /*RxJava with RxAndroid*/
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
     //lifeycle
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha02'
@@ -65,5 +70,9 @@ dependencies {
     /*View animations */
     api 'com.daimajia.easing:library:2.0@aar'
     api 'com.daimajia.androidanimations:library:2.3@aar'
+    //card view
+    implementation "androidx.cardview:cardview:1.0.0"
+    //google material
+    implementation 'com.google.android.material:material:1.0.0-beta01'
 
 }

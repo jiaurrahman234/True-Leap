@@ -1,12 +1,7 @@
 package com.app.trueleap;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,13 +9,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
-import com.app.trueleap.external.Constants;
-
-import org.json.JSONObject;
+import com.app.trueleap.home.MainActivity;
 
 
 public class SplashActivity extends BaseActivity {
@@ -63,7 +54,7 @@ public class SplashActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
         } catch (Exception e) {

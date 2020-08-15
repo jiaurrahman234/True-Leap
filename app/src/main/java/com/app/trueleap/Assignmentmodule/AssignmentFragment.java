@@ -1,4 +1,4 @@
-package com.app.trueleap.SubjectModules;
+package com.app.trueleap.Assignmentmodule;
 
 import android.os.Bundle;
 
@@ -10,23 +10,17 @@ import android.view.ViewGroup;
 
 import com.app.trueleap.R;
 
-
-public class AssignmentViewFragment extends Fragment {
-
+public class AssignmentFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-
     private String mParam1;
     private String mParam2;
 
-    public AssignmentViewFragment() {
-        // Required empty public constructor
+    public AssignmentFragment() {
     }
-
-    public static AssignmentViewFragment newInstance(String param1, String param2) {
-        AssignmentViewFragment fragment = new AssignmentViewFragment();
+    public static AssignmentFragment newInstance(String param1, String param2) {
+        AssignmentFragment fragment = new AssignmentFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -47,6 +41,6 @@ public class AssignmentViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_assignment_view, container, false);
+        return inflater.inflate(R.layout.fragment_assignment, container, false);
     }
 }

@@ -22,4 +22,5 @@
     <dimen name="textsize_m">14sp</dimen>
     <dimen name="textsize_l">16sp</dimen>
     <dimen name="textsize_xl">18sp</dimen>
+    <dimen name="textsize_xxl">22sp</dimen>
 </resources>

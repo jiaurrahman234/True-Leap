@@ -1,0 +1,34 @@
+{
+  "subjects":[
+    {
+      "id": "5f2fef284a8d9e6f535c6b8e",
+      "subject_code": "PH01",
+      "subject_name": "Physics"
+    },
+    {
+      "id": "5f2fef284a8d9g6f535c6b8e",
+      "subject_code": "PH01",
+      "subject_name": "Chemistery"
+    },
+    {
+      "id": "5f2fef284a8d9e6f435c6b8e",
+      "subject_code": "PH01",
+      "subject_name": "Mathematics"
+    },
+    {
+      "id": "5f2fef284a8d9e6gf535c6b8e",
+      "subject_code": "PH01",
+      "subject_name": "Biology"
+    },
+    {
+      "id": "5f2fef284a8d9e6f535c6b8e",
+      "subject_code": "PH01",
+      "subject_name": "English"
+    },
+    {
+      "id": "5f2fef284a8d9e0f5535c6b8e",
+      "subject_code": "PH01",
+      "subject_name": "MIL"
+    }
+  ]
+}

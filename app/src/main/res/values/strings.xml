@@ -8,4 +8,11 @@
     <string name="module_classnote">Class Notes</string>
     <string name="module_gradebook">Grade Book</string>
     <string name="module_message">Message</string>
+
+    <string name="str_uploaded_on">Uploaded On</string>
+    <string name="Class_title">Message</string>
+    <string name="date_time">15 Aug at 9.15AM </string>
+    <string name="view_details">View All Notes</string>
+    <string name="std_class">Student Grade </string>
+    <string name="std_section">Student Section</string>
 </resources>

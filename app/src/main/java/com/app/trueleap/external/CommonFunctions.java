@@ -12,7 +12,6 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
-
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -26,6 +25,9 @@ import static com.app.trueleap.external.Constants.NO_INTERNET;
 
 
 public class CommonFunctions {
+
+public class CommonFunctions {
+    public static String NO_INTERNET = "No Internet";
 
     public static void showSnackView(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
@@ -139,19 +141,4 @@ public class CommonFunctions {
     public static void showToast(Context context) {
         Toast.makeText(context, NO_INTERNET, Toast.LENGTH_SHORT).show();
     }
-
-    /*public static void displayPicasso(String imagePath, ImageView imageView) {
-        Picasso.get()
-                .load(imagePath)
-                .memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE)
-                .error(R.drawable.app_logo).placeholder(R.drawable.app_logo)
-                .into(imageView);
-    }*/
-
-    public static void setErrorInputLayout(TextInputEditText editText, String msg) {
-        editText.requestFocus();
-        editText.setError(msg);
-    }
-
-
 }

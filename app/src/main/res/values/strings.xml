@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">True Leap</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello</string>
+
+    <string name="module_assignment">Assignments</string>
+    <string name="module_quiz">Quiz</string>
+    <string name="module_classnote">Class Notes</string>
+    <string name="module_gradebook">Grade Book</string>
+    <string name="module_message">Message</string>
 </resources>

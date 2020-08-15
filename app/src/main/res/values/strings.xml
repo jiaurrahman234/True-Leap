@@ -2,6 +2,9 @@
     <string name="app_name">True Leap</string>
     <string name="email">Email Id</string>
     <string name="passowrd">Password</string>
+    <string name="required_field">required</string>
+    <string name="email_error">Email error</string>
+    <string name="password_wrong_length">Minimum length is 3</string>
 <!--    <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -41,6 +44,6 @@
     <string name="rs_plus">+\u20B9</string>
     <string name="rs_minus">-\u20B9</string>
     <string name="google_maps_key">AIzaSyDbefp6RmZ5HY4wnfRsByWVICa6fC-Sww0</string>
-    <string name="required_field">required</string>
+
     <string name="available_promotions">Available Promotions</string>-->
 </resources>

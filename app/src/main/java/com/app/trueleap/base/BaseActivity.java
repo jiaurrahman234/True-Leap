@@ -54,8 +54,6 @@ public class BaseActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             context = getApplicationContext();
             localStorage = new LocalStorage(getApplicationContext());
-            gson = new Gson();
-            userJson = localStorage.getUserLogin();
             progressDialog = new ProgressDialog(BaseActivity.this);
             //NetworkCheck.isNetworkAvailable(getApplicationContext());
 

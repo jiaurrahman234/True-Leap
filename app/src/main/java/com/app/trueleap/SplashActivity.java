@@ -50,7 +50,6 @@ public class SplashActivity extends BaseActivity {
     private void mainMethod() {
         try {
             if (localStorage.isUserLoggedIn()) {
-                Log.d(TAG, "kljlgjhl: " + localStorage.getUserPin());
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             } else {

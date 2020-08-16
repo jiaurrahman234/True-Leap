@@ -14,5 +14,15 @@
     <string name="date_time">15 Aug at 9.15AM </string>
     <string name="view_details">View All Notes</string>
     <string name="std_class">Student Grade </string>
-    <string name="std_section">Student Section</string>
+    <string name="std_section">Student Section </string>
+
+
+    <string name="login">Student Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="email_error">Invalid Email</string>
+    <string name="required_field">Required</string>
+    <string name="action_change_lang">Change Languaage</string>
+    <string name="action_logout">Logout</string>
+
 </resources>

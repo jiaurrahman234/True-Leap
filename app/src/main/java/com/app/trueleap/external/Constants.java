@@ -45,6 +45,12 @@ public class Constants {
     public static String APP_LINK = "https://play.google.com/store/apps/details?id="+ BuildConfig.APPLICATION_ID;
     public static int CART_COUPON_APPLY_REQUEST_CODE = 9090;
 
+
+    public static final int  PICK_IMAGE = 1001, TAKE_IMAGE = 1002, REQUEST_DOCUMENT = 1003 ;
+
+    public static final int CAMERA_REQUEST = 1888;
+    public static final int MY_CAMERA_PERMISSION_CODE = 100;
+
     public static void loadAnimation(View view) {
         YoYo.with(Techniques.ZoomIn)
                 .duration(400)

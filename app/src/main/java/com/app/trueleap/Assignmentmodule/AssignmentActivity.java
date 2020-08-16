@@ -1,4 +1,4 @@
-package com.app.trueleap.Classnotemodule;
+package com.app.trueleap.Assignmentmodule;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,34 +15,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.app.trueleap.Classnotemodule.ClassnotesFragmentListing;
 import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
-import com.app.trueleap.databinding.ActivityClassNotesBinding;
+import com.app.trueleap.databinding.ActivityAssignmentBinding;
 import com.app.trueleap.external.Utils;
-import com.app.trueleap.home.studentsubject.HomeSubjectsFragment;
 
-public class ClassNotesActivity extends BaseActivity {
+public class AssignmentActivity extends BaseActivity {
 
-    ActivityClassNotesBinding binding;
     Intent intent;
     String subject_code;
     String subject_name;
+    ActivityAssignmentBinding binding;
     Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_class_notes);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_assignment);
         intent = getIntent();
-        context = ClassNotesActivity.this;
+        context = AssignmentActivity.this;
         initToolbar();
         if (intent.getExtras() != null) {
-           subject_code  = intent.getStringExtra("subject_code");
-           subject_name  = intent.getStringExtra("subject_name");
+            subject_code = intent.getStringExtra("subject_code");
+            subject_name = intent.getStringExtra("subject_name");
         }
-
-        ClassnotesFragmentListing fragmentListing = new ClassnotesFragmentListing().newInstance(subject_code,subject_name);
+        AssignmentFragment fragmentListing = new AssignmentFragment().newInstance(subject_code, subject_name);
         loadFragment(fragmentListing);
     }
 
@@ -55,9 +54,10 @@ public class ClassNotesActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
+
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(binding.frameContainer.getId(), fragment, Utils.Classnotes_fragment);
+        transaction.replace(binding.frameContainer.getId(), fragment, Utils.Assignment_fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -101,6 +101,5 @@ public class ClassNotesActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

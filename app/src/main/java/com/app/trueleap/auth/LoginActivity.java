@@ -16,10 +16,10 @@ import android.widget.Toast;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.app.trueleap.MainActivity;
+import com.app.trueleap.databinding.ActivityLoginBinding;
+import com.app.trueleap.home.MainActivity;
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
-import com.app.trueleap.databinding.ActivityLoginBinding;
 import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.Constants;
 import com.app.trueleap.external.DatabaseHelper;
@@ -111,4 +111,11 @@ public class LoginActivity extends BaseActivity {
 
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        exitApp();
+    }
+
+
 }

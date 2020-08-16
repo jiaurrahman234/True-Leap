@@ -24,7 +24,6 @@ import java.util.Iterator;
 import static com.app.trueleap.external.Constants.NO_INTERNET;
 
 
-public class CommonFunctions {
 
 public class CommonFunctions {
     public static String NO_INTERNET = "No Internet";

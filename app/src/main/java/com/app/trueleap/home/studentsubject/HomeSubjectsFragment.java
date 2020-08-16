@@ -79,6 +79,10 @@ public class HomeSubjectsFragment extends Fragment implements subjectlickListene
     }
 
     private void initdata() {
+
+        binding.studentClass.setText(localStorage.getClassId());
+        binding.studentSection.setText(localStorage.getSectionId());
+
         Subjects = new ArrayList<>();
         SubjectsJson = loadAssetsJsonObj("subject.json", context);
         try{

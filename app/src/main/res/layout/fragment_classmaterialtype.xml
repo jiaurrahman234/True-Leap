@@ -71,9 +71,9 @@
         app:cardBackgroundColor="@color/colorAccent"
         android:layout_marginHorizontal="@dimen/spacing_s"
         android:layout_marginTop="@dimen/spacing_xl"
-        app:cardCornerRadius="20dp"
-        app:contentPadding="@dimen/spacing_xl"
-        app:cardElevation="5dp">
+        app:cardCornerRadius="4dp"
+        app:contentPadding="5dp"
+        app:cardElevation="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,9 +110,9 @@
         app:cardBackgroundColor="@color/colorAccent"
         android:layout_marginHorizontal="@dimen/spacing_s"
         android:layout_marginTop="@dimen/spacing_xl"
-        app:cardCornerRadius="20dp"
-        app:contentPadding="@dimen/spacing_xl"
-        app:cardElevation="5dp">
+        app:cardCornerRadius="4dp"
+        app:contentPadding="5dp"
+        app:cardElevation="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -149,9 +149,9 @@
         app:cardBackgroundColor="@color/colorAccent"
         android:layout_marginHorizontal="@dimen/spacing_s"
         android:layout_marginTop="@dimen/spacing_xl"
-        app:cardCornerRadius="20dp"
-        app:contentPadding="@dimen/spacing_xl"
-        app:cardElevation="5dp">
+        app:cardCornerRadius="4dp"
+        app:contentPadding="5dp"
+        app:cardElevation="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -188,9 +188,9 @@
         app:cardBackgroundColor="@color/colorAccent"
         android:layout_marginHorizontal="@dimen/spacing_s"
         android:layout_marginTop="@dimen/spacing_xl"
-        app:cardCornerRadius="20dp"
-        app:contentPadding="@dimen/spacing_xl"
-        app:cardElevation="5dp">
+        app:cardCornerRadius="4dp"
+        app:contentPadding="5dp"
+        app:cardElevation="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -227,9 +227,9 @@
         app:cardBackgroundColor="@color/colorAccent"
         android:layout_marginHorizontal="@dimen/spacing_s"
         android:layout_marginTop="@dimen/spacing_xl"
-        app:cardCornerRadius="20dp"
-        app:contentPadding="@dimen/spacing_xl"
-        app:cardElevation="5dp">
+        app:cardCornerRadius="4dp"
+        app:contentPadding="5dp"
+        app:cardElevation="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"

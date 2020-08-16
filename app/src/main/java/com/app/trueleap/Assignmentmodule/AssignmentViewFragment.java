@@ -1,7 +1,9 @@
 package com.app.trueleap.Assignmentmodule;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.app.trueleap.R;
+import com.app.trueleap.databinding.FragmentAssignmentBinding;
+import com.app.trueleap.databinding.FragmentAssignmentViewBinding;
+import com.app.trueleap.external.LocalStorage;
 
 
 public class AssignmentViewFragment extends Fragment {
@@ -17,6 +22,9 @@ public class AssignmentViewFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    LocalStorage localStorage;
+    Context context;
+    FragmentAssignmentViewBinding binding;
 
     private String mParam1;
     private String mParam2;
@@ -47,6 +55,20 @@ public class AssignmentViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_assignment_view, container, false);
+        View v = inflater.inflate(R.layout.fragment_assignment_view, container, false);
+        binding = DataBindingUtil.bind(v);
+        context = getContext();
+        localStorage = LocalStorage.getInstance(context);
+        initdata();
+        initListeners();
+        return binding.getRoot();
+    }
+
+    private void initListeners() {
+
+    }
+
+    private void initdata() {
+
     }
 }

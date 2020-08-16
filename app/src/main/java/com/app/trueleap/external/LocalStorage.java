@@ -96,6 +96,12 @@ public class LocalStorage {
     }
 
 
+    public void logoutUser() {
+        editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+    }
+
 
 
 }

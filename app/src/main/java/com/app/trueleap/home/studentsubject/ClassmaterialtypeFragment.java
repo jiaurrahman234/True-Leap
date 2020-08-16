@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.app.trueleap.Assignmentmodule.AssignmentActivity;
 import com.app.trueleap.Classnotemodule.ClassNotesActivity;
 import com.app.trueleap.R;
 import com.app.trueleap.databinding.FragmentClassmaterialtypeBinding;
@@ -24,7 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class ClassmaterialtypeFragment extends Fragment implements View.OnClickListener{
+public class ClassmaterialtypeFragment extends Fragment{
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -79,36 +80,35 @@ public class ClassmaterialtypeFragment extends Fragment implements View.OnClickL
 
     private void initListeners() {
 
-        binding.actionClassnote.setOnClickListener(this);
-        binding.actionAssignment.setOnClickListener(this);
-        binding.actionGradebook.setOnClickListener(this);
-        binding.actionMessage.setOnClickListener(this);
-        binding.actionQuiz.setOnClickListener(this);
+        binding.actionClassnote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent  noteintent = new Intent(getActivity(), ClassNotesActivity.class);
+                noteintent.putExtra("subject_code", mParam1);
+                noteintent.putExtra("subject_name", mParam2);
+                startActivity(noteintent);
+
+            }
+        });
+        binding.actionAssignment.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent assignintent  = new Intent(getActivity(), AssignmentActivity.class);
+              assignintent.putExtra("subject_code", mParam1);
+              assignintent.putExtra("subject_name", mParam2);
+              startActivity(assignintent);
+          }
+          }
+        );
 
     }
 
     private void initdata() {
-        if(mParam2.equals(""))
+        binding.studentClass.setText(localStorage.getClassId());
+        binding.studentSection.setText(localStorage.getSectionId());
+
+        if(!mParam2.equals(""))
             binding.sujectName.setText(mParam2);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.action_assignment) {
-            Intent assignintent = new Intent(getActivity(), ClassNotesActivity.class);
-            assignintent.putExtra("subject_code", mParam1);
-            assignintent.putExtra("subject_name", mParam2);
-        } else if (id == R.id.action_classnote) {
-            Intent noteintent = new Intent(getActivity(), ClassNotesActivity.class);
-            noteintent.putExtra("subject_code", mParam1);
-            noteintent.putExtra("subject_name", mParam2);
-            /* case binding.actionAssignment.getId() :*/
-            /*  Intent intent = new Intent(getActivity(), ClassNotesActivity.class);
-                intent.putExtra("",);
-                break;
-            */
         }
-    }
 }

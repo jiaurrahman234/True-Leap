@@ -53,7 +53,7 @@ public class SplashActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
         } catch (Exception e) {

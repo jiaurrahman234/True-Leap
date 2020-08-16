@@ -82,6 +82,11 @@ public class ClassnotesFragmentListing extends Fragment implements noteClickList
     }
 
     private void initdata() {
+
+        binding.studentClass.setText(localStorage.getClassId());
+        binding.studentSection.setText(localStorage.getSectionId());
+        binding.sujectName.setText(mParam2 +" Class Notes");
+
         class_notes = new ArrayList<>();
         notesJson = loadAssetsJsonObj("class_note.json", context);
         try{

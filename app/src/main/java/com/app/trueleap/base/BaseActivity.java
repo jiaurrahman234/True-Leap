@@ -13,6 +13,8 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
 
@@ -24,6 +26,7 @@ import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieFrameInfo;
 import com.airbnb.lottie.value.SimpleLottieValueCallback;
 import com.app.trueleap.R;
+import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.external.LocalStorage;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -167,6 +170,28 @@ public class BaseActivity extends AppCompatActivity {
                 // If the update is cancelled or fails,
                 // you can request to start the update again.
             }
+        }
+    }
+
+
+    public void exitApp() {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+            builder.setTitle("Confirm")
+                    .setIcon(R.drawable.logo)
+                    .setMessage("Do you really want to exit?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            alertTheme(alertDialog);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

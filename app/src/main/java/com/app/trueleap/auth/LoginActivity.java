@@ -102,6 +102,7 @@ public class LoginActivity extends BaseActivity {
         viewModel.userData.observe(this, it -> {
             Log.d(TAG, "Successfully login " + it.id);
             localStorage.createUserLoginSession(it.token, it.id, it.profile.rollNumber, it.profile.phoneNumber, it.profile.classDataArrayList.get(0).classid, it.profile.classDataArrayList.get(0).section, true);
+            localStorage.setAutodownload(true);
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         });

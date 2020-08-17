@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class APIClient {
-    public static final String BASE_URL = " https://35.164.171.15:9001/"; //production
+    public static final String BASE_URL = "https://35.164.171.15:9001/"; //production
     public static APIClient mInstance;
     private static Retrofit retrofit = null;
     private static HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

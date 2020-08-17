@@ -32,6 +32,7 @@ public class LocalStorage {
     private static final String ROLL_NUMBER = "ROLL_NUMBER";
     private static final String CLASS_ID = "CLASS_ID";
     private static final String SECTION_ID = "SECTION_ID";
+    private static final String AUTODOWNLOAD = "AUTODOWNLOAD";
 
 
     private static LocalStorage instance = null;
@@ -53,6 +54,17 @@ public class LocalStorage {
             }
         }
         return instance;
+    }
+
+    public void setAutodownload(Boolean data) {
+        editor = sharedPreferences.edit();
+        editor.putBoolean(AUTODOWNLOAD, data);
+        editor.commit();
+    }
+
+
+    public Boolean getAutodownload() {
+        return sharedPreferences.getBoolean(AUTODOWNLOAD, false);
     }
 
     public void createUserLoginSession(String token,String id ,String rollNumber,String phoneNumber,String classid,String section,boolean isLogin) {

@@ -7,11 +7,15 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.app.trueleap.R;
+import com.app.trueleap.Retrofit.APIClient;
+import com.app.trueleap.base.BaseFragment;
 import com.app.trueleap.databinding.FragmentSubjectsBinding;
 import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.external.Utils;
@@ -20,11 +24,17 @@ import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+
 import static com.app.trueleap.external.CommonFunctions.loadAssetsJsonObj;
 
-public class HomeSubjectsFragment extends Fragment implements subjectlickListener {
-
+public class HomeSubjectsFragment extends BaseFragment implements subjectlickListener {
+    String TAG = HomeSubjectsFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -65,6 +75,7 @@ public class HomeSubjectsFragment extends Fragment implements subjectlickListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_subjects, container, false);
+
         binding = DataBindingUtil.bind(v);
         context = getContext();
         fragmentManager = getActivity().getSupportFragmentManager();
@@ -84,23 +95,57 @@ public class HomeSubjectsFragment extends Fragment implements subjectlickListene
         binding.studentSection.setText(localStorage.getSectionId());
 
         Subjects = new ArrayList<>();
-        SubjectsJson = loadAssetsJsonObj("subject.json", context);
-        try{
-            JSONArray SubjectsArray =  SubjectsJson.getJSONArray("subjects");
-            for(int i = 0 ; i< SubjectsArray.length(); i++){
-                Subjects.add(new SubjectModel(
-                        SubjectsArray.getJSONObject(i).getString("id"),
-                        SubjectsArray.getJSONObject(i).getString("subject_code"),
-                        SubjectsArray.getJSONObject(i).getString("subject_name")));
-            }
-        } catch (Exception e){
+        try {
+            showProgressView();
+            Call<ResponseBody> call = APIClient
+                    .getInstance()
+                    .getApiInterface()
+                    .getSubjects(localStorage.getKeyUserToken());
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    try {
+                        hideProgressView();
+                        String response_data = response.body().string();
+
+                        JSONArray jsonArray = new JSONArray(response_data);
+                        Log.d(TAG, "subject response: " + jsonArray.length());
+                        if (jsonArray.length()>0){
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONArray jsonArray1 = jsonArray.getJSONArray(i);
+                                for (int j=0;j<jsonArray1.length();j++){
+                                    JSONObject jsonObject = (JSONObject) jsonArray1.get(j);
+                                    Subjects.add(new SubjectModel(
+                                            jsonObject.getString("subject"),
+                                            jsonObject.getString("subject"),
+                                            jsonObject.getString("subject")));
+                                    break;
+                                }
+                            }
+                        }
+                        populateSubjectListing();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        hideProgressView();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressView();
+                }
+            });
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        populateSubjectListing();
+
     }
 
     private void populateSubjectListing() {
-        Subject_adpater  = new subject_adapter(context,Subjects,this);
+        Subject_adpater = new subject_adapter(context, Subjects, this);
         LinearLayoutManager llayoutmanager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         binding.rvSubject.setLayoutManager(llayoutmanager);
         binding.rvSubject.setAdapter(Subject_adpater);
@@ -109,7 +154,7 @@ public class HomeSubjectsFragment extends Fragment implements subjectlickListene
 
     @Override
     public void onClicked(int position) {
-        ClassmaterialtypeFragment  clsmtypeFragment =  new ClassmaterialtypeFragment().newInstance(
+        ClassmaterialtypeFragment clsmtypeFragment = new ClassmaterialtypeFragment().newInstance(
                 Subjects.get(position).getId(),
                 Subjects.get(position).getSubject_title());
 

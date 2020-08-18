@@ -8,10 +8,12 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 import static com.app.trueleap.Retrofit.APIConstants.LOGIN;
+import static com.app.trueleap.Retrofit.APIConstants.SUBJECTS;
 
 public interface APIInterface {
 
@@ -19,6 +21,8 @@ public interface APIInterface {
     @POST(LOGIN)
     Single<LoginModel> loginUser(@Body RequestBody body);
 
+    @GET(SUBJECTS)
+    Call<ResponseBody> getSubjects(@Header("Authorization") String token);
 
 
     @GET("version")

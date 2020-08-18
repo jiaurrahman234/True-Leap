@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class ClassmaterialtypeFragment extends Fragment{
+public class ClassmaterialtypeFragment extends Fragment {
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -84,7 +84,7 @@ public class ClassmaterialtypeFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
-                Intent  noteintent = new Intent(getActivity(), ClassNotesActivity.class);
+                Intent noteintent = new Intent(getActivity(), ClassNotesActivity.class);
                 noteintent.putExtra("subject_code", mParam1);
                 noteintent.putExtra("subject_name", mParam2);
                 startActivity(noteintent);
@@ -92,14 +92,14 @@ public class ClassmaterialtypeFragment extends Fragment{
             }
         });
         binding.actionAssignment.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent assignintent  = new Intent(getActivity(), AssignmentActivity.class);
-              assignintent.putExtra("subject_code", mParam1);
-              assignintent.putExtra("subject_name", mParam2);
-              startActivity(assignintent);
-          }
-          }
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            Intent assignintent = new Intent(getActivity(), AssignmentActivity.class);
+                                                            assignintent.putExtra("subject_code", mParam1);
+                                                            assignintent.putExtra("subject_name", mParam2);
+                                                            startActivity(assignintent);
+                                                        }
+                                                    }
         );
 
     }
@@ -108,7 +108,9 @@ public class ClassmaterialtypeFragment extends Fragment{
         binding.studentClass.setText(localStorage.getClassId());
         binding.studentSection.setText(localStorage.getSectionId());
 
-        if(!mParam2.equals(""))
+        if (!mParam2.equals(""))
             binding.sujectName.setText(mParam2);
-        }
+    }
+
+
 }

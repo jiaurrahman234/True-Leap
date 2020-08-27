@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "212332873097",
+    "firebase_url": "https://axomi-bazar.firebaseio.com",
+    "project_id": "axomi-bazar",
+    "storage_bucket": "axomi-bazar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212332873097:android:03607220f297d495abcd58",
+        "android_client_info": {
+          "package_name": "com.app.trueleap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212332873097-2m4gh27p8s0jqi9fmg1p0lggc8e7l68k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyzTnw0DpaFXp9Yhr3MJuk9HFN5IJUJ3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212332873097-2m4gh27p8s0jqi9fmg1p0lggc8e7l68k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 package com.app.trueleap.Retrofit;
 
 import com.app.trueleap.auth.LoginModel;
+import com.app.trueleap.home.studentsubject.Subject;
 
 import io.reactivex.Single;
 import okhttp3.RequestBody;
@@ -23,6 +24,9 @@ public interface APIInterface {
 
     @GET(SUBJECTS)
     Call<ResponseBody> getSubjects(@Header("Authorization") String token);
+
+    @GET(SUBJECTS)
+    Single<Subject> getSubjectsData(@Header("Authorization") String token);
 
 
     @GET("version")

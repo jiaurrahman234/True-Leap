@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -15,23 +16,27 @@ import android.view.ViewGroup;
 
 import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.APIClient;
+import com.app.trueleap.auth.AuthViewModel;
 import com.app.trueleap.base.BaseFragment;
 import com.app.trueleap.databinding.FragmentSubjectsBinding;
 import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.external.Utils;
 import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
 import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
+import com.app.trueleap.home.studentsubject.viewModel.SubjectViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 import static com.app.trueleap.external.CommonFunctions.loadAssetsJsonObj;
+import static com.app.trueleap.external.Utils.dateFormat;
 
 public class HomeSubjectsFragment extends BaseFragment implements subjectlickListener {
     String TAG = HomeSubjectsFragment.class.getSimpleName();
@@ -47,6 +52,8 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
     JSONObject SubjectsJson;
     subject_adapter Subject_adpater;
     FragmentManager fragmentManager;
+    SubjectViewModel viewModel;
+
 
     public HomeSubjectsFragment() {
         // Required empty public constructor
@@ -80,9 +87,25 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
         context = getContext();
         fragmentManager = getActivity().getSupportFragmentManager();
         localStorage = LocalStorage.getInstance(context);
+        viewModel = ViewModelProviders.of(this).get(SubjectViewModel.class);
         initdata();
+        //initObserver();
         initListeners();
         return binding.getRoot();
+    }
+
+    private void initObserver() {
+        try{
+            viewModel.isApiSuccess.observe(this, it -> {
+                hideProgressView();
+            });
+
+            viewModel.subjectData.observe(this,it->{
+                Log.d(TAG, "Successfully login " + it.uniqueperiodid);
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void initListeners() {
@@ -93,6 +116,9 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
 
         binding.studentClass.setText(localStorage.getClassId());
         binding.studentSection.setText(localStorage.getSectionId());
+
+        /*viewModel.subjectData(localStorage.getKeyUserToken());
+        showProgressView();*/
 
         Subjects = new ArrayList<>();
         try {
@@ -113,16 +139,33 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                         Log.d(TAG, "subject response: " + jsonArray.length());
                         if (jsonArray.length()>0){
                             for (int i = 0; i < jsonArray.length(); i++) {
+                                ArrayList<ClassDate> classDateArrayList = new ArrayList<>();
                                 JSONArray jsonArray1 = jsonArray.getJSONArray(i);
-                                for (int j=0;j<jsonArray1.length();j++){
+                                String subject="",startTime="",endTime="";
+                                for (int j=0;j<10;j++){
                                     JSONObject jsonObject = (JSONObject) jsonArray1.get(j);
-                                    Subjects.add(new SubjectModel(
-                                            jsonObject.getString("subject"),
-                                            jsonObject.getString("subject"),
-                                            jsonObject.getString("subject")));
-                                    break;
+                                    Date dateobj = new Date();
+                                    String startDate = jsonObject.getString("startdate");
+                                    Log.d(TAG,"sub date "+startDate.substring(0,10)+" "+dateFormat.format(dateobj));
+                                    classDateArrayList.add(new ClassDate(
+                                            startDate
+                                    ));
+                                    if (jsonObject.has("subject")) {
+                                        subject = jsonObject.getString("subject");
+                                        startTime = jsonObject.getString("starttime");
+                                        endTime = jsonObject.getString("endtime");
+
+                                    }
                                 }
+                                Subjects.add(new SubjectModel(
+                                        subject,
+                                        subject,
+                                        subject,
+                                        startTime,
+                                        endTime,
+                                        classDateArrayList));
                             }
+
                         }
                         populateSubjectListing();
                     } catch (Exception e) {

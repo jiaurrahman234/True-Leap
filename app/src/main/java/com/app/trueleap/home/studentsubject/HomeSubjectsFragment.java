@@ -142,20 +142,38 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                                 ArrayList<ClassDate> classDateArrayList = new ArrayList<>();
                                 JSONArray jsonArray1 = jsonArray.getJSONArray(i);
                                 String subject="",startTime="",endTime="";
-                                for (int j=0;j<10;j++){
+                                int currentPosition=0;
+                                for (int j=0;j<jsonArray1.length();j++){
                                     JSONObject jsonObject = (JSONObject) jsonArray1.get(j);
-                                    Date dateobj = new Date();
-                                    String startDate = jsonObject.getString("startdate");
-                                    Log.d(TAG,"sub date "+startDate.substring(0,10)+" "+dateFormat.format(dateobj));
-                                    classDateArrayList.add(new ClassDate(
-                                            startDate
-                                    ));
                                     if (jsonObject.has("subject")) {
                                         subject = jsonObject.getString("subject");
                                         startTime = jsonObject.getString("starttime");
                                         endTime = jsonObject.getString("endtime");
 
                                     }
+
+                                    Date curDate = new Date();
+                                    String startDate = jsonObject.getString("startdate");
+                                    Date classDate = dateFormat.parse(startDate.substring(0,10));
+
+                                    if(classDate.compareTo(curDate) < 0) {
+                                        currentPosition = j;
+                                        Log.d(TAG,"sub date "+classDate+" "+dateFormat.format(curDate));
+                                    }else{
+                                        break;
+                                    }
+
+                                }
+                                if (currentPosition>6){
+                                    currentPosition = 6;
+                                }
+                                for (int k=currentPosition;k>=0;k--){
+                                    JSONObject jsonObject = (JSONObject) jsonArray1.get(k);
+                                    String startDate = jsonObject.getString("startdate");
+                                    classDateArrayList.add(new ClassDate(
+                                            startDate
+                                    ));
+
                                 }
                                 Subjects.add(new SubjectModel(
                                         subject,

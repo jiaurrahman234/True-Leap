@@ -4,9 +4,9 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/houschka_rounded"
+        android:font="@font/roboto_regular"
         app:fontStyle="normal"
         app:fontWeight="400"
-        app:font="@font/houschka_rounded"
+        app:font="@font/roboto_regular"
         tools:targetApi="o"/>
 </font-family>

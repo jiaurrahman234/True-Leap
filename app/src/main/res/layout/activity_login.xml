@@ -15,7 +15,7 @@
             android:layout_marginVertical="@dimen/spacing_m"
             android:paddingTop="@dimen/spacing_xl"
             card_view:cardBackgroundColor="@color/white"
-            card_view:cardCornerRadius="0dp"
+            card_view:cardCornerRadius="8dp"
             card_view:contentPadding="@dimen/spacing_xl"
             card_view:cardElevation="18dp">
 
@@ -30,6 +30,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    card_view:cardCornerRadius="8dp"
                     android:layout_gravity="center_horizontal">
 
                     <ImageView
@@ -95,7 +96,7 @@
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/loginBtn"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -104,7 +105,7 @@
                     android:padding="3dp"
                     android:text="@string/login"
                     android:textColor="@color/white"
-                    app:cornerRadius="0dp"
+                    app:cornerRadius="8dp"
                     android:textSize="@dimen/textsize_m"
                     android:textStyle="bold" />
             </LinearLayout>

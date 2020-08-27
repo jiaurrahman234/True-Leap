@@ -103,6 +103,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="match_parent"
+                    app:cornerRadius="8dp"
                     android:text="Download"
                     android:layout_height="wrap_content">
                 </com.google.android.material.button.MaterialButton>
@@ -110,6 +111,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="match_parent"
                     android:text="Open Link"
+                    app:cornerRadius="8dp"
                     android:layout_height="wrap_content">
                 </com.google.android.material.button.MaterialButton>
 
@@ -117,6 +119,7 @@
                     android:id="@+id/upload_assignment"
                     android:layout_width="match_parent"
                     android:text="Uplaod"
+                    app:cornerRadius="8dp"
                     android:layout_height="wrap_content">
                 </com.google.android.material.button.MaterialButton>
 
@@ -135,6 +138,7 @@
                     android:id="@+id/take_photo"
                     android:layout_width="80dp"
                     android:gravity="center"
+                    app:cornerRadius="8dp"
                     android:orientation="vertical"
                     android:layout_marginRight="@dimen/margin_10dp"
                     android:background="@color/border_Color"
@@ -182,6 +186,7 @@
                 <LinearLayout
                     android:id="@+id/upload_doc"
                     android:layout_width="80dp"
+                    app:cornerRadius="8dp"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:background="@color/border_Color"

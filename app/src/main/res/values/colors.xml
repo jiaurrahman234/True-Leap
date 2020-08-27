@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00ACFA</color>
-    <color name="colorPrimaryDark">#03A9F4</color>
-    <color name="colorAccent">#00B0FF</color>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#3f51b5</color>
+    <color name="colorAccent">#3f51b5</color>
     <color name="red_400">#2ec66d</color>
     <color name="green">#4CAF50</color>
     <color name="white">#FFFFFF</color>
@@ -37,4 +37,8 @@
     <color name="colorSub">#b0afaf</color>
     <color name="colorTex">#585858</color>
     <color name="color">#767578</color>
+
+    <color name="toolbar">#efefef</color>
+    <color name="toolbar_text">#8f000000</color>
+    <color name="accent">#2789e4</color>
 </resources>

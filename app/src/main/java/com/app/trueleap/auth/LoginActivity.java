@@ -97,7 +97,6 @@ public class LoginActivity extends BaseActivity {
     private void initObserver() {
         viewModel.isApiSuccess.observe(this, it -> {
             hideProgressBar();
-
         });
         viewModel.userData.observe(this, it -> {
             Log.d(TAG, "Successfully login " + it.id);
@@ -109,7 +108,6 @@ public class LoginActivity extends BaseActivity {
         viewModel.errorData.observe(this, it -> {
             //CommonFunctions.showSnackView(binding.rootlayout, it.errorDesc_);
             CommonFunctions.showSnackView(binding.rootlayout, "Login error");
-
         });
     }
 

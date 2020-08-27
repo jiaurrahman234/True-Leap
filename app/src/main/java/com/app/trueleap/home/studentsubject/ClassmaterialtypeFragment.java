@@ -111,6 +111,4 @@ public class ClassmaterialtypeFragment extends Fragment {
         if (!mParam2.equals(""))
             binding.sujectName.setText(mParam2);
     }
-
-
 }

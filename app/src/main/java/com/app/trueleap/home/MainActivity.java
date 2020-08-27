@@ -22,7 +22,7 @@ import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityMainBinding;
 import com.app.trueleap.external.Utils;
 import com.app.trueleap.home.studentsubject.HomeSubjectsFragment;
-import com.app.trueleap.settings.SettingsActivity;
+/*import com.app.trueleap.settings.SettingsActivity;*/
 
 public class MainActivity extends BaseActivity {
 
@@ -94,9 +94,9 @@ public class MainActivity extends BaseActivity {
                 }
 
                 return true;
-            case R.id.action_settings:
+           /* case R.id.action_settings:
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                return true;
+                return true;*/
 
         }
         return super.onOptionsItemSelected(item);

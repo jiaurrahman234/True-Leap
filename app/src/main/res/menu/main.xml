@@ -3,13 +3,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_change_lang"
-        app:showAsAction="always"
-        android:iconTint="@color/white"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:visible="true"/>
+
     <item
         android:id="@+id/action_change_lang"
         android:title="@string/action_change_lang"
@@ -24,3 +18,6 @@
         app:showAsAction="always" />
 
 </menu>
+
+
+    <!-- android:icon="@drawable/ic_baseline_settings_24"-->

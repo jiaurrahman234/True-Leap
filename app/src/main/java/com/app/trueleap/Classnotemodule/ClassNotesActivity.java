@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,20 +16,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.app.trueleap.Classnotemodule.adapter.classnote_adapter;
+import com.app.trueleap.Classnotemodule.interfaces.noteClickListener;
+import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityClassNotesBinding;
 import com.app.trueleap.external.Utils;
+import com.app.trueleap.home.studentsubject.ClassModel;
 import com.app.trueleap.home.studentsubject.HomeSubjectsFragment;
 
-public class ClassNotesActivity extends BaseActivity {
+import java.util.ArrayList;
+
+public class ClassNotesActivity extends BaseActivity implements noteClickListener {
 
     ActivityClassNotesBinding binding;
     Intent intent;
     String subject_code;
     String subject_name;
     Context context;
+    ArrayList<ClassModel> classModelArrayList;
+    ArrayList<ClassnoteModel> class_notes;
+    classnote_adapter note_adpater;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +48,48 @@ public class ClassNotesActivity extends BaseActivity {
         intent = getIntent();
         context = ClassNotesActivity.this;
         initToolbar();
+        class_notes = new ArrayList<>();
         if (intent.getExtras() != null) {
-           subject_code  = intent.getStringExtra("subject_code");
-           subject_name  = intent.getStringExtra("subject_name");
+            classModelArrayList = new ArrayList<>();
+            subject_code = intent.getStringExtra("subject_code");
+            subject_name = intent.getStringExtra("subject_name");
+            class_notes = (ArrayList<ClassnoteModel>) intent.getExtras().getSerializable("class_note");
         }
+        initData();
+/*
+        ClassnotesFragmentListing fragmentListing = new ClassnotesFragmentListing().newInstance(subject_code, subject_name);
+        loadFragment(fragmentListing);*/
+    }
 
-        ClassnotesFragmentListing fragmentListing = new ClassnotesFragmentListing().newInstance(subject_code,subject_name);
-        loadFragment(fragmentListing);
+    private void initData() {
+        try{
+            binding.studentClass.setText(localStorage.getClassId());
+            binding.studentSection.setText(localStorage.getSectionId());
+            binding.sujectName.setText(subject_name +" Class Notes");
+            /*class_notes = new ArrayList<>();
+            for(int i = 0 ; i< classModelArrayList.size(); i++){
+                class_notes.add(new ClassnoteModel(
+                        classModelArrayList.get(i).getUniqueperiodid(),
+                        classModelArrayList.get(i).getClassname(),
+                        classModelArrayList.get(i).getClassname(),
+                        classModelArrayList.get(i).getClassname(),
+                        classModelArrayList.get(i).getClassname(),
+                        classModelArrayList.get(i).getClassname(),
+                        classModelArrayList.get(i).getClassname()));
+            }*/
+            populateCategories();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void populateCategories() {
+        note_adpater  = new classnote_adapter(context,class_notes,this);
+        LinearLayoutManager llayoutmanager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        binding.rvClassNote.setLayoutManager(llayoutmanager);
+        binding.rvClassNote.setAdapter(note_adpater);
+        note_adpater.notifyDataSetChanged();
     }
 
     private void initToolbar() {
@@ -55,12 +101,12 @@ public class ClassNotesActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-    private void loadFragment(Fragment fragment) {
+   /* private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(binding.frameContainer.getId(), fragment, Utils.Classnotes_fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,4 +149,8 @@ public class ClassNotesActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onClicked(int position) {
+
+    }
 }

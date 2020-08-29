@@ -57,6 +57,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
+            gson = new Gson();
             context = getApplicationContext();
             fragmentManager = getSupportFragmentManager();
             localStorage = new LocalStorage(getApplicationContext());

@@ -55,7 +55,17 @@ public class LocalStorage {
         }
         return instance;
     }
+    public void setClass(String classData) {
+        Editor editor = sharedPreferences.edit();
+        editor.putString("class", classData);
+        editor.commit();
+    }
 
+    public String getClassData() {
+        if (sharedPreferences.contains("class"))
+            return sharedPreferences.getString("class", null);
+        else return null;
+    }
     public void setAutodownload(Boolean data) {
         editor = sharedPreferences.edit();
         editor.putBoolean(AUTODOWNLOAD, data);

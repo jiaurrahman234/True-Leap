@@ -27,6 +27,7 @@ import com.app.trueleap.databinding.FragmentSubjectsBinding;
 import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.external.Utils;
 import com.app.trueleap.home.ClassMaterialTypeActivity;
+import com.app.trueleap.home.studentsubject.CalendarModel;
 import com.app.trueleap.home.studentsubject.ClassModel;
 import com.app.trueleap.home.studentsubject.ClassmaterialtypeFragment;
 import com.app.trueleap.home.studentsubject.DocumentsModel;
@@ -43,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,11 +56,11 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
 
     private WeekView mWeekView;
     Intent intent;
-    LocalStorage localStorage;
     Context context;
     ArrayList<ClassModel> Subjects;
     String selecteduniqueperiodid;
-    ArrayList<ClassModel> calendarClass = new ArrayList<>();
+    ArrayList<ClassModel> classModelArrayList = new ArrayList<>();
+    ArrayList<CalendarModel> calendarModelArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,12 +119,12 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
                     String startDate = subject_class.getJSONObject(j).getString("startdate");
                     Date classDate = getdateValue(startDate);
                     if (classDate.compareTo(curDate) < 0) {
-
-                        if (subject_class.getJSONObject(j).has("documents")){
+                        ArrayList<DocumentsModel> documentsModelArrayList = new ArrayList<>();
+                        if (subject_class.getJSONObject(j).has("documents")) {
                             JSONArray documentArray = subject_class.getJSONObject(j).getJSONArray("documents");
-                            Log.d(TAG,"document "+documentArray.length());
+                            Log.d(TAG, "document " + documentArray.length());
                             if (documentArray.length() > 0) {
-                                ArrayList<DocumentsModel> documentsModelArrayList = new ArrayList<>();
+
                                 for (int k = 0; k < documentArray.length(); k++) {
                                     JSONObject documentObj = documentArray.getJSONObject(k);
                                     documentsModelArrayList.add(new DocumentsModel(
@@ -133,6 +135,7 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
                                             documentObj.getString("note")
                                     ));
                                 }
+                                Log.d(TAG, "jgljfkj: " + documentsModelArrayList.size() + "," + subject_class.getJSONObject(j).getString("startdate"));
                                 Subjects.add(
                                         new ClassModel(
                                                 subject_class.getJSONObject(j).getString("uniqueperiodid"),
@@ -156,10 +159,10 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
                                                 subject_class.getJSONObject(j).getString("starttime"),
                                                 subject_class.getJSONObject(j).getString("endtime"),
                                                 subject_class.getJSONObject(0).getString("subject"),
-                                                null));
+                                                documentsModelArrayList));
                             }
 
-                        }else{
+                        } else {
                             Subjects.add(
                                     new ClassModel(
                                             subject_class.getJSONObject(j).getString("uniqueperiodid"),
@@ -170,10 +173,8 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
                                             subject_class.getJSONObject(j).getString("starttime"),
                                             subject_class.getJSONObject(j).getString("endtime"),
                                             subject_class.getJSONObject(0).getString("subject"),
-                                            null));
+                                            documentsModelArrayList));
                         }
-
-
 
 
                     } else {
@@ -182,6 +183,14 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
 
                 }
             }
+
+            int count = 0;
+            for (int i = Subjects.size() - 1; i >= 0 && count < 8; i--) {
+                classModelArrayList.add(Subjects.get(i));
+                count++;
+            }
+
+
             String[] time = (Subjects.get(0).getStarttime().split("[:.]"));
             mWeekView.goToHour(Integer.parseInt(time[0]));
             Calendar calendar = Calendar.getInstance();
@@ -251,7 +260,7 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
         int count = 0;
         for (int i = Subjects.size() - 1; i >= 0 && count < 8; i--) {
             Log.d("fdvvvbdvd", "dscsc " + Subjects.get(i).getStartdate());
-            calendarClass.add(Subjects.get(i));
+
             Calendar cal = Calendar.getInstance();
             cal.setTime(getdateValue(Subjects.get(i).getStartdate()));
             int month = cal.get(Calendar.MONTH);
@@ -284,6 +293,8 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
             startTime.set(Calendar.YEAR, year);
 
             if ((month == newMonth - 1) && year == newYear) {
+
+                calendarModelArrayList.add(new CalendarModel((int) i, Subjects.get(i).getUniqueperiodid()));
                 WeekViewEvent event = new WeekViewEvent(i, getClassTitle(Subjects.get(i).getSubject(), Subjects.get(i).getStarttime(), Subjects.get(i).getEndtime()), startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_01));
                 events.add(event);
@@ -319,12 +330,29 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
+        try {
+            Toast.makeText(this, "Clicked " + classModelArrayList.size(), Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "ghlglk: " + classModelArrayList.size());
+            Gson gson = new Gson();
+            String classData = gson.toJson(classModelArrayList);
+            localStorage.setClass(classData);
+            startActivity(new Intent(CallenderViewActivity.this, ClassMaterialTypeActivity.class)
+                    .putExtra("subject_name", event.getName())
+                    .putExtra("class_id", Long.toString(event.getId()))
+                    .putExtra("calendar_data", calendarModelArrayList));
+            /*for (int i=0;i<classModelArrayList.size();i++){
+                ClassModel classModel = classModelArrayList.get(i);
+                Log.d(TAG,"jhljgj: "+classModel.getStartdate());
+                if (!classModel.getDocumentsModelArrayList().isEmpty()){
+                    Log.d(TAG,"xcxcx: "+classModel.getDocumentsModelArrayList().size());
+                }
 
-        Toast.makeText(this, "Clicked " + event.getId(), Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(CallenderViewActivity.this, ClassMaterialTypeActivity.class)
-                .putExtra("subject_name",event.getName())
-                .putExtra("class_id",Long.toString(event.getId()))
-                .putExtra("calendar_data", new Gson().toJson(calendarClass)));
+            }*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override

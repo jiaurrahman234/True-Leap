@@ -1,6 +1,9 @@
 package com.app.trueleap.Classnotemodule.model;
 
-public class ClassnoteModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ClassnoteModel implements Parcelable {
     String id;
     String note_title;
     String note_text;
@@ -18,6 +21,28 @@ public class ClassnoteModel {
         this.doc_type = doc_type;
         this.doc_path = doc_path;
     }
+
+    protected ClassnoteModel(Parcel in) {
+        id = in.readString();
+        note_title = in.readString();
+        note_text = in.readString();
+        uploaded_date = in.readString();
+        note_doc_file = in.readString();
+        doc_type = in.readString();
+        doc_path = in.readString();
+    }
+
+    public static final Creator<ClassnoteModel> CREATOR = new Creator<ClassnoteModel>() {
+        @Override
+        public ClassnoteModel createFromParcel(Parcel in) {
+            return new ClassnoteModel(in);
+        }
+
+        @Override
+        public ClassnoteModel[] newArray(int size) {
+            return new ClassnoteModel[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -73,5 +98,21 @@ public class ClassnoteModel {
 
     public void setDoc_path(String doc_path) {
         this.doc_path = doc_path;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(note_title);
+        dest.writeString(note_text);
+        dest.writeString(uploaded_date);
+        dest.writeString(note_doc_file);
+        dest.writeString(doc_type);
+        dest.writeString(doc_path);
     }
 }

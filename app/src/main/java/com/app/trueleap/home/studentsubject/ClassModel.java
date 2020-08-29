@@ -1,8 +1,12 @@
 package com.app.trueleap.home.studentsubject;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ClassModel {
+public class ClassModel  implements Parcelable {
 
     String uniqueperiodid;
     String teacher;
@@ -43,6 +47,32 @@ public class ClassModel {
         this.subject = subject;
         this.documentsModelArrayList = documents;
     }
+
+    protected ClassModel(Parcel in) {
+        uniqueperiodid = in.readString();
+        teacher = in.readString();
+        uniqueteacherid = in.readString();
+        startdate = in.readString();
+        enddate = in.readString();
+        starttime = in.readString();
+        endtime = in.readString();
+        days = in.createStringArrayList();
+        classname = in.readString();
+        section = in.readString();
+        subject = in.readString();
+    }
+
+    public static final Creator<ClassModel> CREATOR = new Creator<ClassModel>() {
+        @Override
+        public ClassModel createFromParcel(Parcel in) {
+            return new ClassModel(in);
+        }
+
+        @Override
+        public ClassModel[] newArray(int size) {
+            return new ClassModel[size];
+        }
+    };
 
     public String getUniqueperiodid() {
         return uniqueperiodid;
@@ -138,6 +168,27 @@ public class ClassModel {
 
     public void setDocumentsModelArrayList(ArrayList<DocumentsModel> documentsModelArrayList) {
         this.documentsModelArrayList = documentsModelArrayList;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(uniqueperiodid);
+        dest.writeString(teacher);
+        dest.writeString(uniqueteacherid);
+        dest.writeString(startdate);
+        dest.writeString(enddate);
+        dest.writeString(starttime);
+        dest.writeString(endtime);
+        dest.writeStringList(days);
+        dest.writeString(classname);
+        dest.writeString(section);
+        dest.writeString(subject);
+        dest.writeArray(new ArrayList[]{documentsModelArrayList});
     }
 }
 

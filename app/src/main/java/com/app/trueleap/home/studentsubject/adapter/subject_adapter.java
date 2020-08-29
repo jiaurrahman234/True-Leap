@@ -5,23 +5,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.app.trueleap.R;
-import com.app.trueleap.home.studentsubject.SubjectModel;
+import com.app.trueleap.home.studentsubject.ClassModel;
 import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
 
 import java.util.ArrayList;
 
 public class subject_adapter extends RecyclerView.Adapter<subject_adapter.ViewHolder> {
-    ArrayList<SubjectModel> mValues;
+    ArrayList<ClassModel> mValues;
     Context mContext;
     protected subjectlickListener mListener;
 
-    public subject_adapter(Context context, ArrayList<SubjectModel> values, subjectlickListener itemListener) {
+    public subject_adapter(Context context, ArrayList<ClassModel> values, subjectlickListener itemListener) {
         mValues = values;
         mContext = context;
         mListener= itemListener;
@@ -30,7 +29,7 @@ public class subject_adapter extends RecyclerView.Adapter<subject_adapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView subject_title;
         public CardView subject_card;
-        SubjectModel item;
+        ClassModel item;
         int position_data;
 
         public ViewHolder(View v) {
@@ -41,9 +40,9 @@ public class subject_adapter extends RecyclerView.Adapter<subject_adapter.ViewHo
             subject_card.setOnClickListener(this);
         }
 
-        public void setData(SubjectModel item) {
+        public void setData(ClassModel item) {
             this.item = item;
-            subject_title.setText(item.getSubject_title());
+            subject_title.setText(item.getSubject());
         }
         @Override
         public void onClick(View view) {

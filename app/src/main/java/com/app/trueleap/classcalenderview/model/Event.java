@@ -103,7 +103,6 @@ public class Event {
         weekViewEvent.setStartTime(startTime);
         weekViewEvent.setEndTime(endTime);
         weekViewEvent.setColor(Color.parseColor(getColor()));
-
         return weekViewEvent;
     }
 }

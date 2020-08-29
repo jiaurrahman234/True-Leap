@@ -1,8 +1,6 @@
 package com.app.trueleap.base;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.Retrofit.APIInterface;
 import com.app.trueleap.model.ErrorResponse;

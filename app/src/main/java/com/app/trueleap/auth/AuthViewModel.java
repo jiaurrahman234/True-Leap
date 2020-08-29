@@ -44,7 +44,6 @@ public class AuthViewModel extends BaseViewModel {
                     @Override
                     public void onError(Throwable e) {
                         try{
-
                             ResponseBody responseBody = ((HttpException)e).response().errorBody();
                             Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
                             ErrorResponse errorObject = converter.convert(responseBody);

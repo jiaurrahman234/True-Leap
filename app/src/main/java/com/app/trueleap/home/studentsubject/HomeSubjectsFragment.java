@@ -1,12 +1,11 @@
 package com.app.trueleap.home.studentsubject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -16,27 +15,24 @@ import android.view.ViewGroup;
 
 import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.APIClient;
-import com.app.trueleap.auth.AuthViewModel;
 import com.app.trueleap.base.BaseFragment;
+import com.app.trueleap.classcalenderview.CallenderViewActivity;
 import com.app.trueleap.databinding.FragmentSubjectsBinding;
 import com.app.trueleap.external.LocalStorage;
-import com.app.trueleap.external.Utils;
 import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
 import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
 import com.app.trueleap.home.studentsubject.viewModel.SubjectViewModel;
+import com.app.trueleap.external.CommonFunctions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-import static com.app.trueleap.external.CommonFunctions.loadAssetsJsonObj;
-import static com.app.trueleap.external.Utils.dateFormat;
+import static com.app.trueleap.external.CommonFunctions.saveJSONToCache;
 
 public class HomeSubjectsFragment extends BaseFragment implements subjectlickListener {
     String TAG = HomeSubjectsFragment.class.getSimpleName();
@@ -45,15 +41,15 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
     private String mParam1;
     private String mParam2;
 
+    private String CACHE_FILE = "classes";
+
     LocalStorage localStorage;
     Context context;
     FragmentSubjectsBinding binding;
-    ArrayList<SubjectModel> Subjects;
-    JSONObject SubjectsJson;
+    ArrayList<ClassModel> Subjects;
     subject_adapter Subject_adpater;
     FragmentManager fragmentManager;
     SubjectViewModel viewModel;
-
 
     public HomeSubjectsFragment() {
         // Required empty public constructor
@@ -67,6 +63,8 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
         fragment.setArguments(args);
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,14 +85,14 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
         context = getContext();
         fragmentManager = getActivity().getSupportFragmentManager();
         localStorage = LocalStorage.getInstance(context);
-        viewModel = ViewModelProviders.of(this).get(SubjectViewModel.class);
+     /* viewModel = ViewModelProviders.of(this).get(SubjectViewModel.class);*/
         initdata();
         //initObserver();
         initListeners();
         return binding.getRoot();
     }
 
-    private void initObserver() {
+   /* private void initObserver() {
         try{
             viewModel.isApiSuccess.observe(this, it -> {
                 hideProgressView();
@@ -106,19 +104,22 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
+    }*/
 
     private void initListeners() {
 
     }
 
-    private void initdata() {
+
+    // author -> Jia
+
+    /*private void initdata() {
 
         binding.studentClass.setText(localStorage.getClassId());
         binding.studentSection.setText(localStorage.getSectionId());
 
-        /*viewModel.subjectData(localStorage.getKeyUserToken());
-        showProgressView();*/
+        *//*viewModel.subjectData(localStorage.getKeyUserToken());
+        showProgressView();*//*
 
         Subjects = new ArrayList<>();
         try {
@@ -149,7 +150,6 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                                         subject = jsonObject.getString("subject");
                                         startTime = jsonObject.getString("starttime");
                                         endTime = jsonObject.getString("endtime");
-
                                     }
 
                                     Date curDate = new Date();
@@ -173,7 +173,6 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                                     classDateArrayList.add(new ClassDate(
                                             startDate
                                     ));
-
                                 }
                                 Subjects.add(new SubjectModel(
                                         subject,
@@ -203,6 +202,75 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
             e.printStackTrace();
         }
 
+    }*/
+
+    /* auth manoj */
+
+    private void initdata() {
+
+        binding.studentClass.setText(localStorage.getClassId());
+        binding.studentSection.setText(localStorage.getSectionId());
+        Subjects = new ArrayList<>();
+        try {
+            showProgressView();
+            Call<ResponseBody> call = APIClient
+                    .getInstance()
+                    .getApiInterface()
+                    .getSubjects(localStorage.getKeyUserToken());
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    try {
+                        hideProgressView();
+                        String response_data = response.body().string();
+                        saveJSONToCache(getActivity(),response_data);
+                        JSONArray jsonArray = new JSONArray(response_data);
+                        Log.d(TAG, "subject response: " + jsonArray.length());
+                        if (jsonArray.length()>0){
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONArray json_array_at_level_1 = jsonArray.getJSONArray(i);
+                                if (json_array_at_level_1.length()>0){
+                                    JSONObject classJsonObject = json_array_at_level_1.getJSONObject(0);
+
+                                    ArrayList<String> daysArraylist = new ArrayList<>();
+                                    JSONArray days = classJsonObject.getJSONArray("days");
+                                    for (int j = 0; j < days.length(); j++) {
+                                        daysArraylist.add(days.getString(j));
+                                    }
+
+                                    Subjects.add(new ClassModel(classJsonObject.getString("uniqueperiodid"),
+                                    classJsonObject.getString("teacher"),
+                                    classJsonObject.getString("uniqueteacherid"),
+                                    classJsonObject.getString("startdate"),
+                                    classJsonObject.getString("enddate"),
+                                    classJsonObject.getString("starttime"),
+                                    classJsonObject.getString("endtime"),
+                                            daysArraylist,
+                                    classJsonObject.getString("class"),
+                                    classJsonObject.getString("section"),
+                                    classJsonObject.getString("subject"),null));
+                                }
+                            }
+                        }
+                        else {
+
+                        }
+                        populateSubjectListing();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        hideProgressView();
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressView();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void populateSubjectListing() {
@@ -215,13 +283,18 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
 
     @Override
     public void onClicked(int position) {
-        ClassmaterialtypeFragment clsmtypeFragment = new ClassmaterialtypeFragment().newInstance(
-                Subjects.get(position).getId(),
-                Subjects.get(position).getSubject_title());
+
+        Intent intent = new Intent(getContext(), CallenderViewActivity.class);
+        intent.putExtra("uniqueperiodid",Subjects.get(position).getUniqueperiodid());
+        startActivity(intent);
+
+        /* ClassmaterialtypeFragment clsmtypeFragment = new ClassmaterialtypeFragment().newInstance(
+                Subjects.get(position).getUniqueperiodid(),
+                Subjects.get(position).getSubject());
 
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.frameContainer, clsmtypeFragment,
-                        Utils.Subject_mat_type_Fragment).commit();
+                        Utils.Subject_mat_type_Fragment).commit();*/
     }
 }

@@ -1,25 +1,41 @@
 package com.app.trueleap.external;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 import static com.app.trueleap.external.Constants.NO_INTERNET;
 
@@ -27,6 +43,9 @@ import static com.app.trueleap.external.Constants.NO_INTERNET;
 
 public class CommonFunctions {
     public static String NO_INTERNET = "No Internet";
+    //Cache settings
+    private static String CACHE_FILE = "classes.srl";
+    final static long MAX_FILE_AGE = 1000 * 60 * 60 * 24 * 2;
 
     public static void showSnackView(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
@@ -63,6 +82,97 @@ public class CommonFunctions {
         return response;
     }
 
+
+    public static void saveJSONToCache(Activity context, String json){
+        // Instantiate a JSON object from the request response
+        try {
+            // Save the JSONObject
+            ObjectOutput out = null;
+            out = new ObjectOutputStream(new FileOutputStream(new File(context.getCacheDir(),"")+ CACHE_FILE));
+
+            out.writeObject( json );
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static  JSONArray getJSONFromCache(Activity context){
+        // Load in an object
+        try {
+            ObjectInputStream in = null;
+            File cacheFile = new File(new File(context.getCacheDir(),"")+ CACHE_FILE);
+            in = new ObjectInputStream(new FileInputStream(cacheFile));
+            String jsonArrayRaw = (String) in.readObject();
+            in.close();
+
+            //If the cache is not outdated
+            if (cacheFile.lastModified()+ MAX_FILE_AGE > System.currentTimeMillis())
+                return new JSONArray(jsonArrayRaw);
+            else
+                return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String parse_date (String date_to_parse){
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy", Locale.ENGLISH);
+        LocalDate date = LocalDate.parse(date_to_parse, inputFormatter);
+        String formattedDate = outputFormatter.format(date);
+        return formattedDate;
+    }
+
+    public static Date getdateValue(String date_to_parse){
+    SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date date = new Date();
+        try{
+        date = DateFor.parse(date_to_parse);
+        }catch (ParseException e) {e.printStackTrace();}
+     return  date;
+    }
+
+
+
+    /*public void store_data(){
+        try {
+            // Save the JSONObject
+            ObjectOutput out = null;
+            out = new ObjectOutputStream(new FileOutputStream(new File(context.getCacheDir(),"")+ CACHE_FILE));
+            out.writeObject(productsInCart);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private retrivedata<CartProduct> retrieveCart(){
+        try {
+            // Load in an object
+            ObjectInputStream in = null;
+            File cacheFile = new File(new File(context.getCacheDir(),"")+ CACHE_FILE);
+            in = new ObjectInputStream(new FileInputStream(cacheFile));
+            ArrayList<CartProduct> productsList = (ArrayList<CartProduct>) in.readObject();
+            in.close();
+
+            return productsList;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+*/
 
     public static JSONObject loadAssetsJsonObj(String fileName, Context context) {
         String json = null;

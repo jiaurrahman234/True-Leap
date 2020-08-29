@@ -22,7 +22,6 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".classcalenderview.CallenderViewActivity"></activity>
         <activity android:name=".Assignmentmodule.AssignmentViewActivity" />
         <activity android:name=".Assignmentmodule.AssignmentActivity" />
         <activity android:name=".Classnotemodule.ClassNotesActivity" />
@@ -38,7 +37,7 @@
         <activity android:name=".base.BaseActivity">
         </activity>
         <!--<activity android:name=".classcalenderview.AsynchronousActivity"></activity>-->
-        <activity android:name=".classcalenderview.BaseActivity"></activity>
+        <activity android:name=".classcalenderview.CallenderViewActivity"></activity>
     </application>
 
 </manifest>

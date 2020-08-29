@@ -21,17 +21,12 @@ import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
 
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-
 
 public class ClassmaterialtypeFragment extends Fragment {
 
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-
     private String mParam1;
     private String mParam2;
 
@@ -40,11 +35,9 @@ public class ClassmaterialtypeFragment extends Fragment {
     Context context;
     FragmentManager fragmentManager;
 
-
     public ClassmaterialtypeFragment() {
         // Required empty public constructor
     }
-
 
     public static ClassmaterialtypeFragment newInstance(String param1, String param2) {
         ClassmaterialtypeFragment fragment = new ClassmaterialtypeFragment();
@@ -88,7 +81,6 @@ public class ClassmaterialtypeFragment extends Fragment {
                 noteintent.putExtra("subject_code", mParam1);
                 noteintent.putExtra("subject_name", mParam2);
                 startActivity(noteintent);
-
             }
         });
         binding.actionAssignment.setOnClickListener(new View.OnClickListener() {

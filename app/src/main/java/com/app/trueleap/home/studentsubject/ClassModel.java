@@ -15,9 +15,9 @@ public class ClassModel {
     String classname;
     String section;
     String subject;
-    String documents;
+    ArrayList<DocumentsModel> documentsModelArrayList;
 
-    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, String subject, String documents) {
+    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, String subject, ArrayList<DocumentsModel> documents) {
         this.uniqueperiodid = uniqueperiodid;
         this.teacher = teacher;
         this.uniqueteacherid = uniqueteacherid;
@@ -26,10 +26,10 @@ public class ClassModel {
         this.starttime = starttime;
         this.endtime = endtime;
         this.subject = subject;
-        this.documents = documents;
+        this.documentsModelArrayList = documents;
     }
 
-    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, ArrayList<String> days, String classname, String section, String subject, String documents) {
+    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, ArrayList<String> days, String classname, String section, String subject, ArrayList<DocumentsModel> documents) {
         this.uniqueperiodid = uniqueperiodid;
         this.teacher = teacher;
         this.uniqueteacherid = uniqueteacherid;
@@ -41,7 +41,7 @@ public class ClassModel {
         this.classname = classname;
         this.section = section;
         this.subject = subject;
-        this.documents = documents;
+        this.documentsModelArrayList = documents;
     }
 
     public String getUniqueperiodid() {
@@ -132,12 +132,12 @@ public class ClassModel {
         this.subject = subject;
     }
 
-    public String getDocuments() {
-        return documents;
+    public ArrayList<DocumentsModel> getDocumentsModelArrayList() {
+        return documentsModelArrayList;
     }
 
-    public void setDocuments(String documents) {
-        this.documents = documents;
+    public void setDocumentsModelArrayList(ArrayList<DocumentsModel> documentsModelArrayList) {
+        this.documentsModelArrayList = documentsModelArrayList;
     }
 }
 

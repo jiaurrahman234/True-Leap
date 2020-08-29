@@ -25,9 +25,15 @@ import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.FragmentSubjectsBinding;
 import com.app.trueleap.external.LocalStorage;
+import com.app.trueleap.external.Utils;
+import com.app.trueleap.home.ClassMaterialTypeActivity;
 import com.app.trueleap.home.studentsubject.ClassModel;
+import com.app.trueleap.home.studentsubject.ClassmaterialtypeFragment;
+import com.app.trueleap.home.studentsubject.DocumentsModel;
+import com.app.trueleap.home.studentsubject.Subject;
 import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
 import com.app.trueleap.home.studentsubject.viewModel.SubjectViewModel;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,14 +50,15 @@ import static com.app.trueleap.external.CommonFunctions.getJSONFromCache;
 import static com.app.trueleap.external.CommonFunctions.getdateValue;
 import static com.app.trueleap.external.CommonFunctions.parse_date;
 
-public  class CallenderViewActivity extends BaseActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
+public class CallenderViewActivity extends BaseActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
 
     private WeekView mWeekView;
-    Intent intent ;
+    Intent intent;
     LocalStorage localStorage;
     Context context;
     ArrayList<ClassModel> Subjects;
-    String selecteduniqueperiodid ;
+    String selecteduniqueperiodid;
+    ArrayList<ClassModel> calendarClass = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,55 +95,103 @@ public  class CallenderViewActivity extends BaseActivity implements WeekView.Eve
     private void initData() {
         Subjects = new ArrayList<>();
         intent = getIntent();
-        if(intent.getExtras()!=null){
+        if (intent.getExtras() != null) {
             selecteduniqueperiodid = intent.getStringExtra("uniqueperiodid");
         }
         JSONArray classes = getJSONFromCache(this);
         try {
             if (classes != null) {
-                int position_to_show=0;
+                int position_to_show = 0;
                 for (int i = 0; i < classes.length(); i++) {
                     JSONArray level_1 = classes.getJSONArray(i);
                     JSONObject ClassObject = level_1.getJSONObject(0);
-                    if(selecteduniqueperiodid.equals(ClassObject.getString("uniqueperiodid"))){
+                    if (selecteduniqueperiodid.equals(ClassObject.getString("uniqueperiodid"))) {
                         position_to_show = i;
                         break;
                     }
                 }
                 JSONArray subject_class = classes.getJSONArray(position_to_show);
 
-                for (int j = 0; j<subject_class.length();j++){
+                for (int j = 0; j < subject_class.length(); j++) {
                     Date curDate = new Date();
                     String startDate = subject_class.getJSONObject(j).getString("startdate");
                     Date classDate = getdateValue(startDate);
-                    if(classDate.compareTo(curDate) < 0) {
-                        Subjects.add(
-                                new ClassModel(
-                                        subject_class.getJSONObject(j).getString("uniqueperiodid"),
-                                        subject_class.getJSONObject(j).getString("teacher"),
-                                        subject_class.getJSONObject(j).getString("uniqueteacherid"),
-                                        subject_class.getJSONObject(j).getString("startdate"),
-                                        subject_class.getJSONObject(j).getString("enddate"),
-                                        subject_class.getJSONObject(j).getString("starttime"),
-                                        subject_class.getJSONObject(j).getString("endtime"),
-                                        subject_class.getJSONObject(0).getString("subject"),
-                                        null));
-                    }else{
+                    if (classDate.compareTo(curDate) < 0) {
+
+                        if (subject_class.getJSONObject(j).has("documents")){
+                            JSONArray documentArray = subject_class.getJSONObject(j).getJSONArray("documents");
+                            Log.d(TAG,"document "+documentArray.length());
+                            if (documentArray.length() > 0) {
+                                ArrayList<DocumentsModel> documentsModelArrayList = new ArrayList<>();
+                                for (int k = 0; k < documentArray.length(); k++) {
+                                    JSONObject documentObj = documentArray.getJSONObject(k);
+                                    documentsModelArrayList.add(new DocumentsModel(
+                                            documentObj.getString("id"),
+                                            documentObj.getString("filename"),
+                                            documentObj.getString("type"),
+                                            documentObj.getString("title"),
+                                            documentObj.getString("note")
+                                    ));
+                                }
+                                Subjects.add(
+                                        new ClassModel(
+                                                subject_class.getJSONObject(j).getString("uniqueperiodid"),
+                                                subject_class.getJSONObject(j).getString("teacher"),
+                                                subject_class.getJSONObject(j).getString("uniqueteacherid"),
+                                                subject_class.getJSONObject(j).getString("startdate"),
+                                                subject_class.getJSONObject(j).getString("enddate"),
+                                                subject_class.getJSONObject(j).getString("starttime"),
+                                                subject_class.getJSONObject(j).getString("endtime"),
+                                                subject_class.getJSONObject(0).getString("subject"),
+                                                documentsModelArrayList));
+
+                            } else {
+                                Subjects.add(
+                                        new ClassModel(
+                                                subject_class.getJSONObject(j).getString("uniqueperiodid"),
+                                                subject_class.getJSONObject(j).getString("teacher"),
+                                                subject_class.getJSONObject(j).getString("uniqueteacherid"),
+                                                subject_class.getJSONObject(j).getString("startdate"),
+                                                subject_class.getJSONObject(j).getString("enddate"),
+                                                subject_class.getJSONObject(j).getString("starttime"),
+                                                subject_class.getJSONObject(j).getString("endtime"),
+                                                subject_class.getJSONObject(0).getString("subject"),
+                                                null));
+                            }
+
+                        }else{
+                            Subjects.add(
+                                    new ClassModel(
+                                            subject_class.getJSONObject(j).getString("uniqueperiodid"),
+                                            subject_class.getJSONObject(j).getString("teacher"),
+                                            subject_class.getJSONObject(j).getString("uniqueteacherid"),
+                                            subject_class.getJSONObject(j).getString("startdate"),
+                                            subject_class.getJSONObject(j).getString("enddate"),
+                                            subject_class.getJSONObject(j).getString("starttime"),
+                                            subject_class.getJSONObject(j).getString("endtime"),
+                                            subject_class.getJSONObject(0).getString("subject"),
+                                            null));
+                        }
+
+
+
+
+                    } else {
                         break;
                     }
 
                 }
             }
-        }
-        catch (JSONException e){
+            String[] time = (Subjects.get(0).getStarttime().split("[:.]"));
+            mWeekView.goToHour(Integer.parseInt(time[0]));
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(getdateValue(Subjects.get(0).getStartdate()));
+            mWeekView.goToDate(calendar);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
-                    String[]  time = (Subjects.get(0).getStarttime().split("[:.]"));
-                    mWeekView.goToHour(Integer.parseInt(time[0]));
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(getdateValue(Subjects.get(0).getStartdate()));
-                    mWeekView.goToDate(calendar);
+
     }
 
     @Override
@@ -168,8 +223,7 @@ public  class CallenderViewActivity extends BaseActivity implements WeekView.Eve
                             })
                             .setNegativeButton(android.R.string.no, null);
                     AlertDialog alertDialog = builder.create();
-                    if(!((Activity) context).isFinishing())
-                    {
+                    if (!((Activity) context).isFinishing()) {
                         alertDialog.show();
                     }
 
@@ -193,10 +247,11 @@ public  class CallenderViewActivity extends BaseActivity implements WeekView.Eve
         // Populate the week view with some events.
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
-        Log.d("fvbdvd","dscsc "+Subjects.size());
-        int count =0;
-        for (int i = Subjects.size()-1; i >=0 &&count<8 ; i--) {
-            Log.d("fdvvvbdvd","dscsc "+Subjects.get(i).getStartdate());
+        Log.d("fvbdvd", "dscsc " + Subjects.size());
+        int count = 0;
+        for (int i = Subjects.size() - 1; i >= 0 && count < 8; i--) {
+            Log.d("fdvvvbdvd", "dscsc " + Subjects.get(i).getStartdate());
+            calendarClass.add(Subjects.get(i));
             Calendar cal = Calendar.getInstance();
             cal.setTime(getdateValue(Subjects.get(i).getStartdate()));
             int month = cal.get(Calendar.MONTH);
@@ -210,10 +265,10 @@ public  class CallenderViewActivity extends BaseActivity implements WeekView.Eve
 
 
             int rdsv = Integer.parseInt(end_time_value_separated[0]);
-            int sdc= Integer.parseInt(end_time_value_separated[1]);
+            int sdc = Integer.parseInt(end_time_value_separated[1]);
 
-            Log.d(TAG,"csacc"+ rdsv );
-            Log.d(TAG,"cszcczcsc"+ sdc);
+            Log.d(TAG, "csacc" + rdsv);
+            Log.d(TAG, "cszcczcsc" + sdc);
 
             Calendar startTime = Calendar.getInstance();
             startTime.set(Calendar.DAY_OF_MONTH, day);
@@ -228,12 +283,12 @@ public  class CallenderViewActivity extends BaseActivity implements WeekView.Eve
             endTime.set(Calendar.MONTH, month);
             startTime.set(Calendar.YEAR, year);
 
-           if((month==newMonth-1 )&& year ==newYear) {
-               WeekViewEvent event = new WeekViewEvent(i, getClassTitle(Subjects.get(i).getSubject(), Subjects.get(i).getStarttime(), Subjects.get(i).getEndtime()), startTime, endTime);
-               event.setColor(getResources().getColor(R.color.event_color_01));
-               events.add(event);
-           }
-               count++;
+            if ((month == newMonth - 1) && year == newYear) {
+                WeekViewEvent event = new WeekViewEvent(i, getClassTitle(Subjects.get(i).getSubject(), Subjects.get(i).getStarttime(), Subjects.get(i).getEndtime()), startTime, endTime);
+                event.setColor(getResources().getColor(R.color.event_color_01));
+                events.add(event);
+            }
+            count++;
         }
 
         return events;
@@ -259,12 +314,17 @@ public  class CallenderViewActivity extends BaseActivity implements WeekView.Eve
     }
 
     protected String getClassTitle(String name, String st, String et) {
-        return name + "("+st+" - "+et+")";
+        return name + "(" + st + " - " + et + ")";
     }
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "Clicked " + event.getId(), Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(CallenderViewActivity.this, ClassMaterialTypeActivity.class)
+                .putExtra("subject_name",event.getName())
+                .putExtra("class_id",Long.toString(event.getId()))
+                .putExtra("calendar_data", new Gson().toJson(calendarClass)));
     }
 
     @Override
@@ -274,7 +334,7 @@ public  class CallenderViewActivity extends BaseActivity implements WeekView.Eve
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
-        Toast.makeText(this, "Empty view long pressed: " , Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Empty view long pressed: ", Toast.LENGTH_SHORT).show();
     }
 
     public WeekView getWeekView() {

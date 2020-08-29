@@ -19,6 +19,7 @@ import android.view.Window;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieProperty;
@@ -49,6 +50,7 @@ public class BaseActivity extends AppCompatActivity {
     public Double longitudeFromMap = null;
     private int REQUEST_CODE_UPDATE = 1201;
     public Double latitudeFromMap = null;
+    public FragmentManager fragmentManager;
 
 
     @Override
@@ -56,6 +58,7 @@ public class BaseActivity extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             context = getApplicationContext();
+            fragmentManager = getSupportFragmentManager();
             localStorage = new LocalStorage(getApplicationContext());
             progressDialog = new ProgressDialog(BaseActivity.this);
             //NetworkCheck.isNetworkAvailable(getApplicationContext());

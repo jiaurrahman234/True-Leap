@@ -108,7 +108,8 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
                     Date classDate = getdateValue(startDate);
                     if (classDate.compareTo(curDate) < 0) {
                         ArrayList<DocumentsModel> documentsModelArrayList = new ArrayList<>();
-                        if (subject_class.getJSONObject(j).has("documents")) {
+                        ArrayList<DocumentsModel> assignmentModelArrayList = new ArrayList<>();
+                        if (subject_class.getJSONObject(j).has("documents") && subject_class.getJSONObject(j).has("assignments")) {
                             JSONArray documentArray = subject_class.getJSONObject(j).getJSONArray("documents");
                             Log.d(TAG, "document " + documentArray.length());
                             if (documentArray.length() > 0) {
@@ -134,7 +135,8 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
                                                 subject_class.getJSONObject(j).getString("starttime"),
                                                 subject_class.getJSONObject(j).getString("endtime"),
                                                 subject_class.getJSONObject(0).getString("subject"),
-                                                documentsModelArrayList));
+                                                documentsModelArrayList,
+                                                assignmentModelArrayList));
 
                             } else {
                                 Subjects.add(
@@ -147,7 +149,8 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
                                                 subject_class.getJSONObject(j).getString("starttime"),
                                                 subject_class.getJSONObject(j).getString("endtime"),
                                                 subject_class.getJSONObject(0).getString("subject"),
-                                                documentsModelArrayList));
+                                                documentsModelArrayList,
+                                                assignmentModelArrayList));
                             }
 
                         } else {
@@ -161,7 +164,8 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
                                             subject_class.getJSONObject(j).getString("starttime"),
                                             subject_class.getJSONObject(j).getString("endtime"),
                                             subject_class.getJSONObject(0).getString("subject"),
-                                            documentsModelArrayList));
+                                            documentsModelArrayList,
+                                            assignmentModelArrayList));
                         }
 
 

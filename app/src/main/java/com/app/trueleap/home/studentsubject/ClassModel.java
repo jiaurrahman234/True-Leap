@@ -20,9 +20,9 @@ public class ClassModel  implements Parcelable {
     String section;
     String subject;
     ArrayList<DocumentsModel> documentsModelArrayList;
-    ArrayList<AssignmentModel> AssignmentArrayList;
+    ArrayList<DocumentsModel> AssignmentArrayList;
 
-    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, String subject, ArrayList<DocumentsModel> documents , ArrayList<AssignmentModel> Assignments) {
+    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, String subject, ArrayList<DocumentsModel> documents , ArrayList<DocumentsModel> Assignments) {
         this.uniqueperiodid = uniqueperiodid;
         this.teacher = teacher;
         this.uniqueteacherid = uniqueteacherid;
@@ -35,7 +35,7 @@ public class ClassModel  implements Parcelable {
         this.AssignmentArrayList = Assignments;
     }
 
-    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, ArrayList<String> days, String classname, String section, String subject, ArrayList<DocumentsModel> documents,ArrayList<AssignmentModel> Assignments) {
+    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, ArrayList<String> days, String classname, String section, String subject, ArrayList<DocumentsModel> documents,ArrayList<DocumentsModel> Assignments) {
         this.uniqueperiodid = uniqueperiodid;
         this.teacher = teacher;
         this.uniqueteacherid = uniqueteacherid;

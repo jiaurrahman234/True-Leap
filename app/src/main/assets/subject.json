@@ -1,34 +1,2232 @@
-{
-  "subjects":[
+[
+  [
     {
-      "id": "5f2fef284a8d9e6f535c6b8e",
-      "subject_code": "PH01",
-      "subject_name": "Physics"
+      "uniqueperiodid": "5f423f35297ff669810f9082",
+      "teacher": "Satyajit Deka",
+      "uniqueteacherid": "5f01ce8dc10feb6bb28ff1e2",
+      "startdate": "2020-08-23T00:00:00.000Z",
+      "enddate": "2020-08-23T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "class": "GRADE V",
+      "section": "SEC A",
+      "subject": "PHYSICS"
     },
     {
-      "id": "5f2fef284a8d9g6f535c6b8e",
-      "subject_code": "PH01",
-      "subject_name": "Chemistery"
+      "uniqueperiodid": "5f423f35297ff669810f9083",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-08T00:00:00.000Z",
+      "enddate": "2020-08-08T00:00:00.000Z",
+      "starttime": "12.30",
+      "endtime": "1.30",
+      "documents": []
     },
     {
-      "id": "5f2fef284a8d9e6f435c6b8e",
-      "subject_code": "PH01",
-      "subject_name": "Mathematics"
+      "uniqueperiodid": "5f423f35297ff669810f9084",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-25T00:00:00.000Z",
+      "enddate": "2020-08-25T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": [
+        {
+          "id": "08272020055326",
+          "filename": "introduction-file-for-physics.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "Benefits of Rain",
+          "note": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        },
+        {
+          "id": "08272020055405",
+          "filename": "",
+          "type": "",
+          "title": "This is second chapter  of visit world map to calculate borders ",
+          "note": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        }
+      ]
     },
     {
-      "id": "5f2fef284a8d9e6gf535c6b8e",
-      "subject_code": "PH01",
-      "subject_name": "Biology"
+      "uniqueperiodid": "5f423f35297ff669810f9085",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-26T00:00:00.000Z",
+      "enddate": "2020-08-26T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
     },
     {
-      "id": "5f2fef284a8d9e6f535c6b8e",
-      "subject_code": "PH01",
-      "subject_name": "English"
+      "uniqueperiodid": "5f423f35297ff669810f9086",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-27T00:00:00.000Z",
+      "enddate": "2020-08-27T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": [
+        {
+          "id": "08272020055114",
+          "filename": "new-map-of-world.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "ABCD Introduction of Future",
+          "note": "What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?"
+        },
+        {
+          "id": "08272020055135",
+          "filename": "introduction-file-for-physics.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "Deep dive in space",
+          "note": "What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?"
+        }
+      ]
     },
     {
-      "id": "5f2fef284a8d9e0f5535c6b8e",
-      "subject_code": "PH01",
-      "subject_name": "MIL"
+      "uniqueperiodid": "5f423f35297ff669810f9087",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-28T00:00:00.000Z",
+      "enddate": "2020-08-28T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9088",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-31T00:00:00.000Z",
+      "enddate": "2020-08-31T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9089",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-01T00:00:00.000Z",
+      "enddate": "2020-09-01T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f908a",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-02T00:00:00.000Z",
+      "enddate": "2020-09-02T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f908b",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-03T00:00:00.000Z",
+      "enddate": "2020-09-03T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f908c",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-04T00:00:00.000Z",
+      "enddate": "2020-09-04T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f908d",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-07T00:00:00.000Z",
+      "enddate": "2020-09-07T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f908e",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-08T00:00:00.000Z",
+      "enddate": "2020-09-08T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f908f",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-09T00:00:00.000Z",
+      "enddate": "2020-09-09T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9090",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-10T00:00:00.000Z",
+      "enddate": "2020-09-10T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9091",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-11T00:00:00.000Z",
+      "enddate": "2020-09-11T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9092",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-14T00:00:00.000Z",
+      "enddate": "2020-09-14T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9093",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-15T00:00:00.000Z",
+      "enddate": "2020-09-15T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9094",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-16T00:00:00.000Z",
+      "enddate": "2020-09-16T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9095",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-17T00:00:00.000Z",
+      "enddate": "2020-09-17T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9096",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-18T00:00:00.000Z",
+      "enddate": "2020-09-18T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9097",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-21T00:00:00.000Z",
+      "enddate": "2020-09-21T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9098",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-22T00:00:00.000Z",
+      "enddate": "2020-09-22T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f9099",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-23T00:00:00.000Z",
+      "enddate": "2020-09-23T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f909a",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-24T00:00:00.000Z",
+      "enddate": "2020-09-24T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f909b",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-25T00:00:00.000Z",
+      "enddate": "2020-09-25T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f909c",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-28T00:00:00.000Z",
+      "enddate": "2020-09-28T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f909d",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-29T00:00:00.000Z",
+      "enddate": "2020-09-29T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f909e",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-30T00:00:00.000Z",
+      "enddate": "2020-09-30T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f909f",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-01T00:00:00.000Z",
+      "enddate": "2020-10-01T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a0",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-02T00:00:00.000Z",
+      "enddate": "2020-10-02T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a1",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-05T00:00:00.000Z",
+      "enddate": "2020-10-05T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a2",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-06T00:00:00.000Z",
+      "enddate": "2020-10-06T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a3",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-07T00:00:00.000Z",
+      "enddate": "2020-10-07T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a4",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-08T00:00:00.000Z",
+      "enddate": "2020-10-08T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a5",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-09T00:00:00.000Z",
+      "enddate": "2020-10-09T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a6",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-12T00:00:00.000Z",
+      "enddate": "2020-10-12T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a7",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-13T00:00:00.000Z",
+      "enddate": "2020-10-13T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a8",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-14T00:00:00.000Z",
+      "enddate": "2020-10-14T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90a9",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-15T00:00:00.000Z",
+      "enddate": "2020-10-15T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90aa",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-16T00:00:00.000Z",
+      "enddate": "2020-10-16T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90ab",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-19T00:00:00.000Z",
+      "enddate": "2020-10-19T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90ac",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-20T00:00:00.000Z",
+      "enddate": "2020-10-20T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90ad",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-21T00:00:00.000Z",
+      "enddate": "2020-10-21T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90ae",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-22T00:00:00.000Z",
+      "enddate": "2020-10-22T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90af",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-23T00:00:00.000Z",
+      "enddate": "2020-10-23T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b0",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-26T00:00:00.000Z",
+      "enddate": "2020-10-26T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b2",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-28T00:00:00.000Z",
+      "enddate": "2020-10-28T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b3",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-29T00:00:00.000Z",
+      "enddate": "2020-10-29T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b1",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-27T00:00:00.000Z",
+      "enddate": "2020-10-27T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b4",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-30T00:00:00.000Z",
+      "enddate": "2020-10-30T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b5",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-02T00:00:00.000Z",
+      "enddate": "2020-11-02T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b6",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-03T00:00:00.000Z",
+      "enddate": "2020-11-03T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b7",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-04T00:00:00.000Z",
+      "enddate": "2020-11-04T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b8",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-05T00:00:00.000Z",
+      "enddate": "2020-11-05T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90b9",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-06T00:00:00.000Z",
+      "enddate": "2020-11-06T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90ba",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-09T00:00:00.000Z",
+      "enddate": "2020-11-09T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90bb",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-10T00:00:00.000Z",
+      "enddate": "2020-11-10T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90bc",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-11T00:00:00.000Z",
+      "enddate": "2020-11-11T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90bd",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-12T00:00:00.000Z",
+      "enddate": "2020-11-12T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90be",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-13T00:00:00.000Z",
+      "enddate": "2020-11-13T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90bf",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-16T00:00:00.000Z",
+      "enddate": "2020-11-16T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c0",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-17T00:00:00.000Z",
+      "enddate": "2020-11-17T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c1",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-18T00:00:00.000Z",
+      "enddate": "2020-11-18T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c2",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-19T00:00:00.000Z",
+      "enddate": "2020-11-19T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c3",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-20T00:00:00.000Z",
+      "enddate": "2020-11-20T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c4",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-23T00:00:00.000Z",
+      "enddate": "2020-11-23T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c5",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-24T00:00:00.000Z",
+      "enddate": "2020-11-24T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c6",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-25T00:00:00.000Z",
+      "enddate": "2020-11-25T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c7",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-26T00:00:00.000Z",
+      "enddate": "2020-11-26T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c8",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-27T00:00:00.000Z",
+      "enddate": "2020-11-27T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90c9",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-30T00:00:00.000Z",
+      "enddate": "2020-11-30T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90ca",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-01T00:00:00.000Z",
+      "enddate": "2020-12-01T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90cb",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-02T00:00:00.000Z",
+      "enddate": "2020-12-02T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90cc",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-03T00:00:00.000Z",
+      "enddate": "2020-12-03T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90cd",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-04T00:00:00.000Z",
+      "enddate": "2020-12-04T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90ce",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-07T00:00:00.000Z",
+      "enddate": "2020-12-07T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90cf",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-08T00:00:00.000Z",
+      "enddate": "2020-12-08T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d0",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-09T00:00:00.000Z",
+      "enddate": "2020-12-09T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d1",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-10T00:00:00.000Z",
+      "enddate": "2020-12-10T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d2",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-11T00:00:00.000Z",
+      "enddate": "2020-12-11T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d3",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-14T00:00:00.000Z",
+      "enddate": "2020-12-14T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d4",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-15T00:00:00.000Z",
+      "enddate": "2020-12-15T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d5",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-16T00:00:00.000Z",
+      "enddate": "2020-12-16T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d6",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-17T00:00:00.000Z",
+      "enddate": "2020-12-17T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d7",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-18T00:00:00.000Z",
+      "enddate": "2020-12-18T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d8",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-21T00:00:00.000Z",
+      "enddate": "2020-12-21T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90d9",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-22T00:00:00.000Z",
+      "enddate": "2020-12-22T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90da",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-23T00:00:00.000Z",
+      "enddate": "2020-12-23T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90db",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-24T00:00:00.000Z",
+      "enddate": "2020-12-24T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90dc",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-25T00:00:00.000Z",
+      "enddate": "2020-12-25T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90dd",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-28T00:00:00.000Z",
+      "enddate": "2020-12-28T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90df",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-30T00:00:00.000Z",
+      "enddate": "2020-12-30T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90e0",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-31T00:00:00.000Z",
+      "enddate": "2020-12-31T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423f35297ff669810f90de",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-29T00:00:00.000Z",
+      "enddate": "2020-12-29T00:00:00.000Z",
+      "starttime": "11:00",
+      "endtime": "12:00",
+      "documents": []
+    }
+  ],
+  [
+    {
+      "uniqueperiodid": "5f423da38337af6980b5563b",
+      "teacher": "Satyajit Deka",
+      "uniqueteacherid": "5f01ce8dc10feb6bb28ff1e2",
+      "startdate": "2020-08-23T00:00:00.000Z",
+      "enddate": "2020-08-23T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "class": "GRADE V",
+      "section": "SEC A",
+      "subject": "MATHEMATICS"
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5563c",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-24T00:00:00.000Z",
+      "enddate": "2020-08-24T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": [
+        {
+          "id": "08232020103413",
+          "filename": "test.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "first title",
+          "note": "first note"
+        }
+      ]
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5563d",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-25T00:00:00.000Z",
+      "enddate": "2020-08-25T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": [
+        {
+          "id": "08272020054531",
+          "filename": "introduction-file-for-physics.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "Introduction to ABCD",
+          "note": "What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer too"
+        },
+        {
+          "id": "08272020054609",
+          "filename": "new-map-of-world.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "Best class ever",
+          "note": "What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer too"
+        }
+      ]
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5563e",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-26T00:00:00.000Z",
+      "enddate": "2020-08-26T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": [
+        {
+          "id": "08282020010615",
+          "filename": "introduction-file-for-physics.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "test note test note test note",
+          "note": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        },
+        {
+          "id": "08282020010709",
+          "filename": "new-map-of-world.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "rest with physics",
+          "note": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        }
+      ]
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5563f",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-27T00:00:00.000Z",
+      "enddate": "2020-08-27T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": [
+        {
+          "id": "08282020010851",
+          "filename": "new-map-of-world.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "What is Lorem Ipsum?",
+          "note": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        },
+        {
+          "id": "08282020011032",
+          "filename": "introduction-file-for-physics.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "Where can I get some?",
+          "note": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet."
+        }
+      ]
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55640",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-28T00:00:00.000Z",
+      "enddate": "2020-08-28T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": [
+        {
+          "id": "08272020053157",
+          "filename": "test.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "Introduction to Physics",
+          "note": "What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer too"
+        },
+        {
+          "id": "08272020053433",
+          "filename": "test.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "Introduction to English",
+          "note": "What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer too"
+        },
+        {
+          "id": "08272020053621",
+          "filename": "",
+          "type": "",
+          "title": "Introduction note",
+          "note": "This note is demo note without file upload. Testing"
+        },
+        {
+          "id": "08272020055537",
+          "filename": "introduction-file-for-physics.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "This is big note to test for big text for the big purpose to achieve big star",
+          "note": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32."
+        }
+      ]
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55641",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-29T00:00:00.000Z",
+      "enddate": "2020-08-29T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55642",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-08-31T00:00:00.000Z",
+      "enddate": "2020-08-31T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55643",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-01T00:00:00.000Z",
+      "enddate": "2020-09-01T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55644",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-02T00:00:00.000Z",
+      "enddate": "2020-09-02T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": [
+        {
+          "id": "08282020011135",
+          "filename": "introduction-file-for-physics.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "Where does it come from?",
+          "note": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet."
+        },
+        {
+          "id": "08282020011200",
+          "filename": "new-map-of-world.pptx",
+          "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          "title": "What is Lorem Ipsum?",
+          "note": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        }
+      ]
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55645",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-03T00:00:00.000Z",
+      "enddate": "2020-09-03T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55646",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-04T00:00:00.000Z",
+      "enddate": "2020-09-04T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55647",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-05T00:00:00.000Z",
+      "enddate": "2020-09-05T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55648",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-07T00:00:00.000Z",
+      "enddate": "2020-09-07T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55649",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-08T00:00:00.000Z",
+      "enddate": "2020-09-08T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5564a",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-09T00:00:00.000Z",
+      "enddate": "2020-09-09T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5564b",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-10T00:00:00.000Z",
+      "enddate": "2020-09-10T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5564c",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-11T00:00:00.000Z",
+      "enddate": "2020-09-11T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5564d",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-12T00:00:00.000Z",
+      "enddate": "2020-09-12T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5564e",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-14T00:00:00.000Z",
+      "enddate": "2020-09-14T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5564f",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-15T00:00:00.000Z",
+      "enddate": "2020-09-15T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55650",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-16T00:00:00.000Z",
+      "enddate": "2020-09-16T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55651",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-17T00:00:00.000Z",
+      "enddate": "2020-09-17T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55652",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-18T00:00:00.000Z",
+      "enddate": "2020-09-18T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55653",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-19T00:00:00.000Z",
+      "enddate": "2020-09-19T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55654",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-21T00:00:00.000Z",
+      "enddate": "2020-09-21T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55658",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-25T00:00:00.000Z",
+      "enddate": "2020-09-25T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55659",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-26T00:00:00.000Z",
+      "enddate": "2020-09-26T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5565a",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-28T00:00:00.000Z",
+      "enddate": "2020-09-28T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55657",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-24T00:00:00.000Z",
+      "enddate": "2020-09-24T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55656",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-23T00:00:00.000Z",
+      "enddate": "2020-09-23T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5565b",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-29T00:00:00.000Z",
+      "enddate": "2020-09-29T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55655",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-22T00:00:00.000Z",
+      "enddate": "2020-09-22T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5565c",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-09-30T00:00:00.000Z",
+      "enddate": "2020-09-30T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5565d",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-01T00:00:00.000Z",
+      "enddate": "2020-10-01T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5565e",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-02T00:00:00.000Z",
+      "enddate": "2020-10-02T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5565f",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-03T00:00:00.000Z",
+      "enddate": "2020-10-03T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55660",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-05T00:00:00.000Z",
+      "enddate": "2020-10-05T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55661",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-06T00:00:00.000Z",
+      "enddate": "2020-10-06T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55662",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-07T00:00:00.000Z",
+      "enddate": "2020-10-07T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55663",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-08T00:00:00.000Z",
+      "enddate": "2020-10-08T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55664",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-09T00:00:00.000Z",
+      "enddate": "2020-10-09T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55665",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-10T00:00:00.000Z",
+      "enddate": "2020-10-10T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55666",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-12T00:00:00.000Z",
+      "enddate": "2020-10-12T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55669",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-15T00:00:00.000Z",
+      "enddate": "2020-10-15T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5566a",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-16T00:00:00.000Z",
+      "enddate": "2020-10-16T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55668",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-14T00:00:00.000Z",
+      "enddate": "2020-10-14T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55667",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-13T00:00:00.000Z",
+      "enddate": "2020-10-13T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5566b",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-17T00:00:00.000Z",
+      "enddate": "2020-10-17T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5566c",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-19T00:00:00.000Z",
+      "enddate": "2020-10-19T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5566d",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-20T00:00:00.000Z",
+      "enddate": "2020-10-20T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5566e",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-21T00:00:00.000Z",
+      "enddate": "2020-10-21T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5566f",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-22T00:00:00.000Z",
+      "enddate": "2020-10-22T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55670",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-23T00:00:00.000Z",
+      "enddate": "2020-10-23T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55671",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-24T00:00:00.000Z",
+      "enddate": "2020-10-24T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55672",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-26T00:00:00.000Z",
+      "enddate": "2020-10-26T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55673",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-27T00:00:00.000Z",
+      "enddate": "2020-10-27T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55674",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-28T00:00:00.000Z",
+      "enddate": "2020-10-28T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55675",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-29T00:00:00.000Z",
+      "enddate": "2020-10-29T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55676",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-30T00:00:00.000Z",
+      "enddate": "2020-10-30T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55677",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-10-31T00:00:00.000Z",
+      "enddate": "2020-10-31T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55678",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-02T00:00:00.000Z",
+      "enddate": "2020-11-02T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55679",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-03T00:00:00.000Z",
+      "enddate": "2020-11-03T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5567a",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-04T00:00:00.000Z",
+      "enddate": "2020-11-04T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5567b",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-05T00:00:00.000Z",
+      "enddate": "2020-11-05T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5567c",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-06T00:00:00.000Z",
+      "enddate": "2020-11-06T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5567d",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-07T00:00:00.000Z",
+      "enddate": "2020-11-07T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5567e",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-09T00:00:00.000Z",
+      "enddate": "2020-11-09T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5567f",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-10T00:00:00.000Z",
+      "enddate": "2020-11-10T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55680",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-11T00:00:00.000Z",
+      "enddate": "2020-11-11T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55681",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-12T00:00:00.000Z",
+      "enddate": "2020-11-12T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55682",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-13T00:00:00.000Z",
+      "enddate": "2020-11-13T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55683",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-14T00:00:00.000Z",
+      "enddate": "2020-11-14T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55684",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-16T00:00:00.000Z",
+      "enddate": "2020-11-16T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55685",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-17T00:00:00.000Z",
+      "enddate": "2020-11-17T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55686",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-18T00:00:00.000Z",
+      "enddate": "2020-11-18T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55687",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-19T00:00:00.000Z",
+      "enddate": "2020-11-19T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55688",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-20T00:00:00.000Z",
+      "enddate": "2020-11-20T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55689",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-21T00:00:00.000Z",
+      "enddate": "2020-11-21T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5568a",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-23T00:00:00.000Z",
+      "enddate": "2020-11-23T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5568b",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-24T00:00:00.000Z",
+      "enddate": "2020-11-24T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5568c",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-25T00:00:00.000Z",
+      "enddate": "2020-11-25T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5568d",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-26T00:00:00.000Z",
+      "enddate": "2020-11-26T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5568e",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-27T00:00:00.000Z",
+      "enddate": "2020-11-27T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5568f",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-28T00:00:00.000Z",
+      "enddate": "2020-11-28T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55690",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-11-30T00:00:00.000Z",
+      "enddate": "2020-11-30T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55691",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-01T00:00:00.000Z",
+      "enddate": "2020-12-01T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55692",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-02T00:00:00.000Z",
+      "enddate": "2020-12-02T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55693",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-03T00:00:00.000Z",
+      "enddate": "2020-12-03T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55694",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-04T00:00:00.000Z",
+      "enddate": "2020-12-04T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55695",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-05T00:00:00.000Z",
+      "enddate": "2020-12-05T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55696",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-07T00:00:00.000Z",
+      "enddate": "2020-12-07T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55697",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-08T00:00:00.000Z",
+      "enddate": "2020-12-08T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55698",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-09T00:00:00.000Z",
+      "enddate": "2020-12-09T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b55699",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-10T00:00:00.000Z",
+      "enddate": "2020-12-10T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5569a",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-11T00:00:00.000Z",
+      "enddate": "2020-12-11T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5569b",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-12T00:00:00.000Z",
+      "enddate": "2020-12-12T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5569c",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-14T00:00:00.000Z",
+      "enddate": "2020-12-14T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5569d",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-15T00:00:00.000Z",
+      "enddate": "2020-12-15T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5569e",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-16T00:00:00.000Z",
+      "enddate": "2020-12-16T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a1",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-19T00:00:00.000Z",
+      "enddate": "2020-12-19T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a0",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-18T00:00:00.000Z",
+      "enddate": "2020-12-18T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b5569f",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-17T00:00:00.000Z",
+      "enddate": "2020-12-17T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a2",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-21T00:00:00.000Z",
+      "enddate": "2020-12-21T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a3",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-22T00:00:00.000Z",
+      "enddate": "2020-12-22T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a4",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-23T00:00:00.000Z",
+      "enddate": "2020-12-23T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a5",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-24T00:00:00.000Z",
+      "enddate": "2020-12-24T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a6",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-25T00:00:00.000Z",
+      "enddate": "2020-12-25T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a7",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-26T00:00:00.000Z",
+      "enddate": "2020-12-26T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a8",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-28T00:00:00.000Z",
+      "enddate": "2020-12-28T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556a9",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-29T00:00:00.000Z",
+      "enddate": "2020-12-29T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556ab",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-31T00:00:00.000Z",
+      "enddate": "2020-12-31T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
+    },
+    {
+      "uniqueperiodid": "5f423da38337af6980b556aa",
+      "teacher": "",
+      "uniqueteacherid": "",
+      "startdate": "2020-12-30T00:00:00.000Z",
+      "enddate": "2020-12-30T00:00:00.000Z",
+      "starttime": "09:30",
+      "endtime": "10:00",
+      "documents": []
     }
   ]
-}
+]

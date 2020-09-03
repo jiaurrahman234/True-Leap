@@ -37,10 +37,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 
-import static com.app.trueleap.external.Constants.NO_INTERNET;
-
-
-
 public class CommonFunctions {
     public static String NO_INTERNET = "No Internet";
     //Cache settings
@@ -49,14 +45,6 @@ public class CommonFunctions {
 
     public static void showSnackView(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    public static void loadAnimation(View view) {
-        YoYo.with(Techniques.ZoomIn)
-                .duration(400)
-                .repeat(0)
-                .playOn(view);
-        //view.animation = AnimationUtils.loadAnimation(view.context, R.anim.popup_show)
     }
 
     public static String getResponseData(int code, Context context) {
@@ -122,14 +110,29 @@ public class CommonFunctions {
 
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static String parse_date (String date_to_parse){
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy", Locale.ENGLISH);
+
+        String datepattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        String display_datepattern = "dd-MM-yyyy 'at' HH:mm";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(datepattern);
+        SimpleDateFormat display_dateFormat = new SimpleDateFormat(display_datepattern);
+
+        String formatted_date="";
+        try {
+            Date inputdateFormat = dateFormat.parse(date_to_parse);
+            formatted_date = display_dateFormat.format(inputdateFormat);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+     /*   DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy 'at' HH:mm", Locale.ENGLISH);
+
         LocalDate date = LocalDate.parse(date_to_parse, inputFormatter);
-        String formattedDate = outputFormatter.format(date);
-        return formattedDate;
+        String formattedDate = outputFormatter.format(date);*/
+
+        return formatted_date;
     }
 
     public static Date getdateValue(String date_to_parse){
@@ -194,8 +197,39 @@ public class CommonFunctions {
             }
         }
         return array;
-
     }
+
+    public static JSONArray loadAssetsJsonArray(String fileName, Context context) {
+        String json = null;
+        JSONArray array = null;
+        try {
+            InputStream is = context.getAssets().open(fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                array = new JSONArray(json);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return array;
+    }
+
+
+
+        public static void loadAnimation(View view) {
+        YoYo.with(Techniques.ZoomIn)
+                .duration(400)
+                .repeat(0)
+                .playOn(view);
+    }
+
 
     public static boolean isInternetOn(Context mContext) {
         ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);

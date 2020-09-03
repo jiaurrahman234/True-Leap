@@ -4,22 +4,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ClassnoteModel implements Parcelable {
+
     String id;
     String note_title;
     String note_text;
     String uploaded_date;
     String note_doc_file;
     String doc_type;
-    String doc_path;
 
-    public ClassnoteModel(String id, String note_title, String note_text, String uploaded_date, String note_doc_file, String doc_type, String doc_path) {
+    public ClassnoteModel(String id, String note_title, String note_text, String uploaded_date, String note_doc_file, String doc_type) {
         this.id = id;
         this.note_title = note_title;
         this.note_text = note_text;
         this.uploaded_date = uploaded_date;
         this.note_doc_file = note_doc_file;
         this.doc_type = doc_type;
-        this.doc_path = doc_path;
     }
 
     protected ClassnoteModel(Parcel in) {
@@ -29,7 +28,6 @@ public class ClassnoteModel implements Parcelable {
         uploaded_date = in.readString();
         note_doc_file = in.readString();
         doc_type = in.readString();
-        doc_path = in.readString();
     }
 
     public static final Creator<ClassnoteModel> CREATOR = new Creator<ClassnoteModel>() {
@@ -92,13 +90,7 @@ public class ClassnoteModel implements Parcelable {
         this.doc_type = doc_type;
     }
 
-    public String getDoc_path() {
-        return doc_path;
-    }
 
-    public void setDoc_path(String doc_path) {
-        this.doc_path = doc_path;
-    }
 
     @Override
     public int describeContents() {
@@ -113,6 +105,5 @@ public class ClassnoteModel implements Parcelable {
         dest.writeString(uploaded_date);
         dest.writeString(note_doc_file);
         dest.writeString(doc_type);
-        dest.writeString(doc_path);
     }
 }

@@ -138,17 +138,6 @@ public class BaseActivity extends AppCompatActivity {
 
 
 
-/*    public void initToolbar(String title) {
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
-
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator();
-    }*/
-
-
     public void alertTheme(AlertDialog alertDialog) {
         Button positiveBtn = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
         positiveBtn.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -198,4 +187,6 @@ public class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    
 }

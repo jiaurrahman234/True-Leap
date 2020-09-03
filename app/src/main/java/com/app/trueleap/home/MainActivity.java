@@ -1,9 +1,9 @@
 package com.app.trueleap.home;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
@@ -20,14 +20,15 @@ import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityMainBinding;
+import com.app.trueleap.dialogFragment.LanguageDialogFragment;
 import com.app.trueleap.external.Utils;
 import com.app.trueleap.home.studentsubject.HomeSubjectsFragment;
-/*import com.app.trueleap.settings.SettingsActivity;*/
 
 public class MainActivity extends BaseActivity {
 
     ActivityMainBinding binding;
     Context context;
+    TextView toolbar_tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initToolbar() {
-        TextView toolbar_tv;
         Toolbar toolbar;
         toolbar_tv = (TextView) findViewById(R.id.toolbar_tv);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,10 +61,12 @@ public class MainActivity extends BaseActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_change_lang:
+                showLanguageDialog();
                 return true;
             case R.id.action_logout:
                 try {
@@ -107,4 +109,14 @@ public class MainActivity extends BaseActivity {
         exitApp();
     }
 
+    private void showLanguageDialog(){
+        Fragment LanguageDialogFragment = getSupportFragmentManager().findFragmentByTag("language_dialog");
+        DialogFragment LanguageDialog = (DialogFragment) LanguageDialogFragment;
+        if (LanguageDialog == null) {
+            LanguageDialogFragment languageDialog = new LanguageDialogFragment();
+            FragmentManager transaction = getSupportFragmentManager();
+            languageDialog.setCancelable(false);
+            languageDialog.show(transaction, "language_dialog");
+        }
+    }
 }

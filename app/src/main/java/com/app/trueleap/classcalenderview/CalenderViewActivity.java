@@ -13,9 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
@@ -23,17 +20,10 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
-import com.app.trueleap.databinding.FragmentSubjectsBinding;
-import com.app.trueleap.external.LocalStorage;
-import com.app.trueleap.external.Utils;
 import com.app.trueleap.home.ClassMaterialTypeActivity;
 import com.app.trueleap.home.studentsubject.CalendarModel;
 import com.app.trueleap.home.studentsubject.ClassModel;
-import com.app.trueleap.home.studentsubject.ClassmaterialtypeFragment;
 import com.app.trueleap.home.studentsubject.DocumentsModel;
-import com.app.trueleap.home.studentsubject.Subject;
-import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
-import com.app.trueleap.home.studentsubject.viewModel.SubjectViewModel;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -44,15 +34,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import static com.app.trueleap.external.CommonFunctions.getJSONFromCache;
 import static com.app.trueleap.external.CommonFunctions.getdateValue;
-import static com.app.trueleap.external.CommonFunctions.parse_date;
 
-public class CallenderViewActivity extends BaseActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
+public class CalenderViewActivity extends BaseActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
 
     private WeekView mWeekView;
     Intent intent;
@@ -336,18 +324,19 @@ public class CallenderViewActivity extends BaseActivity implements WeekView.Even
             Gson gson = new Gson();
             String classData = gson.toJson(classModelArrayList);
             localStorage.setClass(classData);
-            startActivity(new Intent(CallenderViewActivity.this, ClassMaterialTypeActivity.class)
+            startActivity(new Intent(CalenderViewActivity.this, ClassMaterialTypeActivity.class)
                     .putExtra("subject_name", event.getName())
                     .putExtra("class_id", Long.toString(event.getId()))
                     .putExtra("calendar_data", calendarModelArrayList));
+
             /*for (int i=0;i<classModelArrayList.size();i++){
                 ClassModel classModel = classModelArrayList.get(i);
                 Log.d(TAG,"jhljgj: "+classModel.getStartdate());
                 if (!classModel.getDocumentsModelArrayList().isEmpty()){
                     Log.d(TAG,"xcxcx: "+classModel.getDocumentsModelArrayList().size());
                 }
-
             }*/
+
         } catch (Exception e) {
             e.printStackTrace();
         }

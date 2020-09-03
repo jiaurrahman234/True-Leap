@@ -39,7 +39,8 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
     ArrayList<ClassModel> classModelArrayList;
     ArrayList<ClassnoteModel> class_notes;
     classnote_adapter note_adpater;
-
+    TextView toolbar_tv;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,10 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
             class_notes = (ArrayList<ClassnoteModel>) intent.getExtras().getSerializable("class_note");
         }
         initData();
-/*
+        /*
         ClassnotesFragmentListing fragmentListing = new ClassnotesFragmentListing().newInstance(subject_code, subject_name);
-        loadFragment(fragmentListing);*/
+        loadFragment(fragmentListing);
+        */
     }
 
     private void initData() {
@@ -66,25 +68,14 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
             binding.sujectName.setText(subject_name +" Class Notes");
-            /*class_notes = new ArrayList<>();
-            for(int i = 0 ; i< classModelArrayList.size(); i++){
-                class_notes.add(new ClassnoteModel(
-                        classModelArrayList.get(i).getUniqueperiodid(),
-                        classModelArrayList.get(i).getClassname(),
-                        classModelArrayList.get(i).getClassname(),
-                        classModelArrayList.get(i).getClassname(),
-                        classModelArrayList.get(i).getClassname(),
-                        classModelArrayList.get(i).getClassname(),
-                        classModelArrayList.get(i).getClassname()));
-            }*/
-            populateCategories();
+            populatenotes();
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    private void populateCategories() {
+    private void populatenotes() {
         note_adpater  = new classnote_adapter(context,class_notes,this);
         LinearLayoutManager llayoutmanager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         binding.rvClassNote.setLayoutManager(llayoutmanager);
@@ -93,24 +84,14 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
     }
 
     private void initToolbar() {
-        TextView toolbar_tv;
-        Toolbar toolbar;
         toolbar_tv = (TextView) findViewById(R.id.toolbar_tv);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-   /* private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(binding.frameContainer.getId(), fragment, Utils.Classnotes_fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }*/
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -151,6 +132,10 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
 
     @Override
     public void onClicked(int position) {
+
+        Intent intent = new Intent(ClassNotesActivity.this, ViewClassNoteActivity.class);
+        intent.putExtra("class_note",class_notes.get(position));
+        startActivity(intent);
 
     }
 }

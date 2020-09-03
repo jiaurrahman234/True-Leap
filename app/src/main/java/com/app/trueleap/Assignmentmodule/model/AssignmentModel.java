@@ -1,13 +1,15 @@
 package com.app.trueleap.Assignmentmodule.model;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class AssignmentModel {
+public class AssignmentModel implements  Parcelable{
     String id;
     String note_title;
     String note_text;
     String uploaded_date;
     String note_doc_file;
     String doc_type;
-    String doc_path;
+
 
     public AssignmentModel(String id, String note_title, String note_text, String uploaded_date, String note_doc_file, String doc_type, String doc_path) {
         this.id = id;
@@ -16,8 +18,28 @@ public class AssignmentModel {
         this.uploaded_date = uploaded_date;
         this.note_doc_file = note_doc_file;
         this.doc_type = doc_type;
-        this.doc_path = doc_path;
     }
+
+    protected AssignmentModel(Parcel in) {
+        id = in.readString();
+        note_title = in.readString();
+        note_text = in.readString();
+        uploaded_date = in.readString();
+        note_doc_file = in.readString();
+        doc_type = in.readString();
+    }
+
+        public static final Parcelable.Creator<AssignmentModel> CREATOR = new Parcelable.Creator<AssignmentModel>() {
+        @Override
+        public AssignmentModel createFromParcel(Parcel in) {
+            return new AssignmentModel(in);
+        }
+
+        @Override
+        public AssignmentModel[] newArray(int size) {
+            return new AssignmentModel[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -67,11 +89,20 @@ public class AssignmentModel {
         this.doc_type = doc_type;
     }
 
-    public String getDoc_path() {
-        return doc_path;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setDoc_path(String doc_path) {
-        this.doc_path = doc_path;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(note_title);
+        dest.writeString(note_text);
+        dest.writeString(uploaded_date);
+        dest.writeString(note_doc_file);
+        dest.writeString(doc_type);
     }
+
 }

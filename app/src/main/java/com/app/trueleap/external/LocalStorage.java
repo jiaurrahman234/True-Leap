@@ -17,12 +17,6 @@ public class LocalStorage {
     public static final String USER_PREFERENCES = "user_preferences";
     public static final String USER_NAME = "user_name";
     public static final String USER_EMAIL = "user_email";
-    public static final String SLIDER_IMAGE = "slider_image";
-    public static final String ADVERTISE_IMAGE = "advertise_image";
-    public static final String CATEGORY = "category";
-    public static final String FAVORITE_CATEGORY = "fav_category";
-    public static final String KEY_SELECTED_CITY = "user_city";
-    public static final String KEY_SELECTED_CITY_ID = "user_city_id";
     public static final String PREF_LOCATION = "location_data";
     public static final String PREF_LATITUDE = "location_data_latitude";
     public static final String PREF_LONGITUDE = "location_data_longitude";

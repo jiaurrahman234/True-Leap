@@ -79,6 +79,7 @@ dependencies {
 
     // Calender
     implementation 'com.github.alamkanak:android-week-view:1.2.6';
+    implementation 'com.github.kizitonwose:CalendarView:0.4.3';
 
 
 }

@@ -3,7 +3,7 @@ package com.app.trueleap.home.studentsubject;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
+import com.app.trueleap.Assignmentmodule.AssignmentModel;
 import java.util.ArrayList;
 
 public class ClassModel  implements Parcelable {
@@ -20,8 +20,9 @@ public class ClassModel  implements Parcelable {
     String section;
     String subject;
     ArrayList<DocumentsModel> documentsModelArrayList;
+    ArrayList<AssignmentModel> AssignmentArrayList;
 
-    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, String subject, ArrayList<DocumentsModel> documents) {
+    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, String subject, ArrayList<DocumentsModel> documents , ArrayList<AssignmentModel> Assignments) {
         this.uniqueperiodid = uniqueperiodid;
         this.teacher = teacher;
         this.uniqueteacherid = uniqueteacherid;
@@ -31,9 +32,10 @@ public class ClassModel  implements Parcelable {
         this.endtime = endtime;
         this.subject = subject;
         this.documentsModelArrayList = documents;
+        this.AssignmentArrayList = Assignments;
     }
 
-    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, ArrayList<String> days, String classname, String section, String subject, ArrayList<DocumentsModel> documents) {
+    public ClassModel(String uniqueperiodid, String teacher, String uniqueteacherid, String startdate, String enddate, String starttime, String endtime, ArrayList<String> days, String classname, String section, String subject, ArrayList<DocumentsModel> documents,ArrayList<AssignmentModel> Assignments) {
         this.uniqueperiodid = uniqueperiodid;
         this.teacher = teacher;
         this.uniqueteacherid = uniqueteacherid;
@@ -46,6 +48,7 @@ public class ClassModel  implements Parcelable {
         this.section = section;
         this.subject = subject;
         this.documentsModelArrayList = documents;
+        this.AssignmentArrayList = Assignments;
     }
 
     protected ClassModel(Parcel in) {
@@ -189,6 +192,7 @@ public class ClassModel  implements Parcelable {
         dest.writeString(section);
         dest.writeString(subject);
         dest.writeArray(new ArrayList[]{documentsModelArrayList});
+        dest.writeArray(new ArrayList[]{AssignmentArrayList});
     }
 }
 

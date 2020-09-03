@@ -82,7 +82,6 @@ public class ClassnotesFragmentListing extends Fragment implements noteClickList
     }
 
     private void initdata() {
-
         binding.studentClass.setText(localStorage.getClassId());
         binding.studentSection.setText(localStorage.getSectionId());
         binding.sujectName.setText(mParam2 +" Class Notes");
@@ -98,8 +97,7 @@ public class ClassnotesFragmentListing extends Fragment implements noteClickList
                         notesArray.getJSONObject(i).getString("note_text"),
                         notesArray.getJSONObject(i).getString("uploaded_date"),
                         notesArray.getJSONObject(i).getString("note_doc_file"),
-                        notesArray.getJSONObject(i).getString("doc_type"),
-                        notesArray.getJSONObject(i).getString("doc_path")));
+                        notesArray.getJSONObject(i).getString("doc_type")));
             }
         } catch (Exception e){
             e.printStackTrace();

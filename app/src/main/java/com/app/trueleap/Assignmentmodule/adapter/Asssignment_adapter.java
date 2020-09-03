@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.trueleap.Assignmentmodule.interfaces.assignmentClickListener;
 import com.app.trueleap.Assignmentmodule.model.AssignmentModel;
 import com.app.trueleap.R;
-
 import java.util.ArrayList;
 
 public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapter.ViewHolder> {

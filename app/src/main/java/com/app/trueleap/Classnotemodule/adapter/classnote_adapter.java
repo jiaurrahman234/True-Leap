@@ -1,6 +1,7 @@
 package com.app.trueleap.Classnotemodule.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.trueleap.Classnotemodule.interfaces.noteClickListener;
@@ -17,7 +19,10 @@ import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import java.util.ArrayList;
 
+import static com.app.trueleap.external.CommonFunctions.parse_date;
+
 public class classnote_adapter extends RecyclerView.Adapter<classnote_adapter.ViewHolder> {
+
     ArrayList<ClassnoteModel> mValues;
     Context mContext;
     protected noteClickListener mListener;
@@ -50,7 +55,7 @@ public class classnote_adapter extends RecyclerView.Adapter<classnote_adapter.Vi
             this.item = item;
             note_title.setText(item.getNote_title());
             note_text.setText(item.getNote_text());
-            note_date.setText(item.getUploaded_date());
+            note_date.setText(parse_date(item.getUploaded_date()));
         }
         @Override
         public void onClick(View view) {

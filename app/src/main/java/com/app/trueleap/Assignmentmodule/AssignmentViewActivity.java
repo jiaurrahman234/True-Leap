@@ -107,7 +107,6 @@ public class AssignmentViewActivity extends BaseActivity {
                 performFileSearch();
             }
         });
-
     }
 
     private void PickImage() {

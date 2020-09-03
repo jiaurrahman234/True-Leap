@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
@@ -15,18 +14,14 @@ import com.app.trueleap.Classnotemodule.ClassNotesActivity;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
-import com.app.trueleap.base.BaseFragment;
-import com.app.trueleap.classcalenderview.CallenderViewActivity;
 import com.app.trueleap.databinding.FragmentClassmaterialtypeBinding;
 import com.app.trueleap.home.studentsubject.CalendarModel;
 import com.app.trueleap.home.studentsubject.ClassModel;
 import com.app.trueleap.home.studentsubject.DocumentsModel;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ClassMaterialTypeActivity extends BaseActivity {
     FragmentClassmaterialtypeBinding binding;
@@ -41,7 +36,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
         initToolbar();
         initdata();
         initListeners();
-
     }
 
     private void initToolbar() {
@@ -81,7 +75,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                     documentsModel.getNote(),
                                                     classModel.getStartdate(),
                                                     documentsModel.getFilename(),
-                                                    documentsModel.getType(),
                                                     documentsModel.getType()));
                                         }
 

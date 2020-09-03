@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.app.trueleap.R;
+import com.app.trueleap.base.BaseActivity;
 
-public class MessagingFragment extends AppCompatActivity {
+public class MessagingFragment extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

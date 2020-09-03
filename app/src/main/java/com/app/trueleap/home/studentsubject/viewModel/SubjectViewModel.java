@@ -15,7 +15,7 @@ public class SubjectViewModel extends BaseViewModel {
 
     public void subjectData(String token) {
         if (apiInterface == null) getApiImplementation();
-        Single<Subject> dataObserve = apiInterface.getSubjectsData(token);
+        Single<Subject> dataObserve = apiInterface.getSubjectsData(token,true);
         dataObserve.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Subject>() {

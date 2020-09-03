@@ -7,9 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.base.BaseViewModel;
 import com.app.trueleap.model.ErrorResponse;
-
 import java.lang.annotation.Annotation;
-
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,13 +32,11 @@ public class AuthViewModel extends BaseViewModel {
                     public void onSubscribe(Disposable d) {
 
                     }
-
                     @Override
                     public void onSuccess(LoginModel loginModel) {
                         userData.setValue(loginModel);
                         isApiSuccess.setValue(true);
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         try{
@@ -55,5 +51,5 @@ public class AuthViewModel extends BaseViewModel {
                         }
                     }
                 });
-    }
+        }
 }

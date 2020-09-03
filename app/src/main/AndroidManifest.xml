@@ -22,6 +22,7 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Classnotemodule.ViewClassNoteActivity"></activity>
         <activity android:name=".Assignmentmodule.AssignmentViewActivity" />
         <activity android:name=".Assignmentmodule.AssignmentActivity" />
         <activity android:name=".Classnotemodule.ClassNotesActivity" />
@@ -29,15 +30,15 @@
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".auth.LoginActivity" />
         <activity android:name=".home.MainActivity" />
-        <activity android:name=".base.BaseActivity"/>
-        <activity android:name=".home.ClassMaterialTypeActivity"/>
-        <!--<activity android:name=".classcalenderview.AsynchronousActivity"></activity>-->
-        <activity android:name=".classcalenderview.CallenderViewActivity"></activity>
+        <activity android:name=".base.BaseActivity" />
+        <activity android:name=".home.ClassMaterialTypeActivity" /> <!-- <activity android:name=".classcalenderview.AsynchronousActivity"></activity> -->
+        <activity android:name=".classcalenderview.CalenderViewActivity" />
     </application>
 
 </manifest>

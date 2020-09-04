@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
@@ -22,6 +23,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import static com.app.trueleap.external.CommonFunctions.parse_date;
 
 public class ClassMaterialTypeActivity extends BaseActivity {
     FragmentClassmaterialtypeBinding binding;
@@ -77,7 +80,13 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                     documentsModel.getFilename(),
                                                     documentsModel.getType()));
                                         }
+                                        startActivity(new Intent(ClassMaterialTypeActivity.this, ClassNotesActivity.class)
+                                                .putExtra("subject_code", sujectName)
+                                                .putExtra("subject_name", sujectName)
+                                                .putExtra("class_note", classnoteModelArrayList));
 
+                                    }else{
+                                        Toast.makeText(context,"Class notes not found!",Toast.LENGTH_SHORT).show();
                                     }
                                     break;
                                 }
@@ -85,12 +94,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                             break;
                         }
                     }
-
-
-                    startActivity(new Intent(ClassMaterialTypeActivity.this, ClassNotesActivity.class)
-                            .putExtra("subject_code", sujectName)
-                            .putExtra("subject_name", sujectName)
-                            .putExtra("class_note", classnoteModelArrayList));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -167,6 +170,20 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                 classModelArrayList = gson.fromJson(jsonClass, type);
 
             }
+
+            for (int i = 0; i < calendarModelArrayList.size(); i++) {
+                if (Integer.parseInt(classId) == calendarModelArrayList.get(i).getId()) {
+                    for (int j = 0; j < classModelArrayList.size(); j++) {
+                        ClassModel classModel = classModelArrayList.get(j);
+                        if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {
+                            binding.classDate.setText(parse_date(classModel.getStartdate()));
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
 

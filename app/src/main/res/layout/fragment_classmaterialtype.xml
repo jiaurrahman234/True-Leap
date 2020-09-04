@@ -15,7 +15,17 @@
         android:layout_height="wrap_content">
         <include
             layout="@layout/appbar_layout"/>
-
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/classDate"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textStyle="bold"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/textsize_m" />
         <LinearLayout
             android:layout_marginHorizontal="@dimen/margin_10dp"
             android:layout_marginVertical="@dimen/margin_10dp"

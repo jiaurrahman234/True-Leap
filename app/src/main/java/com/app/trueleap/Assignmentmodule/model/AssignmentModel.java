@@ -10,7 +10,6 @@ public class AssignmentModel implements  Parcelable{
     String note_doc_file;
     String doc_type;
 
-
     public AssignmentModel(String id, String note_title, String note_text, String uploaded_date, String note_doc_file, String doc_type, String doc_path) {
         this.id = id;
         this.note_title = note_title;

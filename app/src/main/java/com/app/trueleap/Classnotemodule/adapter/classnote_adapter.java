@@ -54,7 +54,7 @@ public class classnote_adapter extends RecyclerView.Adapter<classnote_adapter.Vi
         public void setData(ClassnoteModel item) {
             this.item = item;
             note_title.setText(item.getNote_title());
-            note_text.setText(item.getNote_text());
+            note_text.setText(item.get_doucument_exceprt());
             note_date.setText(parse_date(item.getUploaded_date()));
         }
         @Override

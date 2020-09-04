@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
@@ -44,6 +45,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.app.trueleap.external.CommonFunctions.parse_date;
 import static com.app.trueleap.external.Constants.CAMERA_REQUEST;
 import static com.app.trueleap.external.Constants.MY_CAMERA_PERMISSION_CODE;
 import static com.app.trueleap.external.Constants.PICK_IMAGE;
@@ -60,6 +62,8 @@ public class AssignmentViewActivity extends BaseActivity {
     private static String IMAGE_DIRECTORY = "";
     private String imagepath = "";
     Context context;
+    ClassnoteModel class_note;
+    String subject_name;
 
 
     @Override
@@ -68,9 +72,7 @@ public class AssignmentViewActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_assignment_view);
         intent = getIntent();
         if (intent.getExtras() != null) {
-            title= intent.getStringExtra("title");
-            text  = intent.getStringExtra("text");
-            date  = intent.getStringExtra("date");
+            class_note = (ClassnoteModel) intent.getExtras().getParcelable("assignment");
         }
         context = AssignmentViewActivity.this;
         initToolbar();
@@ -139,9 +141,26 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     private void initdata() {
-        binding.assignmentTitle.setText(title);
-        binding.assignmentTextExcerpt.setText(text);
-        binding.date.setText(date);
+        try{
+            binding.studentClass.setText(localStorage.getClassId());
+            binding.studentSection.setText(localStorage.getSectionId());
+            binding.sujectName.setText(subject_name +" Class Notes");
+            renderContent();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void renderContent() {
+        binding.assignmentTitle.setText(class_note.getNote_title());
+        binding.assignmentTextExcerpt.setText(class_note.getNote_text());
+        binding.date.setText(parse_date(class_note.getUploaded_date()));
+
+        if(class_note.getNote_doc_file()!=null){
+            binding.fileName.setText(class_note.getNote_doc_file());
+        }else {
+            binding.fileTitle.setVisibility(View.GONE);
+        }
     }
 
 
@@ -226,6 +245,7 @@ public class AssignmentViewActivity extends BaseActivity {
             }
         }
     }
+
 
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();

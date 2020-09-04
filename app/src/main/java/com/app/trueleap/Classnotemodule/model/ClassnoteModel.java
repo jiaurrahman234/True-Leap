@@ -3,6 +3,8 @@ package com.app.trueleap.Classnotemodule.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import static com.app.trueleap.external.Constants.EXCERPT_LENGTH;
+
 public class ClassnoteModel implements Parcelable {
 
     String id;
@@ -91,6 +93,16 @@ public class ClassnoteModel implements Parcelable {
     }
 
 
+    public String get_doucument_exceprt() {
+        String d_text = note_text;
+        if (d_text.equals("null") || d_text.isEmpty() || d_text == "") {
+            return "No Text";
+        } else if (d_text.length() > EXCERPT_LENGTH) {
+            return d_text.substring(0, EXCERPT_LENGTH) + " ...";
+        } else {
+            return d_text;
+        }
+    }
 
     @Override
     public int describeContents() {

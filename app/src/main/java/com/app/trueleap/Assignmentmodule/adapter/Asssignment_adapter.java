@@ -12,15 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.trueleap.Assignmentmodule.interfaces.assignmentClickListener;
 import com.app.trueleap.Assignmentmodule.model.AssignmentModel;
+import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import java.util.ArrayList;
 
 public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapter.ViewHolder> {
-    ArrayList<AssignmentModel> mValues;
+    ArrayList<ClassnoteModel> mValues;
     Context mContext;
     protected assignmentClickListener mListener;
 
-    public Asssignment_adapter(Context context, ArrayList<AssignmentModel> values, assignmentClickListener itemListener) {
+    public Asssignment_adapter(Context context, ArrayList<ClassnoteModel> values, assignmentClickListener itemListener) {
         mValues = values;
         mContext = context;
         mListener= itemListener;
@@ -31,7 +32,7 @@ public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapte
         public TextView note_text;
         public TextView note_date;
         public LinearLayout view_all_note;
-        AssignmentModel item;
+        ClassnoteModel item;
         int position_data;
 
         public ViewHolder(View v) {
@@ -44,10 +45,10 @@ public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapte
             view_all_note.setOnClickListener(this);
         }
 
-        public void setData(AssignmentModel item) {
+        public void setData(ClassnoteModel item) {
             this.item = item;
             note_title.setText(item.getNote_title());
-            note_text.setText(item.getNote_text());
+            note_text.setText(item.get_doucument_exceprt());
             note_date.setText(item.getUploaded_date());
         }
         @Override

@@ -100,10 +100,47 @@ public class ClassMaterialTypeActivity extends BaseActivity {
         binding.actionAssignment.setOnClickListener(new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
-                                                            Intent assignintent = new Intent(ClassMaterialTypeActivity.this, AssignmentActivity.class);
-                                                            assignintent.putExtra("subject_code", sujectName);
-                                                            assignintent.putExtra("subject_name", sujectName);
-                                                            startActivity(assignintent);
+                                                            try {
+                                                                ArrayList<ClassnoteModel> AssignmentModelArrayList = new ArrayList<>();
+                                                                for (int i = 0; i < calendarModelArrayList.size(); i++) {
+                                                                    Log.d(TAG, "khkhf: " + calendarModelArrayList.size() + ", " + classId + " , " + calendarModelArrayList.get(i).getId());
+                                                                    //CalendarModel calendarModel = calendarModelArrayList.get(i);
+                                                                    if (Integer.parseInt(classId) == calendarModelArrayList.get(i).getId()) {
+
+                                                                        Log.d(TAG, "khkhf: " + calendarModelArrayList.get(i).getPeriodId());
+                                                                        for (int j = 0; j < classModelArrayList.size(); j++) {
+                                                                            ClassModel classModel = classModelArrayList.get(j);
+                                                                            Log.d(TAG, "vvcvc: " + calendarModelArrayList.get(i).getPeriodId() + "," + classModel.getUniqueperiodid());
+                                                                            if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {
+                                                                                Log.d(TAG, "hkghfg: " + classModel.getSubject());
+                                                                                if (!classModel.getAssgnmentModelArrayList().isEmpty()) {
+                                                                                    for (int k = 0; k < classModel.getAssgnmentModelArrayList().size(); k++) {
+                                                                                        DocumentsModel documentsModel = classModel.getAssgnmentModelArrayList().get(k);
+                                                                                        AssignmentModelArrayList.add(new ClassnoteModel(
+                                                                                                documentsModel.getId(),
+                                                                                                documentsModel.getTitle(),
+                                                                                                documentsModel.getNote(),
+                                                                                                classModel.getStartdate(),
+                                                                                                documentsModel.getFilename(),
+                                                                                                documentsModel.getType()));
+                                                                                    }
+                                                                                }
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                        break;
+                                                                    }
+                                                                }
+
+
+                                                                startActivity(new Intent(ClassMaterialTypeActivity.this, AssignmentActivity.class)
+                                                                        .putExtra("subject_code", sujectName)
+                                                                        .putExtra("subject_name", sujectName)
+                                                                        .putExtra("assignment", AssignmentModelArrayList));
+                                                            } catch (Exception e) {
+                                                                e.printStackTrace();
+                                                            }
+
                                                         }
                                                     }
         );

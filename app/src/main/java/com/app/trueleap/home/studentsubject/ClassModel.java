@@ -173,6 +173,14 @@ public class ClassModel  implements Parcelable {
         this.documentsModelArrayList = documentsModelArrayList;
     }
 
+    public ArrayList<DocumentsModel> getAssgnmentModelArrayList() {
+        return documentsModelArrayList;
+    }
+
+    public void setAssgnmentModelArrayList(ArrayList<DocumentsModel> AssignmentArrayList) {
+        this.AssignmentArrayList = AssignmentArrayList;
+    }
+
     @Override
     public int describeContents() {
         return 0;

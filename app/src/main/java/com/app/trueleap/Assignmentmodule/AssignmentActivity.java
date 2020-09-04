@@ -1,10 +1,7 @@
 package com.app.trueleap.Assignmentmodule;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,20 +12,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.app.trueleap.Classnotemodule.ClassnotesFragmentListing;
+import com.app.trueleap.Assignmentmodule.adapter.Asssignment_adapter;
+import com.app.trueleap.Assignmentmodule.interfaces.assignmentClickListener;
+import com.app.trueleap.Classnotemodule.ClassNotesActivity;
+import com.app.trueleap.Classnotemodule.ViewClassNoteActivity;
+import com.app.trueleap.Classnotemodule.adapter.classnote_adapter;
+import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityAssignmentBinding;
-import com.app.trueleap.external.Utils;
+import com.app.trueleap.home.studentsubject.ClassModel;
 
-public class AssignmentActivity extends BaseActivity {
+import java.util.ArrayList;
+
+public class AssignmentActivity extends BaseActivity implements assignmentClickListener {
+
 
     Intent intent;
     String subject_code;
     String subject_name;
     ActivityAssignmentBinding binding;
     Context context;
+    ArrayList<ClassModel> classModelArrayList;
+    ArrayList<ClassnoteModel> assignment;
+    Asssignment_adapter assignment_adpater;
+    TextView toolbar_tv;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +47,34 @@ public class AssignmentActivity extends BaseActivity {
         intent = getIntent();
         context = AssignmentActivity.this;
         initToolbar();
+        assignment = new ArrayList<>();
         if (intent.getExtras() != null) {
+            classModelArrayList = new ArrayList<>();
             subject_code = intent.getStringExtra("subject_code");
             subject_name = intent.getStringExtra("subject_name");
+            assignment = (ArrayList<ClassnoteModel>) intent.getExtras().getSerializable("assignment");
         }
-        AssignmentFragment fragmentListing = new AssignmentFragment().newInstance(subject_code, subject_name);
-        loadFragment(fragmentListing);
+        initData();
+    }
+
+    private void initData() {
+        try{
+            binding.studentClass.setText(localStorage.getClassId());
+            binding.studentSection.setText(localStorage.getSectionId());
+            binding.sujectName.setText(subject_name +" Assignments");
+            populateAssignments();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void populateAssignments() {
+        assignment_adpater  = new Asssignment_adapter(context,assignment,this);
+        LinearLayoutManager llayoutmanager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        binding.rvClassNote.setLayoutManager(llayoutmanager);
+        binding.rvClassNote.setAdapter(assignment_adpater);
+        assignment_adpater.notifyDataSetChanged();
     }
 
     private void initToolbar() {
@@ -54,13 +86,6 @@ public class AssignmentActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(binding.frameContainer.getId(), fragment, Utils.Assignment_fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,4 +127,10 @@ public class AssignmentActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClicked(int position) {
+        Intent intent = new Intent(AssignmentActivity.this, AssignmentViewActivity.class);
+        intent.putExtra("assignment",assignment.get(position));
+        startActivity(intent);
+    }
 }

@@ -19,10 +19,11 @@
                 android:id="@+id/weekView"
                 app:layout_constraintTop_toBottomOf="@+id/appbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 app:eventTextColor="@android:color/white"
                 app:textSize="12sp"
                 app:hourHeight="100dp"
+                android:visibility="gone"
                 app:headerColumnPadding="8dp"
                 app:headerColumnTextColor="@color/toolbar_text"
                 app:headerRowPadding="12dp"
@@ -33,6 +34,32 @@
                 app:todayBackgroundColor="#1848adff"
                 app:headerColumnBackground="#ffffffff"
                 app:todayHeaderTextColor="@color/accent" />
+
+
+        <com.applandeo.materialcalendarview.CalendarView
+            android:visibility="gone"
+            android:id="@+id/calendarView"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            app:highlightedDaysLabelsColor="@color/colorPrimary"
+            android:layout_height="match_parent" />
+
+        <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            app:layout_constraintTop_toBottomOf="@+id/appbar_layout"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/compactcalendar_view"
+            android:layout_width="match_parent"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_height="250dp"
+            app:compactCalendarTargetHeight="250dp"
+            app:compactCalendarTextSize="12sp"
+            app:compactCalendarBackgroundColor="#ffe95451"
+            app:compactCalendarTextColor="#fff"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
+            app:compactCalendarCurrentDayBackgroundColor="#B71C1C"
+            app:compactCalendarMultiEventIndicatorColor="#fff"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

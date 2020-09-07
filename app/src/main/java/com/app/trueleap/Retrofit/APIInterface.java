@@ -14,6 +14,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
+import static com.app.trueleap.Retrofit.APIConstants.DOCUMENT;
 import static com.app.trueleap.Retrofit.APIConstants.LOGIN;
 import static com.app.trueleap.Retrofit.APIConstants.SUBJECTS;
 
@@ -29,6 +30,8 @@ public interface APIInterface {
     @GET(SUBJECTS)
     Single<Subject> getSubjectsData(@Header("Authorization") String token , @Query("ismobile") boolean ismobile);
 
+    @GET(DOCUMENT)
+    Single<Subject> getDocument(@Header("Authorization") String token , @Query("periodid")  String periodid , @Query("documentid") String documentid );
 
     @GET("version")
     Call<ResponseBody> getVersion();

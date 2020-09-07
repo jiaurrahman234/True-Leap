@@ -73,6 +73,7 @@ public class AssignmentViewActivity extends BaseActivity {
         intent = getIntent();
         if (intent.getExtras() != null) {
             class_note = (ClassnoteModel) intent.getExtras().getParcelable("assignment");
+            subject_name = (String) intent.getStringExtra("subject_name");
         }
         context = AssignmentViewActivity.this;
         initToolbar();
@@ -144,7 +145,7 @@ public class AssignmentViewActivity extends BaseActivity {
         try{
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
-            binding.sujectName.setText(subject_name +" Class Notes");
+            binding.sujectName.setText(subject_name +" Assignments");
             renderContent();
         }catch (Exception e){
             e.printStackTrace();
@@ -288,6 +289,7 @@ public class AssignmentViewActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_change_lang:
+                showLanguageDialog();
                 return true;
             case R.id.action_logout:
                 try {

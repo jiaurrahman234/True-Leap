@@ -4,14 +4,22 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CalendarModel  implements Parcelable {
     int id;
     String periodId;
+    Calendar calendar;
 
     public CalendarModel(int id, String periodId) {
         this.id = id;
         this.periodId = periodId;
+    }
+
+    public CalendarModel(int id, String periodId, Calendar calendar) {
+        this.id = id;
+        this.periodId = periodId;
+        this.calendar = calendar;
     }
 
     protected CalendarModel(Parcel in) {

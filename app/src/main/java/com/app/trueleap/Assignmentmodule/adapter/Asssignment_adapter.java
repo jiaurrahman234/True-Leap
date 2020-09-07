@@ -16,6 +16,8 @@ import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import java.util.ArrayList;
 
+import static com.app.trueleap.external.CommonFunctions.parse_date;
+
 public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapter.ViewHolder> {
     ArrayList<ClassnoteModel> mValues;
     Context mContext;
@@ -49,7 +51,7 @@ public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapte
             this.item = item;
             note_title.setText(item.getNote_title());
             note_text.setText(item.get_doucument_exceprt());
-            note_date.setText(item.getUploaded_date());
+            note_date.setText(parse_date(item.getUploaded_date()));
         }
         @Override
         public void onClick(View view) {

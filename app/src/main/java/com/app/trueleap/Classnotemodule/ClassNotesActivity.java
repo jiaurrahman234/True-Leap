@@ -33,7 +33,6 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
 
     ActivityClassNotesBinding binding;
     Intent intent;
-    String subject_code;
     String subject_name;
     Context context;
     ArrayList<ClassModel> classModelArrayList;
@@ -52,7 +51,6 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
         class_notes = new ArrayList<>();
         if (intent.getExtras() != null) {
             classModelArrayList = new ArrayList<>();
-            subject_code = intent.getStringExtra("subject_code");
             subject_name = intent.getStringExtra("subject_name");
             class_notes = (ArrayList<ClassnoteModel>) intent.getExtras().getSerializable("class_note");
         }
@@ -100,6 +98,7 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_change_lang:
+                showLanguageDialog();
                 return true;
             case R.id.action_logout:
                 try {
@@ -135,6 +134,7 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
 
         Intent intent = new Intent(ClassNotesActivity.this, ViewClassNoteActivity.class);
         intent.putExtra("class_note",class_notes.get(position));
+        intent.putExtra("subject_name",subject_name);
         startActivity(intent);
 
     }

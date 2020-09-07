@@ -1,8 +1,12 @@
 package com.app.trueleap.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +18,7 @@ import com.app.trueleap.Assignmentmodule.AssignmentActivity;
 import com.app.trueleap.Classnotemodule.ClassNotesActivity;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
+import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.FragmentClassmaterialtypeBinding;
 import com.app.trueleap.home.studentsubject.CalendarModel;
@@ -81,7 +86,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                     documentsModel.getType()));
                                         }
                                         startActivity(new Intent(ClassMaterialTypeActivity.this, ClassNotesActivity.class)
-                                                .putExtra("subject_code", sujectName)
                                                 .putExtra("subject_name", sujectName)
                                                 .putExtra("class_note", classnoteModelArrayList));
 
@@ -127,6 +131,13 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                                                                 documentsModel.getFilename(),
                                                                                                 documentsModel.getType()));
                                                                                     }
+
+                                                                                    startActivity(new Intent(ClassMaterialTypeActivity.this, AssignmentActivity.class)
+                                                                                            .putExtra("subject_name", sujectName)
+                                                                                            .putExtra("assignment", AssignmentModelArrayList));
+                                                                                }
+                                                                                else{
+                                                                                    Toast.makeText(context,"No Asssignment uploaded!",Toast.LENGTH_SHORT).show();
                                                                                 }
                                                                                 break;
                                                                             }
@@ -135,11 +146,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                                     }
                                                                 }
 
-
-                                                                startActivity(new Intent(ClassMaterialTypeActivity.this, AssignmentActivity.class)
-                                                                        .putExtra("subject_code", sujectName)
-                                                                        .putExtra("subject_name", sujectName)
-                                                                        .putExtra("assignment", AssignmentModelArrayList));
                                                             } catch (Exception e) {
                                                                 e.printStackTrace();
                                                             }
@@ -168,6 +174,8 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                 Type type = new TypeToken<ArrayList<ClassModel>>() {
                 }.getType();
                 classModelArrayList = gson.fromJson(jsonClass, type);
+                Log.d(TAG, "classModelArrayList " + classId + "," + calendarModelArrayList.size() + " , " + classModelArrayList.size());
+
 
             }
 
@@ -193,5 +201,46 @@ public class ClassMaterialTypeActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_change_lang:
+                showLanguageDialog();
+                return true;
+            case R.id.action_logout:
+                try {
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
+
+                    builder.setTitle("Confirm")
+                            .setIcon(R.drawable.logo)
+                            .setMessage("Do you really want to logout?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    localStorage.logoutUser();
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, null);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    alertTheme(alertDialog);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

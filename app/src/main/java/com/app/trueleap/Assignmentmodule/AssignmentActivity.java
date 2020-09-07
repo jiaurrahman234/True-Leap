@@ -30,7 +30,6 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
 
 
     Intent intent;
-    String subject_code;
     String subject_name;
     ActivityAssignmentBinding binding;
     Context context;
@@ -50,7 +49,6 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
         assignment = new ArrayList<>();
         if (intent.getExtras() != null) {
             classModelArrayList = new ArrayList<>();
-            subject_code = intent.getStringExtra("subject_code");
             subject_name = intent.getStringExtra("subject_name");
             assignment = (ArrayList<ClassnoteModel>) intent.getExtras().getSerializable("assignment");
         }
@@ -98,6 +96,7 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_change_lang:
+                showLanguageDialog();
                 return true;
             case R.id.action_logout:
                 try {
@@ -131,6 +130,7 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
     public void onClicked(int position) {
         Intent intent = new Intent(AssignmentActivity.this, AssignmentViewActivity.class);
         intent.putExtra("assignment",assignment.get(position));
+        intent.putExtra("subject_name",subject_name);
         startActivity(intent);
     }
 }

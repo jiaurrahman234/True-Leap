@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string name="app_name">True Leap</string>
+        <!-- TODO: Remove or change this placeholder text -->
+        <string name="hello_blank_fragment">Hello</string>
+        <string name="module_assignment">कार्य</string>
+        <string name="module_quiz">प्रश्नोत्तरी</string>
+        <string name="module_classnote">क्लास नोट्स</string>
+        <string name="module_gradebook">ग्रेड बुक</string>
+        <string name="module_message">संदेश</string>
+
+        <string name="str_uploaded_on">पर अपलोड किया गया</string>
+        <string name="Class_title">संदेश</string>
+        <string name="date_time">15 Aug at 9.15AM </string>
+        <string name="view_details">सभी नोट्स देखें</string>
+        <string name="std_class">Student Grade </string>
+        <string name="std_section">Student Section </string>
+
+        <string name="login">लॉग इन करें</string>
+        <string name="email">Email</string>
+        <string name="password">Password</string>
+        <string name="email_error">Invalid Email</string>
+        <string name="required_field">Required</string>
+        <string name="action_change_lang">Change Languaage</string>
+        <string name="action_settings">Change Languaage</string>
+        <string name="action_logout">Logout</string>
+
+
+        <color name="event_color_01">#59dbe0</color>
+        <color name="event_color_02">#f57f68</color>
+        <color name="event_color_03">#87d288</color>
+        <color name="event_color_04">#f8b552</color>
+
+        <string name="action_today">Today</string>
+        <string name="action_day_view">Day view</string>
+        <string name="action_three_day_view">3 day view</string>
+        <string name="action_week_view">Week view</string>
+        <string name="title_activity_basic">Basic Example</string>
+        <string name="title_activity_asynchronous">Asynchronous Events</string>
+        <string name="async_error">Could not download events from the internet</string>
+</resources>

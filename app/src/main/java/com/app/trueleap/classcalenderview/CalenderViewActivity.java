@@ -54,6 +54,7 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
     Intent intent;
     Context context;
     ArrayList<ClassModel> Subjects;
+    String Subject_name;
     String selecteduniqueperiodid;
     ArrayList<ClassModel> classModelArrayList = new ArrayList<>();
     ArrayList<CalendarModel> calendarModelArrayList = new ArrayList<>();
@@ -83,16 +84,16 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
         mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
         mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
         mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
-
-
         initData();
     }
 
     private void initData() {
         Subjects = new ArrayList<>();
+        context= CalenderViewActivity.this;
         intent = getIntent();
         if (intent.getExtras() != null) {
             selecteduniqueperiodid = intent.getStringExtra("uniqueperiodid");
+            Subject_name = intent.getStringExtra("subject_name");
         }
         JSONArray classes = getJSONFromCache(this);
         try {
@@ -131,7 +132,6 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
                                             documentObj.getString("note")
                                     ));
                                 }
-
 
                                 for (int k = 0; k < AssignmentArray.length(); k++) {
                                     JSONObject documentObj = documentArray.getJSONObject(k);
@@ -212,55 +212,60 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
             e.printStackTrace();
         }
 
-        setupCalander();
-
-
+       setupCalander();
     }
 
     private void setupCalander() {
-        int countx = 0;
-        CompactCalendarView calendarView;
-        calendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+        int countx = 1;
+        CalendarView calendarView;
+        calendarView = findViewById(R.id.calendarView);
 
         List<Calendar> calendars = new ArrayList<>();
-
+        List<EventDay> events = new ArrayList<>();
         for (int i = Subjects.size() - 1; i >= 0 && countx < 8; i--) {
-
-            List<EventDay> events = new ArrayList<>();
             Calendar calendar = Calendar.getInstance();
             Log.d(TAG,"cscd "+Subjects.get(i).getStartdate());
             calendar.setTime(getdateValue(Subjects.get(i).getStartdate()));
             calendars.add(calendar);
-            calendarView.setFirstDayOfWeek(Calendar.MONDAY);
-            Event ev1 = new Event(Color.GREEN, calendar.getTimeInMillis(), "Some extra data that I want to store.");
-            calendarView.addEvent(ev1);
-          //  events = calendarView.getEvents();
+            calendarModelArrayList.add(new CalendarModel(i, Subjects.get(i).getUniqueperiodid()));
+            EventDay eventDay = new EventDay(calendar, R.drawable.ic_baseline_menu_book_24);
+            events.add(eventDay);
+            // events = calendarView.getEvents();
             Log.d(TAG, " Events: " + events);
             countx++ ;
         }
-
-        calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
-            @Override
-            public void onDayClick(Date dateClicked) {
-                List<Event> events = calendarView.getEvents(dateClicked);
-                Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
-            }
-
-            @Override
-            public void onMonthScroll(Date firstDayOfNewMonth) {
-                Log.d(TAG, "Month was scrolled to: " + firstDayOfNewMonth);
-            }
-        });
-
-        /*calendarView.setHighlightedDays(calendars);
+        calendarView.setEvents(events);
+        calendarView.setHighlightedDays(calendars);
         calendarView.setSelectedDates(calendars);
 
         calendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
             public void onDayClick(EventDay eventDay) {
                 Calendar clickedDayCalendar = eventDay.getCalendar();
+                try {
+                    Toast.makeText(context, "Clicked " + classModelArrayList.size(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "ghlglk: " + classModelArrayList.size());
+                    Gson gson = new Gson();
+                    String classData = gson.toJson(classModelArrayList);
+                    localStorage.setClass(classData);
+                    startActivity(new Intent(CalenderViewActivity.this, ClassMaterialTypeActivity.class)
+                            .putExtra("subject_name", Subject_name)
+                            .putExtra("class_id", Integer.toString(3))
+                            .putExtra("calendar_data", calendarModelArrayList));
+
+            /*for (int i=0;i<classModelArrayList.size();i++){
+                ClassModel classModel = classModelArrayList.get(i);
+                Log.d(TAG,"jhljgj: "+classModel.getStartdate());
+                if (!classModel.getDocumentsModelArrayList().isEmpty()){
+                    Log.d(TAG,"xcxcx: "+classModel.getDocumentsModelArrayList().size());
+                }
+            }*/
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        });*/
+        });
     }
 
     @Override

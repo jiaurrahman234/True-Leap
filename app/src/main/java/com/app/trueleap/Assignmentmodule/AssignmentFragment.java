@@ -41,7 +41,7 @@ public class AssignmentFragment extends Fragment implements assignmentClickListe
     LocalStorage localStorage;
     Context context;
     FragmentAssignmentBinding binding;
-    ArrayList<AssignmentModel> class_assignment;
+    ArrayList<ClassnoteModel> class_assignment;
     JSONObject assignJson;
     Asssignment_adapter Assign_adpater;
 
@@ -73,7 +73,7 @@ public class AssignmentFragment extends Fragment implements assignmentClickListe
         binding = DataBindingUtil.bind(v);
         context = getContext();
         localStorage = LocalStorage.getInstance(context);
-        initdata();
+        /*initdata();*/
         initListeners();
         return binding.getRoot();
     }
@@ -82,7 +82,7 @@ public class AssignmentFragment extends Fragment implements assignmentClickListe
 
     }
 
-    private void initdata() {
+   /* private void initdata() {
 
         binding.studentClass.setText(localStorage.getClassId());
         binding.studentSection.setText(localStorage.getSectionId());
@@ -106,7 +106,7 @@ public class AssignmentFragment extends Fragment implements assignmentClickListe
             e.printStackTrace();
         }
         populateCategories();
-    }
+    }*/
 
     private void populateCategories() {
         Assign_adpater  = new Asssignment_adapter(context,class_assignment,this);

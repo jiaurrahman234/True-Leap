@@ -1,5 +1,6 @@
 package com.app.trueleap.classcalenderview;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -32,6 +33,11 @@ import com.app.trueleap.home.studentsubject.DocumentsModel;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.google.gson.Gson;
 
 
@@ -56,6 +62,7 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
     Intent intent;
     Context context;
     ArrayList<ClassModel> Subjects;
+    String Subject_name;
     String selecteduniqueperiodid;
     ArrayList<ClassModel> classModelArrayList = new ArrayList<>();
     ArrayList<CalendarModel> calendarModelArrayList = new ArrayList<>();
@@ -65,20 +72,15 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
-
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
-
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
         mWeekView.setMonthChangeListener(this);
-
         // Set long press listener for events.
         mWeekView.setEventLongPressListener(this);
-
         // Set long press listener for empty view
         mWeekView.setEmptyViewLongPressListener(this);
 
@@ -121,9 +123,11 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
 
     private void initData() {
         Subjects = new ArrayList<>();
+        context= CalenderViewActivity.this;
         intent = getIntent();
         if (intent.getExtras() != null) {
             selecteduniqueperiodid = intent.getStringExtra("uniqueperiodid");
+            Subject_name = intent.getStringExtra("subject_name");
         }
         JSONArray classes = getJSONFromCache(this);
         try {
@@ -148,8 +152,9 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
                         ArrayList<DocumentsModel> assignmentModelArrayList = new ArrayList<>();
                         if (subject_class.getJSONObject(j).has("documents") && subject_class.getJSONObject(j).has("assignments")) {
                             JSONArray documentArray = subject_class.getJSONObject(j).getJSONArray("documents");
+                            JSONArray AssignmentArray = subject_class.getJSONObject(j).getJSONArray("assignments");
                             Log.d(TAG, "document " + documentArray.length());
-                            if (documentArray.length() > 0) {
+                            if (documentArray.length() > 0 || AssignmentArray.length() > 0) {
 
                                 for (int k = 0; k < documentArray.length(); k++) {
                                     JSONObject documentObj = documentArray.getJSONObject(k);
@@ -161,6 +166,18 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
                                             documentObj.getString("note")
                                     ));
                                 }
+
+                                for (int k = 0; k < AssignmentArray.length(); k++) {
+                                    JSONObject documentObj = documentArray.getJSONObject(k);
+                                    assignmentModelArrayList.add(new DocumentsModel(
+                                            documentObj.getString("id"),
+                                            documentObj.getString("filename"),
+                                            documentObj.getString("type"),
+                                            documentObj.getString("title"),
+                                            documentObj.getString("note")
+                                    ));
+                                }
+
                                 Log.d(TAG, "jgljfkj: " + documentsModelArrayList.size() + "," + subject_class.getJSONObject(j).getString("startdate"));
                                 Subjects.add(
                                         new ClassModel(
@@ -229,7 +246,60 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
             e.printStackTrace();
         }
 
+       setupCalander();
+    }
 
+    private void setupCalander() {
+        int countx = 1;
+        CalendarView calendarView;
+        calendarView = findViewById(R.id.calendarView);
+
+        List<Calendar> calendars = new ArrayList<>();
+        List<EventDay> events = new ArrayList<>();
+        for (int i = Subjects.size() - 1; i >= 0 && countx < 8; i--) {
+            Calendar calendar = Calendar.getInstance();
+            Log.d(TAG,"cscd "+Subjects.get(i).getStartdate());
+            calendar.setTime(getdateValue(Subjects.get(i).getStartdate()));
+            calendars.add(calendar);
+            calendarModelArrayList.add(new CalendarModel(i, Subjects.get(i).getUniqueperiodid()));
+            EventDay eventDay = new EventDay(calendar, R.drawable.ic_baseline_menu_book_24);
+            events.add(eventDay);
+            // events = calendarView.getEvents();
+            Log.d(TAG, " Events: " + events);
+            countx++ ;
+        }
+        calendarView.setEvents(events);
+        calendarView.setHighlightedDays(calendars);
+        calendarView.setSelectedDates(calendars);
+
+        calendarView.setOnDayClickListener(new OnDayClickListener() {
+            @Override
+            public void onDayClick(EventDay eventDay) {
+                Calendar clickedDayCalendar = eventDay.getCalendar();
+                try {
+                    Toast.makeText(context, "Clicked " + classModelArrayList.size(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "ghlglk: " + classModelArrayList.size());
+                    Gson gson = new Gson();
+                    String classData = gson.toJson(classModelArrayList);
+                    localStorage.setClass(classData);
+                    startActivity(new Intent(CalenderViewActivity.this, ClassMaterialTypeActivity.class)
+                            .putExtra("subject_name", Subject_name)
+                            .putExtra("class_id", Integer.toString(3))
+                            .putExtra("calendar_data", calendarModelArrayList));
+
+            /*for (int i=0;i<classModelArrayList.size();i++){
+                ClassModel classModel = classModelArrayList.get(i);
+                Log.d(TAG,"jhljgj: "+classModel.getStartdate());
+                if (!classModel.getDocumentsModelArrayList().isEmpty()){
+                    Log.d(TAG,"xcxcx: "+classModel.getDocumentsModelArrayList().size());
+                }
+            }*/
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -278,7 +348,6 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
@@ -381,8 +450,6 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -392,7 +459,7 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
-        Toast.makeText(this, "Empty view long pressed: ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Empty view long pressed:", Toast.LENGTH_SHORT).show();
     }
 
     public WeekView getWeekView() {

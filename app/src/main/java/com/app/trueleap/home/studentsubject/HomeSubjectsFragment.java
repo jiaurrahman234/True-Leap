@@ -333,6 +333,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
 
         Intent intent = new Intent(getContext(), CalenderViewActivity.class);
         intent.putExtra("uniqueperiodid",Subjects.get(position).getUniqueperiodid());
+        intent.putExtra("subject_name",Subjects.get(position).getSubject());
         startActivity(intent);
 
         /* ClassmaterialtypeFragment clsmtypeFragment = new ClassmaterialtypeFragment().newInstance(

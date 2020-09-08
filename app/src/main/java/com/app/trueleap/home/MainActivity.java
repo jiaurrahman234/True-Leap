@@ -109,14 +109,5 @@ public class MainActivity extends BaseActivity {
         exitApp();
     }
 
-    private void showLanguageDialog(){
-        Fragment LanguageDialogFragment = getSupportFragmentManager().findFragmentByTag("language_dialog");
-        DialogFragment LanguageDialog = (DialogFragment) LanguageDialogFragment;
-        if (LanguageDialog == null) {
-            LanguageDialogFragment languageDialog = new LanguageDialogFragment();
-            FragmentManager transaction = getSupportFragmentManager();
-            languageDialog.setCancelable(false);
-            languageDialog.show(transaction, "language_dialog");
-        }
-    }
+
 }

@@ -27,6 +27,7 @@ public class LocalStorage {
     private static final String CLASS_ID = "CLASS_ID";
     private static final String SECTION_ID = "SECTION_ID";
     private static final String AUTODOWNLOAD = "AUTODOWNLOAD";
+    private static final String SELECTED_LANGUAGE = "selected_language";
 
 
     private static LocalStorage instance = null;
@@ -65,7 +66,6 @@ public class LocalStorage {
         editor.putBoolean(AUTODOWNLOAD, data);
         editor.commit();
     }
-
 
     public Boolean getAutodownload() {
         return sharedPreferences.getBoolean(AUTODOWNLOAD, false);
@@ -118,6 +118,13 @@ public class LocalStorage {
         editor.commit();
     }
 
+    public String getSelectedLanguage() {
+        return sharedPreferences.getString(SELECTED_LANGUAGE, "");
+    }
 
-
+    public void setSelectedLanguage(String lang) {
+        editor = sharedPreferences.edit();
+        editor.putString(SELECTED_LANGUAGE, lang);
+        editor.commit();
+    }
 }

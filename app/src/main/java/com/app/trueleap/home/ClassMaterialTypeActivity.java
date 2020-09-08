@@ -123,7 +123,7 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                 sujectName = intent.getStringExtra("subject_name");
                 //classModelArrayList = (ArrayList<ClassModel>) intent.getExtras().getSerializable("class_data");
                 calendarModelArrayList = (ArrayList<CalendarModel>) intent.getExtras().getSerializable("calendar_data");
-                Log.d(TAG, "classModelArrayList " + classId + "," + calendarModelArrayList.size() + " , " + classModelArrayList.size());
+
             }
 
             if (localStorage.getClassData() != null) {
@@ -131,8 +131,8 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                 Type type = new TypeToken<ArrayList<ClassModel>>() {
                 }.getType();
                 classModelArrayList = gson.fromJson(jsonClass, type);
-
             }
+            Log.d(TAG, "classModelArrayList " + classId + "," + calendarModelArrayList.size() + " , " + classModelArrayList.size());
 
             for (int i = 0; i < calendarModelArrayList.size(); i++) {
                 if (Integer.parseInt(classId) == calendarModelArrayList.get(i).getId()) {

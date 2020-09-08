@@ -81,5 +81,7 @@ dependencies {
     implementation 'com.github.alamkanak:android-week-view:1.2.6';
     implementation 'com.github.kizitonwose:CalendarView:0.4.3';
 
+    //implementation 'com.github.marcohc:robotocalendarview:3.6.1'
+    implementation 'com.applandeo:material-calendar-view:1.4.0'
 
 }

@@ -5,12 +5,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -24,7 +27,13 @@ import com.app.trueleap.home.ClassMaterialTypeActivity;
 import com.app.trueleap.home.studentsubject.CalendarModel;
 import com.app.trueleap.home.studentsubject.ClassModel;
 import com.app.trueleap.home.studentsubject.DocumentsModel;
+
+
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.google.gson.Gson;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +45,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 
 import static com.app.trueleap.external.CommonFunctions.getJSONFromCache;
 import static com.app.trueleap.external.CommonFunctions.getdateValue;
@@ -49,6 +59,7 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
     String selecteduniqueperiodid;
     ArrayList<ClassModel> classModelArrayList = new ArrayList<>();
     ArrayList<CalendarModel> calendarModelArrayList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +90,33 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
         mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
         mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
         mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
+
+
+
+        List<EventDay> events = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        events.add(new EventDay(calendar, R.drawable.logo));
+        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+        calendarView.setEvents(events);
+
+        Calendar min = Calendar.getInstance();
+        min.add(Calendar.DAY_OF_MONTH, -30);
+
+        Calendar max = Calendar.getInstance();
+        max.add(Calendar.DAY_OF_MONTH, 30);
+        calendarView.setMinimumDate(min);
+        calendarView.setMaximumDate(max);
+
         initData();
+    }
+
+    private void previewNote(EventDay eventDay) {
+        /*Intent intent = new Intent(this, NotePreviewActivity.class);
+        if(eventDay instanceof MyEventDay){
+            intent.putExtra(EVENT, (MyEventDay) eventDay);
+        }
+        startActivity(intent);*/
+        Log.d(TAG,"jdfljdl: "+eventDay.getCalendar());
     }
 
     private void initData() {

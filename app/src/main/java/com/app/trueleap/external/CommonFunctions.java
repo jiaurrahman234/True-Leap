@@ -1,16 +1,25 @@
 package com.app.trueleap.external;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import okhttp3.ResponseBody;
 
+import com.app.trueleap.R;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,6 +37,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -144,6 +154,86 @@ public class CommonFunctions {
      return  date;
     }
 
+    public static boolean writeResponseBodyToDisk(ResponseBody body , String doc_id , String file_name) {
+        try {
+            File billFile;
+            File billDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap");
+            if(!billDirectory.isDirectory()) {{
+                billDirectory.mkdir();
+                billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+doc_id+"_"+file_name+".pdf");
+            }}else {
+                billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+doc_id+"_"+file_name+".pdf");
+            }
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+                byte[] fileReader = new byte[4096];
+
+                long fileSize = body.contentLength();
+                long fileSizeDownloaded = 0;
+
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(billFile);
+
+                while (true) {
+                    int read = inputStream.read(fileReader);
+
+                    if (read == -1) {
+                        break;
+                    }
+
+                    outputStream.write(fileReader, 0, read);
+
+                    fileSizeDownloaded += read;
+
+                    Log.d("TAG", "file download: " + fileSizeDownloaded + " of " + fileSize);
+                }
+
+                outputStream.flush();
+
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public static boolean hasPermissionToDownload(final Activity context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+                ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED )
+            return true;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(R.string.download_permission_explaination);
+        builder.setPositiveButton(R.string.download_permission_grant, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // Fire off an async request to actually get the permission
+                // This will show the standard permission request dialog UI
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    context.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        return false;
+    }
+
 
 
     /*public void store_data(){
@@ -221,9 +311,7 @@ public class CommonFunctions {
         return array;
     }
 
-
-
-        public static void loadAnimation(View view) {
+    public static void loadAnimation(View view) {
         YoYo.with(Techniques.ZoomIn)
                 .duration(400)
                 .repeat(0)

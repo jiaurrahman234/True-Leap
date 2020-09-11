@@ -1,10 +1,7 @@
 package com.app.trueleap.Classnotemodule;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
@@ -23,9 +20,7 @@ import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityClassNotesBinding;
-import com.app.trueleap.external.Utils;
-import com.app.trueleap.home.studentsubject.ClassModel;
-import com.app.trueleap.home.studentsubject.HomeSubjectsFragment;
+import com.app.trueleap.home.studentsubject.model.ClassModel;
 
 import java.util.ArrayList;
 
@@ -67,7 +62,6 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
             binding.studentSection.setText(localStorage.getSectionId());
             binding.sujectName.setText(subject_name +" Class Notes");
             populatenotes();
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -103,7 +97,6 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
             case R.id.action_logout:
                 try {
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
-
                     builder.setTitle("Confirm")
                             .setIcon(R.drawable.logo)
                             .setMessage("Do you really want to logout?")
@@ -122,7 +115,6 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -131,11 +123,9 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
 
     @Override
     public void onClicked(int position) {
-
         Intent intent = new Intent(ClassNotesActivity.this, ViewClassNoteActivity.class);
         intent.putExtra("class_note",class_notes.get(position));
         intent.putExtra("subject_name",subject_name);
         startActivity(intent);
-
     }
 }

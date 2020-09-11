@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.app.trueleap.R;
-import com.app.trueleap.home.studentsubject.ClassModel;
+import com.app.trueleap.home.studentsubject.model.ClassModel;
 import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
 
 import java.util.ArrayList;

@@ -1,9 +1,8 @@
-package com.app.trueleap.home.studentsubject;
+package com.app.trueleap.home.studentsubject.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CalendarModel  implements Parcelable {

@@ -14,15 +14,12 @@ import android.widget.TextView;
 
 import com.app.trueleap.Assignmentmodule.adapter.Asssignment_adapter;
 import com.app.trueleap.Assignmentmodule.interfaces.assignmentClickListener;
-import com.app.trueleap.Classnotemodule.ClassNotesActivity;
-import com.app.trueleap.Classnotemodule.ViewClassNoteActivity;
-import com.app.trueleap.Classnotemodule.adapter.classnote_adapter;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityAssignmentBinding;
-import com.app.trueleap.home.studentsubject.ClassModel;
+import com.app.trueleap.home.studentsubject.model.ClassModel;
 
 import java.util.ArrayList;
 

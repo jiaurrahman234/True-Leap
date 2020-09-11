@@ -21,6 +21,7 @@ import com.app.trueleap.databinding.FragmentSubjectsBinding;
 import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
 import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
+import com.app.trueleap.home.studentsubject.model.ClassModel;
 import com.app.trueleap.home.studentsubject.viewModel.SubjectViewModel;
 
 import org.json.JSONArray;
@@ -263,7 +264,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
             Call<ResponseBody> call = APIClient
                     .getInstance()
                     .getApiInterface()
-                    .getSubjects(localStorage.getKeyUserToken(),false);
+                    .getSubjects(localStorage.getKeyUserToken(),true);
 
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -292,8 +293,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                                     classJsonObject.getString("startdate"),
                                     classJsonObject.getString("enddate"),
                                     classJsonObject.getString("starttime"),
-                                    classJsonObject.getString("endtime"),
-                                            daysArraylist,
+                                    classJsonObject.getString("endtime"), daysArraylist,
                                     classJsonObject.getString("class"),
                                     classJsonObject.getString("section"),
                                     classJsonObject.getString("subject"),null,null));

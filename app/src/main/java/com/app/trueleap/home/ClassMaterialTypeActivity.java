@@ -21,9 +21,9 @@ import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.FragmentClassmaterialtypeBinding;
-import com.app.trueleap.home.studentsubject.CalendarModel;
-import com.app.trueleap.home.studentsubject.ClassModel;
-import com.app.trueleap.home.studentsubject.DocumentsModel;
+import com.app.trueleap.home.studentsubject.model.CalendarModel;
+import com.app.trueleap.home.studentsubject.model.ClassModel;
+import com.app.trueleap.home.studentsubject.model.DocumentsModel;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;

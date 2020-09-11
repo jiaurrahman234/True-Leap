@@ -150,8 +150,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-
-
     public void alertTheme(AlertDialog alertDialog) {
         Button positiveBtn = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
         positiveBtn.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -201,6 +199,4 @@ public class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    
 }

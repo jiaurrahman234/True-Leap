@@ -1,9 +1,8 @@
-package com.app.trueleap.home.studentsubject;
+package com.app.trueleap.home.studentsubject.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.app.trueleap.Assignmentmodule.AssignmentModel;
 import java.util.ArrayList;
 
 public class ClassModel  implements Parcelable {

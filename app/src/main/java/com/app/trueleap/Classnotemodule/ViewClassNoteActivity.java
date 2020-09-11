@@ -146,7 +146,7 @@ public class ViewClassNoteActivity extends BaseActivity {
     private void download_file(){
         showProgressBar();
         Call<ResponseBody> call = null;
-        call = APIClient
+        call =   APIClient
                 .getInstance()
                 .getApiInterface()
                 .getDocument(localStorage.getKeyUserToken(),"geger",class_note.getId());
@@ -178,7 +178,6 @@ public class ViewClassNoteActivity extends BaseActivity {
                                 }
                             });
                     snackbar.show();
-
                 } else {
                     Log.d(TAG, "server contact failed");
                     snackbar = Snackbar.make(binding.getRoot(), "Download Failed" ,Snackbar.LENGTH_LONG );

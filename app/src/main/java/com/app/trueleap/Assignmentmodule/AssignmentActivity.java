@@ -98,7 +98,6 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
             case R.id.action_logout:
                 try {
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
-
                     builder.setTitle("Confirm")
                             .setIcon(R.drawable.logo)
                             .setMessage("Do you really want to logout?")

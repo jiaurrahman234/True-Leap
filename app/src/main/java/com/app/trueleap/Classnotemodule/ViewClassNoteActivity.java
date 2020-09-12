@@ -40,7 +40,7 @@ public class ViewClassNoteActivity extends BaseActivity {
     ActivityViewClassNoteBinding binding;
     Intent intent;
     String subject_code;
-    String subject_name;
+    String subject_name,period_id;
     Context context;
     ClassnoteModel class_note;
     TextView toolbar_tv;
@@ -57,6 +57,7 @@ public class ViewClassNoteActivity extends BaseActivity {
         if (intent.getExtras() != null) {
             class_note = (ClassnoteModel) intent.getExtras().getParcelable("class_note");
             subject_name = (String) intent.getStringExtra("subject_name");
+            period_id = (String) intent.getStringExtra("period_id");
         }
         initData();
         initListeners();
@@ -149,7 +150,7 @@ public class ViewClassNoteActivity extends BaseActivity {
         call =   APIClient
                 .getInstance()
                 .getApiInterface()
-                .getDocument(localStorage.getKeyUserToken(),"geger",class_note.getId());
+                .getDocument(localStorage.getKeyUserToken(),period_id,class_note.getId());
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

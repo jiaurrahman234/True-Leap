@@ -28,7 +28,7 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
 
     ActivityClassNotesBinding binding;
     Intent intent;
-    String subject_name;
+    String subject_name,period_id;
     Context context;
     ArrayList<ClassModel> classModelArrayList;
     ArrayList<ClassnoteModel> class_notes;
@@ -46,6 +46,7 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
         class_notes = new ArrayList<>();
         if (intent.getExtras() != null) {
             classModelArrayList = new ArrayList<>();
+            period_id = intent.getStringExtra("period_id");
             subject_name = intent.getStringExtra("subject_name");
             class_notes = (ArrayList<ClassnoteModel>) intent.getExtras().getSerializable("class_note");
         }
@@ -126,6 +127,7 @@ public class ClassNotesActivity extends BaseActivity implements noteClickListene
         Intent intent = new Intent(ClassNotesActivity.this, ViewClassNoteActivity.class);
         intent.putExtra("class_note",class_notes.get(position));
         intent.putExtra("subject_name",subject_name);
+        intent.putExtra("period_id",period_id);
         startActivity(intent);
     }
 }

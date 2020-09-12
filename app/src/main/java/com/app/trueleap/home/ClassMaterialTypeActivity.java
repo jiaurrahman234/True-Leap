@@ -81,6 +81,7 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                     documentsModel.getType()));
                                         }
                                         startActivity(new Intent(ClassMaterialTypeActivity.this, ClassNotesActivity.class)
+                                                .putExtra("period_id", classModel.getUniqueperiodid())
                                                 .putExtra("subject_code", sujectName)
                                                 .putExtra("subject_name", sujectName)
                                                 .putExtra("class_note", classnoteModelArrayList));

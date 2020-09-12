@@ -30,8 +30,11 @@ public interface APIInterface {
     @GET(SUBJECTS)
     Single<Subject> getSubjectsData(@Header("Authorization") String token , @Query("ismobile") boolean ismobile);
 
+   /* @GET(DOCUMENT)
+    Single<Subject> getDocument(@Header("Authorization") String token , @Query("periodid")  String periodid , @Query("documentid") String documentid );*/
+
     @GET(DOCUMENT)
-    Single<Subject> getDocument(@Header("Authorization") String token , @Query("periodid")  String periodid , @Query("documentid") String documentid );
+    Call<ResponseBody> getDocument(@Header("Authorization") String token, @Query("periodid")  String periodid , @Query("documentid") String documentid);
 
     @GET("version")
     Call<ResponseBody> getVersion();

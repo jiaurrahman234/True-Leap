@@ -29,7 +29,7 @@
                 android:layout_weight="6"
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
-                android:text="Subject name"
+                android:text=""
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textsize_xl" />

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -40,16 +41,11 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 
 public class CommonFunctions {
     public static String NO_INTERNET = "No Internet";
-    //Cache settings
     private static String CACHE_FILE = "classes.srl";
     final static long MAX_FILE_AGE = 1000 * 60 * 60 * 24 * 2;
 
@@ -79,7 +75,6 @@ public class CommonFunctions {
         }
         return response;
     }
-
 
     public static void saveJSONToCache(Activity context, String json){
         // Instantiate a JSON object from the request response
@@ -154,15 +149,15 @@ public class CommonFunctions {
      return  date;
     }
 
-    public static boolean writeResponseBodyToDisk(ResponseBody body , String doc_id , String file_name) {
+    public static boolean writeResponseBodyToDisk(ResponseBody body , String doc_id , String file_name , String mime_type) {
         try {
             File billFile;
             File billDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap");
             if(!billDirectory.isDirectory()) {{
                 billDirectory.mkdir();
-                billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+doc_id+"_"+file_name+".pdf");
+                billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+doc_id+"_"+file_name+"."+getExtensionType(mime_type));
             }}else {
-                billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+doc_id+"_"+file_name+".pdf");
+                billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+doc_id+"_"+file_name+"."+getExtensionType(mime_type));
             }
             InputStream inputStream = null;
             OutputStream outputStream = null;
@@ -212,7 +207,6 @@ public class CommonFunctions {
         }
     }
 
-
     public static boolean hasPermissionToDownload(final Activity context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
                 ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -233,8 +227,6 @@ public class CommonFunctions {
         dialog.show();
         return false;
     }
-
-
 
     /*public void store_data(){
         try {
@@ -318,7 +310,6 @@ public class CommonFunctions {
                 .playOn(view);
     }
 
-
     public static boolean isInternetOn(Context mContext) {
         ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -371,5 +362,22 @@ public class CommonFunctions {
 
     public static void showToast(Context context) {
         Toast.makeText(context, NO_INTERNET, Toast.LENGTH_SHORT).show();
+    }
+
+    public static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
+
+    public static String getExtensionType(String mime_type) {
+        String extension = null;
+        if (mime_type != null) {
+            extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mime_type);
+        }
+        return extension;
     }
 }

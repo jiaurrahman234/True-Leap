@@ -46,13 +46,10 @@ public class BaseActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 20;
     public Gson gson;
     public LocalStorage localStorage;
-    String userJson;
     ProgressDialog progressDialog;
     public Context context;
     Dialog dialog = null;
-    public Double longitudeFromMap = null;
     private int REQUEST_CODE_UPDATE = 1201;
-    public Double latitudeFromMap = null;
     public FragmentManager fragmentManager;
 
 
@@ -182,9 +179,9 @@ public class BaseActivity extends AppCompatActivity {
     public void exitApp() {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
-            builder.setTitle("Confirm")
+            builder.setTitle(R.string.confirm)
                     .setIcon(R.drawable.logo)
-                    .setMessage("Do you really want to exit?")
+                    .setMessage(R.string.logout_msg)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             finish();

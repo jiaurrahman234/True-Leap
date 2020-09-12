@@ -1,19 +1,24 @@
 package com.app.trueleap.home;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-
 import com.app.trueleap.Assignmentmodule.AssignmentActivity;
 import com.app.trueleap.Classnotemodule.ClassNotesActivity;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
+import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.FragmentClassmaterialtypeBinding;
 import com.app.trueleap.home.studentsubject.model.CalendarModel;
@@ -51,7 +56,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
     }
 
     private void initListeners() {
-
         binding.actionClassnote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +86,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                         }
                                         startActivity(new Intent(ClassMaterialTypeActivity.this, ClassNotesActivity.class)
                                                 .putExtra("period_id", classModel.getUniqueperiodid())
-                                                .putExtra("subject_code", sujectName)
                                                 .putExtra("subject_name", sujectName)
                                                 .putExtra("class_note", classnoteModelArrayList));
 
@@ -101,17 +104,57 @@ public class ClassMaterialTypeActivity extends BaseActivity {
 
             }
         });
+
         binding.actionAssignment.setOnClickListener(new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
-                                                            Intent assignintent = new Intent(ClassMaterialTypeActivity.this, AssignmentActivity.class);
-                                                            assignintent.putExtra("subject_code", sujectName);
-                                                            assignintent.putExtra("subject_name", sujectName);
-                                                            startActivity(assignintent);
+                                                            try {
+                                                                ArrayList<ClassnoteModel> AssignmentModelArrayList = new ArrayList<>();
+                                                                for (int i = 0; i < calendarModelArrayList.size(); i++) {
+                                                                    Log.d(TAG, "khkhf: " + calendarModelArrayList.size() + ", " + classId + " , " + calendarModelArrayList.get(i).getId());
+                                                                    //CalendarModel calendarModel = calendarModelArrayList.get(i);
+                                                                    if (Integer.parseInt(classId) == calendarModelArrayList.get(i).getId()) {
+
+                                                                        Log.d(TAG, "khkhf: " + calendarModelArrayList.get(i).getPeriodId());
+                                                                        for (int j = 0; j < classModelArrayList.size(); j++) {
+                                                                            ClassModel classModel = classModelArrayList.get(j);
+                                                                            Log.d(TAG, "vvcvc: " + calendarModelArrayList.get(i).getPeriodId() + "," + classModel.getUniqueperiodid());
+                                                                            if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {
+                                                                                Log.d(TAG, "hkghfg: " + classModel.getSubject());
+                                                                                if (!classModel.getAssgnmentModelArrayList().isEmpty()) {
+                                                                                    for (int k = 0; k < classModel.getAssgnmentModelArrayList().size(); k++) {
+                                                                                        DocumentsModel documentsModel = classModel.getAssgnmentModelArrayList().get(k);
+                                                                                        AssignmentModelArrayList.add(new ClassnoteModel(
+                                                                                                documentsModel.getId(),
+                                                                                                documentsModel.getTitle(),
+                                                                                                documentsModel.getNote(),
+                                                                                                classModel.getStartdate(),
+                                                                                                documentsModel.getFilename(),
+                                                                                                documentsModel.getType()));
+                                                                                    }
+
+                                                                                    startActivity(new Intent(ClassMaterialTypeActivity.this, AssignmentActivity.class)
+                                                                                            .putExtra("period_id", classModel.getUniqueperiodid())
+                                                                                            .putExtra("subject_name", sujectName)
+                                                                                            .putExtra("assignment", AssignmentModelArrayList));
+                                                                                }
+                                                                                else{
+                                                                                    Toast.makeText(context,"No Asssignment uploaded!",Toast.LENGTH_SHORT).show();
+                                                                                }
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                        break;
+                                                                    }
+                                                                }
+
+                                                            } catch (Exception e) {
+                                                                e.printStackTrace();
+                                                            }
+
                                                         }
                                                     }
         );
-
     }
 
     private void initdata() {
@@ -157,5 +200,51 @@ public class ClassMaterialTypeActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_change_lang:
+                showLanguageDialog();
+                return true;
+            case R.id.action_logout:
+                try {
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
+                    builder.setTitle(context.getResources().getString(R.string.confirm))
+                            .setIcon(R.drawable.logo)
+                            .setMessage(context.getResources().getString(R.string.exit_msg))
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    localStorage.logoutUser();
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, null);
+                    AlertDialog alertDialog = builder.create();
+                    if(!((Activity) context).isFinishing())
+                    {
+                        alertDialog.show();
+                    }
+                    alertTheme(alertDialog);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return true;
+           /*   case R.id.action_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                return true;*/
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

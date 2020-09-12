@@ -41,7 +41,7 @@
                     android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/std_class"
+                    android:text=""
                     android:textStyle="bold"
                     android:layout_marginRight="@dimen/margin_10dp"
                     android:textColor="@color/text_color"
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/std_section"
+                    android:text=""
                     android:textStyle="bold"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/textsize_m" />
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Subject name"
+                android:text=""
                 android:textStyle="bold"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/textsize_m" />

@@ -6,35 +6,18 @@ import android.content.SharedPreferences.Editor;
 
 
 public class LocalStorage {
-    public static final String KEY_HASH = "hash";
-    public static final String RECIPE_SLIDER = "recipeSlider";
-    public static final String KEY_USER = "User";
-    public static final String KEY_USER_ADDRESS = "user_address";
-    public static final String KEY_USER_LOCATION = "user_location";
     public static final String TOKEN = "user_token";
     public static final String ID = "id";
-    public static final String KEY_PREFERENCES = "preferences";
-    public static final String USER_PREFERENCES = "user_preferences";
-    public static final String USER_NAME = "user_name";
-    public static final String USER_EMAIL = "user_email";
-    public static final String PREF_LOCATION = "location_data";
-    public static final String PREF_LATITUDE = "location_data_latitude";
-    public static final String PREF_LONGITUDE = "location_data_longitude";
     private static final String IS_USER_LOGIN = "IsUserLoggedIn";
-    private static final String USER_PIN = "userpin";
     private static final String USER_PHONE = "user_phone";
     private static final String ROLL_NUMBER = "ROLL_NUMBER";
     private static final String CLASS_ID = "CLASS_ID";
     private static final String SECTION_ID = "SECTION_ID";
     private static final String AUTODOWNLOAD = "AUTODOWNLOAD";
     private static final String SELECTED_LANGUAGE = "selected_language";
-
-
     private static LocalStorage instance = null;
     SharedPreferences sharedPreferences;
     Editor editor;
-    int PRIVATE_MODE = 0;
-    Context _context;
 
     public LocalStorage(Context context) {
         sharedPreferences = context.getSharedPreferences("Preferences", 0);
@@ -119,7 +102,7 @@ public class LocalStorage {
     }
 
     public String getSelectedLanguage() {
-        return sharedPreferences.getString(SELECTED_LANGUAGE, "");
+        return sharedPreferences.getString(SELECTED_LANGUAGE, "en");
     }
 
     public void setSelectedLanguage(String lang) {

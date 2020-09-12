@@ -33,11 +33,6 @@ public class SplashActivity extends BaseActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    /*if (Constants.isInternetOn(context)) {
-                        getVersionCode();
-                    } else {
-                        mainMethod();
-                    }*/
                     mainMethod();
                 }
             }, 3000);
@@ -52,7 +47,7 @@ public class SplashActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
         } catch (Exception e) {

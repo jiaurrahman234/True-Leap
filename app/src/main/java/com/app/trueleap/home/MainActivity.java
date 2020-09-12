@@ -71,10 +71,9 @@ public class MainActivity extends BaseActivity {
             case R.id.action_logout:
                 try {
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
-
-                    builder.setTitle("Confirm")
+                    builder.setTitle(context.getResources().getString(R.string.confirm))
                             .setIcon(R.drawable.logo)
-                            .setMessage("Do you really want to logout?")
+                            .setMessage(context.getResources().getString(R.string.exit_msg))
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     localStorage.logoutUser();
@@ -89,7 +88,6 @@ public class MainActivity extends BaseActivity {
                     {
                         alertDialog.show();
                     }
-
                     alertTheme(alertDialog);
                 } catch (Exception e) {
                     e.printStackTrace();

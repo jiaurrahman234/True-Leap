@@ -31,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.app.trueleap.external.CommonFunctions.getExtensionType;
 import static com.app.trueleap.external.CommonFunctions.hasPermissionToDownload;
 import static com.app.trueleap.external.CommonFunctions.parse_date;
 import static com.app.trueleap.external.CommonFunctions.writeResponseBodyToDisk;
@@ -39,7 +40,6 @@ public class ViewClassNoteActivity extends BaseActivity {
 
     ActivityViewClassNoteBinding binding;
     Intent intent;
-    String subject_code;
     String subject_name,period_id;
     Context context;
     ClassnoteModel class_note;
@@ -63,16 +63,6 @@ public class ViewClassNoteActivity extends BaseActivity {
         initListeners();
     }
 
-    private void initListeners() {
-        binding.fileTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(hasPermissionToDownload(((Activity)context))){
-                    download_file();
-                }
-            }
-        });
-    }
 
     private void initData() {
         try{
@@ -94,9 +84,11 @@ public class ViewClassNoteActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -106,11 +98,10 @@ public class ViewClassNoteActivity extends BaseActivity {
                 return true;
             case R.id.action_logout:
                 try {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
-
-                    builder.setTitle("Confirm")
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
+                    builder.setTitle(context.getResources().getString(R.string.confirm))
                             .setIcon(R.drawable.logo)
-                            .setMessage("Do you really want to logout?")
+                            .setMessage(context.getResources().getString(R.string.exit_msg))
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     localStorage.logoutUser();
@@ -121,13 +112,20 @@ public class ViewClassNoteActivity extends BaseActivity {
                             })
                             .setNegativeButton(android.R.string.no, null);
                     AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                    if(!((Activity) context).isFinishing())
+                    {
+                        alertDialog.show();
+                    }
                     alertTheme(alertDialog);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 return true;
+           /* case R.id.action_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                return true;*/
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -144,6 +142,23 @@ public class ViewClassNoteActivity extends BaseActivity {
         }
     }
 
+    private void initListeners() {
+        binding.fileTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
+                if(docfile.exists()){
+                    openFile(docfile);
+                }else {
+                    if(hasPermissionToDownload(((Activity)context))){
+                        download_file();
+                    }
+                }
+            }
+        });
+    }
+
     private void download_file(){
         showProgressBar();
         Call<ResponseBody> call = null;
@@ -158,24 +173,14 @@ public class ViewClassNoteActivity extends BaseActivity {
                 hideProgressBar();
                 if (response.isSuccessful()) {
                     Log.d(TAG, "server contacted and has file");
-                    boolean writtenToDisk = writeResponseBodyToDisk(response.body() , class_note.getId() , class_note.getNote_doc_file());
+                    boolean writtenToDisk = writeResponseBodyToDisk(response.body() , class_note.getId() , class_note.getNote_doc_file(), class_note.getDoc_type() );
                     Log.d(TAG, "file download was a success? " + writtenToDisk);
-                    snackbar = Snackbar.make(binding.getRoot(), "Downloaded Succesfully" ,Snackbar.LENGTH_LONG )
-                            .setAction("Open", new View.OnClickListener() {
+                    snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully ,Snackbar.LENGTH_LONG )
+                            .setAction(R.string.open, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    File billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+".pdf");
+                                    File billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
                                     openFile(billFile);
-                                }
-
-                                private void openFile(File file) {
-                                    try {
-                                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                                        intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-                                        startActivity(intent);
-                                    } catch (ActivityNotFoundException e) {
-                                        e.printStackTrace();
-                                    }
                                 }
                             });
                     snackbar.show();
@@ -194,5 +199,15 @@ public class ViewClassNoteActivity extends BaseActivity {
                 snackbar.show();
             }
         });
+    }
+
+    public void openFile(File file) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(file), class_note.getDoc_type());
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

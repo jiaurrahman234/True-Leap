@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <resources>
-        <string name="app_name">True Leap</string>
-        <!-- TODO: Remove or change this placeholder text -->
+        <string name="app_name">Trueleap</string>
         <string name="hello_blank_fragment">Hello</string>
         <string name="module_assignment">कार्य</string>
         <string name="module_quiz">प्रश्नोत्तरी</string>
@@ -17,13 +16,13 @@
         <string name="std_section">Student Section </string>
 
         <string name="login">लॉग इन करें</string>
-        <string name="email">Email</string>
-        <string name="password">Password</string>
-        <string name="email_error">Invalid Email</string>
-        <string name="required_field">Required</string>
-        <string name="action_change_lang">Change Languaage</string>
-        <string name="action_settings">Change Languaage</string>
-        <string name="action_logout">Logout</string>
+        <string name="email">ईमेल</string>
+        <string name="password">पासवर्ड</string>
+        <string name="email_error">अवैध ईमेल</string>
+        <string name="required_field">अपेक्षित</string>
+        <string name="action_change_lang">भाषा बदलो</string>
+        <string name="action_settings">भाषा बदलो</string>
+        <string name="action_logout">लॉग आउट</string>
 
 
         <color name="event_color_01">#59dbe0</color>
@@ -41,4 +40,24 @@
 
         <string name="download_permission_explaination">File Download - Write to external storage permission</string>
         <string name="download_permission_grant">Grant Permission</string>
+
+
+        <string name="download">डाउनलोड</string>
+        <string name="open">दस्तावेज़ खोलें</string>
+        <string name="upload">डालना</string>
+        <string name="take_photo">फोटो लो</string>
+        <string name="open_gallery">गैलरी खोलें</string>
+        <string name="add_document">दस्तावेज़ जोड़ें</string>
+        <string name="auto_download">ऑटो डाउनलोड</string>
+
+        <string name="english">अंग्रेज़ी</string>
+        <string name="hindi">हिन्दी</string>
+        <string name="select_language">भाषा का चयन करें</string>
+
+        <string name="confirm">पुष्टि करें</string>
+        <string name="logout_msg">क्या आप वास्तव में बाहर निकलना चाहते हैं?</string>
+        <string name="exit_msg">क्या आप वास्तव में लॉगआउट करना चाहते हैं?</string>
+        <string name="downloaded_successfully">सफलतापूर्वक डाउनलोड किया गया</string>
+        <string name="submit_assignment">असाइनमेंट जमा करें</string>
+
 </resources>

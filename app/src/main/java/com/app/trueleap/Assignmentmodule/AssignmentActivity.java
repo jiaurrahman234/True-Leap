@@ -3,6 +3,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -89,6 +90,7 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -98,9 +100,9 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
             case R.id.action_logout:
                 try {
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
-                    builder.setTitle("Confirm")
+                    builder.setTitle(context.getResources().getString(R.string.confirm))
                             .setIcon(R.drawable.logo)
-                            .setMessage("Do you really want to logout?")
+                            .setMessage(context.getResources().getString(R.string.exit_msg))
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     localStorage.logoutUser();
@@ -111,13 +113,20 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
                             })
                             .setNegativeButton(android.R.string.no, null);
                     AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                    if(!((Activity) context).isFinishing())
+                    {
+                        alertDialog.show();
+                    }
                     alertTheme(alertDialog);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 return true;
+           /* case R.id.action_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                return true;*/
+
         }
         return super.onOptionsItemSelected(item);
     }

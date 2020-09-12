@@ -275,18 +275,19 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_change_lang:
+                showLanguageDialog();
                 return true;
             case R.id.action_logout:
                 try {
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
-
-                    builder.setTitle("Confirm")
+                    builder.setTitle(context.getResources().getString(R.string.confirm))
                             .setIcon(R.drawable.logo)
-                            .setMessage("Do you really want to logout?")
+                            .setMessage(context.getResources().getString(R.string.exit_msg))
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     localStorage.logoutUser();
@@ -297,10 +298,10 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
                             })
                             .setNegativeButton(android.R.string.no, null);
                     AlertDialog alertDialog = builder.create();
-                    if (!((Activity) context).isFinishing()) {
+                    if(!((Activity) context).isFinishing())
+                    {
                         alertDialog.show();
                     }
-
                     alertTheme(alertDialog);
                 } catch (Exception e) {
                     e.printStackTrace();

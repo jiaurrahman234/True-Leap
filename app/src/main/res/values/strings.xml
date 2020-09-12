@@ -43,4 +43,29 @@
     <string name="download_permission_explaination">File Download - Write to external storage permission</string>
     <string name="download_permission_grant">Grant Permission</string>
 
+    <string name="download">Download</string>
+    <string name="open">Open Document</string>
+    <string name="upload">Upload</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="open_gallery">Open Gallery</string>
+    <string name="add_document">Add Document</string>
+    <string name="auto_download">Auto Download</string>
+
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+    <string name="select_language">Select Language</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="logout_msg">Do you really want to exit?</string>
+    <string name="exit_msg">Do you really want to logout?</string>
+
+    <string name="downloaded_successfully">Downloaded Successfully</string>
+    <string name="submit_assignment">Submit Assignment</string>
+
+
+
+
+
+
+
 </resources>

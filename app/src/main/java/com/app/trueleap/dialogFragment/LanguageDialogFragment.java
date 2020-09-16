@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import com.app.trueleap.R;
 import com.app.trueleap.databinding.FragmentLanguageDialogBinding;
 import com.app.trueleap.external.LocalStorage;
 import com.google.android.material.chip.ChipGroup;
+
 import java.util.Locale;
 
 public class LanguageDialogFragment extends DialogFragment {
@@ -34,7 +36,7 @@ public class LanguageDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         context = getActivity();
-        activity = (Activity)context;
+        activity = (Activity) context;
         localStorage = new LocalStorage(context);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -43,19 +45,26 @@ public class LanguageDialogFragment extends DialogFragment {
         binding = DataBindingUtil.bind(view);
 
         language = view.findViewById(R.id.language);
+        Log.d("TAG","language "+localStorage.getSelectedLanguage());
         switch (localStorage.getSelectedLanguage()) {
-            case "en" :
+            case "en":
                 binding.english.setChecked(true);
+                binding.hindi.setChecked(false);
                 checked_id = binding.english.getId();
-            case "hi" :
+                break;
+            case "hi":
                 binding.hindi.setChecked(true);
+                binding.english.setChecked(false);
                 checked_id = binding.hindi.getId();
+                break;
         }
 
         binding.english.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
+                    binding.english.setChecked(true);
+                    binding.hindi.setChecked(false);
                     checked_id = binding.english.getId();
                     Log.d("cdsc", "eng checked");
                 }
@@ -65,7 +74,9 @@ public class LanguageDialogFragment extends DialogFragment {
         binding.hindi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
+                    binding.hindi.setChecked(true);
+                    binding.english.setChecked(false);
                     checked_id = binding.hindi.getId();
                     Log.d("cdsc", "hind checked");
                 }
@@ -94,22 +105,27 @@ public class LanguageDialogFragment extends DialogFragment {
     private void selectLanguage(DialogInterface dialog) {
         Locale locale;
         locale = new Locale("en");
-        Log.d("checked id" ,"fdfd "+checked_id);
-        if(checked_id!=0 ) {
-            if(checked_id==binding.hindi.getId()) {
+        Log.d("checked id", "fdfd " + checked_id);
+        if (checked_id != 0) {
+            if (checked_id == binding.hindi.getId()) {
                 locale = new Locale("hi");
                 localStorage.setSelectedLanguage("hi");
-                Log.d("ds","hindi");
-            }else if(checked_id==binding.english.getId()){
+                Log.d("ds", "hindi");
+            } else if (checked_id == binding.english.getId()) {
                 locale = new Locale("en");
                 localStorage.setSelectedLanguage("en");
-                Log.d("ds","englsh");
+                Log.d("ds", "englsh");
             }
             Locale.setDefault(locale);
             Configuration config = new Configuration();
             config.locale = locale;
             getContext().getResources().updateConfiguration(config, getContext().getResources().getDisplayMetrics());
-            }
+        }
+        //refresh activity
+        Intent intent = getActivity().getIntent();
+        getActivity().finish();
+        startActivity(intent);
+
         dialog.cancel();
     }
 
@@ -121,11 +137,11 @@ public class LanguageDialogFragment extends DialogFragment {
                 Button positiveButton = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
                 positiveButton.setEnabled(false);
             }*/
-        }
+    }
 
 
     @Override
-    public void onCancel(DialogInterface dialogInterface){
+    public void onCancel(DialogInterface dialogInterface) {
         super.onCancel(dialogInterface);
     }
 }

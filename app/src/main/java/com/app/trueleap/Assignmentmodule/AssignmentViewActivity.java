@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.Manifest;
@@ -80,7 +81,7 @@ public class AssignmentViewActivity extends BaseActivity {
     ClassnoteModel class_note;
     String subject_name, period_id;
     Snackbar snackbar;
-
+    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +93,8 @@ public class AssignmentViewActivity extends BaseActivity {
             period_id = intent.getStringExtra("period_id");
         }
         context = AssignmentViewActivity.this;
+        IMAGE_DIRECTORY = "/" + getString(R.string.app_name);
+
         initToolbar();
         initdata();
         initListener();
@@ -156,13 +159,8 @@ public class AssignmentViewActivity extends BaseActivity {
         binding.download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
-                if(docfile.exists()){
-                    openFile(docfile);
-                }else {
-                    if(hasPermissionToDownload(((Activity)context))){
-                        download_file();
-                    }
+                if (isStoragePermissionGranted()){
+                    downLoadFile();
                 }
             }
         });
@@ -181,6 +179,48 @@ public class AssignmentViewActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private void downLoadFile() {
+        try{
+            //author jiaur
+            File directory = new File(
+                    Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
+            // have the object build the directory structure, if needed.
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            //author manoj
+                    File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
+                if(docfile.exists()){
+                    openFile(docfile);
+                }else {
+                    if(hasPermissionToDownload(((Activity)context))){
+                        download_file();
+                    }
+                }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
+        }
     }
 
     private void PickImage() {
@@ -313,6 +353,19 @@ public class AssignmentViewActivity extends BaseActivity {
             {
                 Toast.makeText(context, "camera permission denied", Toast.LENGTH_LONG).show();
             }
+        }else{
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                // permission was granted, yay! Do the
+                // contacts-related task you need to do.
+                downLoadFile();
+            } else {
+                Toast.makeText(context, "Can't download file", Toast.LENGTH_SHORT).show();
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
+            }
+            return;
         }
     }
 

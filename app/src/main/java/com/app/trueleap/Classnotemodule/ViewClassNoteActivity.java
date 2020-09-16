@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.APIClient;
+import com.app.trueleap.Retrofit.ApiClientFile;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityViewClassNoteBinding;
@@ -53,6 +55,8 @@ public class ViewClassNoteActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_class_note);
         intent = getIntent();
         context = ViewClassNoteActivity.this;
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         initToolbar();
         if (intent.getExtras() != null) {
             class_note = (ClassnoteModel) intent.getExtras().getParcelable("class_note");
@@ -147,7 +151,8 @@ public class ViewClassNoteActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
+                //File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
+                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file());
                 if(docfile.exists()){
                     openFile(docfile);
                 }else {
@@ -162,7 +167,7 @@ public class ViewClassNoteActivity extends BaseActivity {
     private void download_file(){
         showProgressBar();
         Call<ResponseBody> call = null;
-        call =   APIClient
+        call =   ApiClientFile
                 .getInstance()
                 .getApiInterface()
                 .getDocument(localStorage.getKeyUserToken(),period_id,class_note.getId());
@@ -171,6 +176,8 @@ public class ViewClassNoteActivity extends BaseActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 hideProgressBar();
+                Log.d(TAG,"hjjkkkj:"+response.toString());
+                Log.d(TAG,"dsds:"+call.request());
                 if (response.isSuccessful()) {
                     Log.d(TAG, "server contacted and has file");
                     boolean writtenToDisk = writeResponseBodyToDisk(response.body() , class_note.getId() , class_note.getNote_doc_file(), class_note.getDoc_type() );
@@ -179,7 +186,7 @@ public class ViewClassNoteActivity extends BaseActivity {
                             .setAction(R.string.open, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    File billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
+                                    File billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file());
                                     openFile(billFile);
                                 }
                             });

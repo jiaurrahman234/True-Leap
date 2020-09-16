@@ -270,6 +270,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                     try {
+                        Log.d(TAG,"hkghkf: "+call.request());
                         hideProgressView();
                         String response_data = response.body().string();
                         saveJSONToCache(getActivity(),response_data);

@@ -173,7 +173,7 @@ public class ClassModel  implements Parcelable {
     }
 
     public ArrayList<DocumentsModel> getAssgnmentModelArrayList() {
-        return documentsModelArrayList;
+        return AssignmentArrayList;
     }
 
     public void setAssgnmentModelArrayList(ArrayList<DocumentsModel> AssignmentArrayList) {

@@ -14,15 +14,25 @@
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.app.trueleap"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+        <activity android:name=".Assignmentmodule.AssignmentViewActivity"/>
         <activity android:name=".Classnotemodule.ViewClassNoteActivity"></activity>
-        <activity android:name=".Assignmentmodule.AssignmentViewActivity" >
+        <activity android:name=".SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,8 +42,6 @@
         <activity android:name=".Assignmentmodule.AssignmentActivity" />
         <activity android:name=".Classnotemodule.ClassNotesActivity" />
         <activity android:name=".MessagingModule.MessagingFragment" />
-        <activity android:name=".SplashActivity">
-        </activity>
         <activity android:name=".auth.LoginActivity" />
         <activity android:name=".home.MainActivity" />
         <activity android:name=".base.BaseActivity" />

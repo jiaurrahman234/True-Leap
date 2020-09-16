@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.APIClient;
+import com.app.trueleap.Retrofit.ApiClientFile;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityAssignmentBinding;
@@ -453,7 +454,7 @@ public class AssignmentViewActivity extends BaseActivity {
     private void download_file(){
         showProgressBar();
         Call<ResponseBody> call = null;
-        call =   APIClient
+        call =   ApiClientFile
                 .getInstance()
                 .getApiInterface()
                 .getDocument(localStorage.getKeyUserToken(),period_id,class_note.getId());

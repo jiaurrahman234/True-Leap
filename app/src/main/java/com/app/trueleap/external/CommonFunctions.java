@@ -153,12 +153,12 @@ public class CommonFunctions {
         try {
             File billFile;
             File billDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap");
-            if(!billDirectory.isDirectory()) {{
+            if(!billDirectory.isDirectory()) {
                 billDirectory.mkdir();
-                billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+doc_id+"_"+file_name+"."+getExtensionType(mime_type));
-            }}else {
-                billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+doc_id+"_"+file_name+"."+getExtensionType(mime_type));
             }
+
+            billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+doc_id+"_"+file_name);
+
             InputStream inputStream = null;
             OutputStream outputStream = null;
 

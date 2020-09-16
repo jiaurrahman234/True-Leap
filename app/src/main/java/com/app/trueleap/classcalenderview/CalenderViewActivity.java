@@ -48,9 +48,8 @@ import java.util.Locale;
 import static com.app.trueleap.external.CommonFunctions.getJSONFromCache;
 import static com.app.trueleap.external.CommonFunctions.getdateValue;
 
-public class CalenderViewActivity extends BaseActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
+public class CalenderViewActivity extends BaseActivity  {
 
-    private WeekView mWeekView;
     Intent intent;
     Context context;
     ArrayList<ClassModel> Subjects;
@@ -64,26 +63,6 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-        // Get a reference for the week view in the layout.
-        mWeekView = (WeekView) findViewById(R.id.weekView);
-        // Show a toast message about the touched event.
-        mWeekView.setOnEventClickListener(this);
-        // The week view has infinite scrolling horizontally. We have to provide the events of a
-        // month every time the month changes on the week view.
-        mWeekView.setMonthChangeListener(this);
-        // Set long press listener for events.
-        mWeekView.setEventLongPressListener(this);
-        // Set long press listener for empty view
-        mWeekView.setEmptyViewLongPressListener(this);
-
-        // Set up a date time interpreter to interpret how the date and time will be formatted in
-        // the week view. This is optional.
-        /* setupDateTimeInterpreter(false); */
-
-        mWeekView.setNumberOfVisibleDays(4);
-        mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
-        mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
-        mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
         initData();
     }
 
@@ -204,10 +183,8 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
 
 
             String[] time = (Subjects.get(0).getStarttime().split("[:.]"));
-            mWeekView.goToHour(Integer.parseInt(time[0]));
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(getdateValue(Subjects.get(0).getStartdate()));
-            mWeekView.goToDate(calendar);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -250,7 +227,7 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
                     localStorage.setClass(classData);
                     startActivity(new Intent(CalenderViewActivity.this, ClassMaterialTypeActivity.class)
                             .putExtra("subject_name", Subject_name)
-                            .putExtra("class_id", Integer.toString(3))
+                            .putExtra("class_id", Integer.toString(1))
                             .putExtra("calendar_data", calendarModelArrayList));
 
             /*for (int i=0;i<classModelArrayList.size();i++){
@@ -316,120 +293,7 @@ public class CalenderViewActivity extends BaseActivity implements WeekView.Event
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        // Populate the week view with some events.
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-
-        Log.d("fvbdvd", "dscsc " + Subjects.size());
-        int count = 0;
-        for (int i = Subjects.size() - 1; i >= 0 && count < 8; i--) {
-            Log.d("fdvvvbdvd", "dscsc " + Subjects.get(i).getStartdate());
-
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(getdateValue(Subjects.get(i).getStartdate()));
-            int month = cal.get(Calendar.MONTH);
-            int year = cal.get(Calendar.YEAR);
-            int day = cal.get(Calendar.DATE);
-
-            String start_time = Subjects.get(i).getStarttime();
-            String[] starttime_value_separated = start_time.split("[://.]");
-            String end_time = Subjects.get(i).getEndtime();
-            String[] end_time_value_separated = end_time.split("[://.]");
-
-
-            int rdsv = Integer.parseInt(end_time_value_separated[0]);
-            int sdc = Integer.parseInt(end_time_value_separated[1]);
-
-            Log.d(TAG, "csacc" + rdsv);
-            Log.d(TAG, "cszcczcsc" + sdc);
-
-            Calendar startTime = Calendar.getInstance();
-            startTime.set(Calendar.DAY_OF_MONTH, day);
-            startTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(starttime_value_separated[0]));
-            startTime.set(Calendar.MINUTE, Integer.parseInt(starttime_value_separated[1]));
-            startTime.set(Calendar.MONTH, month);
-            startTime.set(Calendar.YEAR, year);
-
-            Calendar endTime = (Calendar) startTime.clone();
-            endTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(end_time_value_separated[0]));
-            endTime.set(Calendar.MINUTE, Integer.parseInt(end_time_value_separated[1]));
-            endTime.set(Calendar.MONTH, month);
-            startTime.set(Calendar.YEAR, year);
-
-            if ((month == newMonth - 1) && year == newYear) {
-
-                calendarModelArrayList.add(new CalendarModel((int) i, Subjects.get(i).getUniqueperiodid()));
-                WeekViewEvent event = new WeekViewEvent(i, getClassTitle(Subjects.get(i).getSubject(), Subjects.get(i).getStarttime(), Subjects.get(i).getEndtime()), startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_01));
-                events.add(event);
-            }
-            count++;
-        }
-
-        return events;
-    }
-
-    private void setupDateTimeInterpreter(final boolean shortDate) {
-        mWeekView.setDateTimeInterpreter(new DateTimeInterpreter() {
-            @Override
-            public String interpretDate(Calendar date) {
-                SimpleDateFormat weekdayNameFormat = new SimpleDateFormat("EEE", Locale.getDefault());
-                String weekday = weekdayNameFormat.format(date.getTime());
-                SimpleDateFormat format = new SimpleDateFormat(" M/d", Locale.getDefault());
-                if (shortDate)
-                    weekday = String.valueOf(weekday.charAt(0));
-                return weekday.toUpperCase() + format.format(date.getTime());
-            }
-
-            @Override
-            public String interpretTime(int hour) {
-                return hour > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
-            }
-        });
-    }
-
     protected String getClassTitle(String name, String st, String et) {
         return name + "(" + st + " - " + et + ")";
-    }
-
-    @Override
-    public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        try {
-            Toast.makeText(this, "Clicked " + classModelArrayList.size(), Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "ghlglk: " + classModelArrayList.size());
-            Gson gson = new Gson();
-            String classData = gson.toJson(classModelArrayList);
-            localStorage.setClass(classData);
-            startActivity(new Intent(CalenderViewActivity.this, ClassMaterialTypeActivity.class)
-                    .putExtra("subject_name", event.getName())
-                    .putExtra("class_id", Long.toString(event.getId()))
-                    .putExtra("calendar_data", calendarModelArrayList));
-
-            /*for (int i=0;i<classModelArrayList.size();i++){
-                ClassModel classModel = classModelArrayList.get(i);
-                Log.d(TAG,"jhljgj: "+classModel.getStartdate());
-                if (!classModel.getDocumentsModelArrayList().isEmpty()){
-                    Log.d(TAG,"xcxcx: "+classModel.getDocumentsModelArrayList().size());
-                }
-            }*/
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onEmptyViewLongPress(Calendar time) {
-        Toast.makeText(this, "Empty view long pressed:", Toast.LENGTH_SHORT).show();
-    }
-
-    public WeekView getWeekView() {
-        return mWeekView;
     }
 }

@@ -113,7 +113,7 @@ public class CalenderViewActivity extends BaseActivity  {
                                 }
 
                                 for (int k = 0; k < AssignmentArray.length(); k++) {
-                                    JSONObject documentObj = documentArray.getJSONObject(k);
+                                    JSONObject documentObj = AssignmentArray.getJSONObject(k);
                                     assignmentModelArrayList.add(new DocumentsModel(
                                             documentObj.getString("id"),
                                             documentObj.getString("filename"),

@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.Menu;
@@ -52,6 +53,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -83,6 +85,7 @@ public class AssignmentViewActivity extends BaseActivity {
     String subject_name, period_id;
     Snackbar snackbar;
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +97,8 @@ public class AssignmentViewActivity extends BaseActivity {
             period_id = intent.getStringExtra("period_id");
         }
         context = AssignmentViewActivity.this;
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         IMAGE_DIRECTORY = "/" + getString(R.string.app_name);
 
         initToolbar();
@@ -135,11 +140,11 @@ public class AssignmentViewActivity extends BaseActivity {
         binding.openDocument.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
-                if(docfile.exists()){
+                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
+                if (docfile.exists()) {
                     openFile(docfile);
-                }else {
-                    if(hasPermissionToDownload(((Activity)context))){
+                } else {
+                    if (hasPermissionToDownload(((Activity) context))) {
                         download_file();
                     }
                 }
@@ -150,7 +155,7 @@ public class AssignmentViewActivity extends BaseActivity {
         binding.submitAssignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(hasPermissionToDownload(((Activity)context))) {
+                if (hasPermissionToDownload(((Activity) context))) {
                     uploadFile();
                 }
             }
@@ -160,7 +165,7 @@ public class AssignmentViewActivity extends BaseActivity {
         binding.download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isStoragePermissionGranted()){
+                if (isStoragePermissionGranted()) {
                     downLoadFile();
                 }
             }
@@ -170,11 +175,11 @@ public class AssignmentViewActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
-                if(docfile.exists()){
+                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
+                if (docfile.exists()) {
                     openFile(docfile);
-                }else {
-                    if(hasPermissionToDownload(((Activity)context))){
+                } else {
+                    if (hasPermissionToDownload(((Activity) context))) {
                         download_file();
                     }
                 }
@@ -183,7 +188,7 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     private void downLoadFile() {
-        try{
+        try {
             //author jiaur
             File directory = new File(
                     Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
@@ -192,34 +197,33 @@ public class AssignmentViewActivity extends BaseActivity {
                 directory.mkdirs();
             }
             //author manoj
-                    File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
-                if(docfile.exists()){
-                    openFile(docfile);
-                }else {
-                    if(hasPermissionToDownload(((Activity)context))){
-                        download_file();
-                    }
+            File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
+            if (docfile.exists()) {
+                openFile(docfile);
+            } else {
+                if (hasPermissionToDownload(((Activity) context))) {
+                    download_file();
                 }
-        }catch (Exception e){
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public  boolean isStoragePermissionGranted() {
+    public boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
+                Log.v(TAG, "Permission is granted");
                 return true;
             } else {
 
-                Log.v(TAG,"Permission is revoked");
+                Log.v(TAG, "Permission is revoked");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
                 return false;
             }
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG, "Permission is granted");
             return true;
         }
     }
@@ -254,12 +258,12 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     private void initdata() {
-        try{
+        try {
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
-            binding.sujectName.setText(subject_name +" Assignments");
+            binding.sujectName.setText(subject_name + " Assignments");
             renderContent();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -269,9 +273,9 @@ public class AssignmentViewActivity extends BaseActivity {
         binding.assignmentTextExcerpt.setText(class_note.getNote_text());
         binding.date.setText(parse_date(class_note.getUploaded_date()));
 
-        if(class_note.getNote_doc_file()!=null){
+        if (class_note.getNote_doc_file() != null) {
             binding.fileName.setText(class_note.getNote_doc_file());
-        }else {
+        } else {
             binding.fileTitle.setVisibility(View.GONE);
         }
     }
@@ -279,8 +283,7 @@ public class AssignmentViewActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == TAKE_IMAGE && resultCode == Activity.RESULT_OK)
-        {
+        if (requestCode == TAKE_IMAGE && resultCode == Activity.RESULT_OK) {
             if (!(data == null)) {
                 try {
                     uplaod_image = (Bitmap) data.getExtras().get("data");
@@ -300,7 +303,7 @@ public class AssignmentViewActivity extends BaseActivity {
                     InputStream inputStream = context.getContentResolver().openInputStream(data.getData());
                     uplaod_image = BitmapFactory.decodeStream(inputStream);
                     imagepath = saveImage(uplaod_image);
-                    Log.d(TAG,"image path "+ imagepath);
+                    Log.d(TAG, "image path " + imagepath);
                     binding.imagesToUpload.setVisibility(View.VISIBLE);
                     binding.imageView.setImageBitmap(uplaod_image);
                     binding.docName.setText("");
@@ -311,50 +314,45 @@ public class AssignmentViewActivity extends BaseActivity {
         }
 
         if (requestCode == REQUEST_DOCUMENT) {
-                Uri uri = data.getData();
-                String uriString = uri.toString();
-                File myFile = new File(uriString);
-                String path = myFile.getAbsolutePath();
-                String displayName = null;
-                if (uriString.startsWith("content://")) {
-                    Cursor cursor = null;
-                    try {
-                        cursor = getContentResolver().query(uri, null, null, null, null);
-                        if (cursor != null && cursor.moveToFirst()) {
-                            displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                            binding.imagesToUpload.setVisibility(View.VISIBLE);
-                            binding.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_picture_as_pdf_24));
-                            binding.docName.setText(displayName);
-                        }
-                    } finally {
-                        cursor.close();
+            Uri uri = data.getData();
+            String uriString = uri.toString();
+            File myFile = new File(uriString);
+            String path = myFile.getAbsolutePath();
+            String displayName = null;
+            if (uriString.startsWith("content://")) {
+                Cursor cursor = null;
+                try {
+                    cursor = getContentResolver().query(uri, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        binding.imagesToUpload.setVisibility(View.VISIBLE);
+                        binding.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_picture_as_pdf_24));
+                        binding.docName.setText(displayName);
                     }
-                } else if (uriString.startsWith("file://")) {
-                    displayName = myFile.getName();
-                    binding.imagesToUpload.setVisibility(View.VISIBLE);
-                    binding.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_picture_as_pdf_24));
-                    binding.docName.setText(displayName);
+                } finally {
+                    cursor.close();
                 }
+            } else if (uriString.startsWith("file://")) {
+                displayName = myFile.getName();
+                binding.imagesToUpload.setVisibility(View.VISIBLE);
+                binding.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_picture_as_pdf_24));
+                binding.docName.setText(displayName);
             }
+        }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_CAMERA_PERMISSION_CODE)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(context, "camera permission granted", Toast.LENGTH_LONG).show();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            }
-            else
-            {
+            } else {
                 Toast.makeText(context, "camera permission denied", Toast.LENGTH_LONG).show();
             }
-        }else{
+        } else {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
@@ -378,9 +376,9 @@ public class AssignmentViewActivity extends BaseActivity {
         try {
 
             File uploadDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + "upload");
-            if(!uploadDirectory.isDirectory()) {
+            if (!uploadDirectory.isDirectory()) {
                 uploadDirectory.mkdir();
-                Log.d("ewfdewd","fwew");
+                Log.d("ewfdewd", "fwew");
             }
             //File uploadablefile = new File(uploadDirectory, period_id+ "_" + class_note.getId() + ".jpg");
             File uploadablefile = new File(uploadDirectory, "asssign" + ".jpg");
@@ -432,8 +430,7 @@ public class AssignmentViewActivity extends BaseActivity {
                             })
                             .setNegativeButton(android.R.string.no, null);
                     AlertDialog alertDialog = builder.create();
-                    if(!((Activity) context).isFinishing())
-                    {
+                    if (!((Activity) context).isFinishing()) {
                         alertDialog.show();
                     }
                     alertTheme(alertDialog);
@@ -451,13 +448,13 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
 
-    private void download_file(){
+    private void download_file() {
         showProgressBar();
         Call<ResponseBody> call = null;
-        call =   ApiClientFile
+        call = ApiClientFile
                 .getInstance()
                 .getApiInterface()
-                .getDocument(localStorage.getKeyUserToken(),period_id,class_note.getId());
+                .getDocument(localStorage.getKeyUserToken(), period_id, class_note.getId());
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -465,20 +462,20 @@ public class AssignmentViewActivity extends BaseActivity {
                 hideProgressBar();
                 if (response.isSuccessful()) {
                     Log.d(TAG, "server contacted and has file");
-                    boolean writtenToDisk = writeResponseBodyToDisk(response.body() , class_note.getId() , class_note.getNote_doc_file(), class_note.getDoc_type() );
+                    boolean writtenToDisk = writeResponseBodyToDisk(response.body(), class_note.getId(), class_note.getNote_doc_file(), class_note.getDoc_type());
                     Log.d(TAG, "file download was a success? " + writtenToDisk);
-                    snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully ,Snackbar.LENGTH_LONG )
+                    snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully, Snackbar.LENGTH_LONG)
                             .setAction(R.string.open, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    File billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file()+"."+ getExtensionType(class_note.getDoc_type()));
+                                    File billFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
                                     openFile(billFile);
                                 }
                             });
                     snackbar.show();
                 } else {
                     Log.d(TAG, "server contact failed");
-                    snackbar = Snackbar.make(binding.getRoot(), "Download Failed" ,Snackbar.LENGTH_LONG );
+                    snackbar = Snackbar.make(binding.getRoot(), "Download Failed", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
@@ -487,7 +484,7 @@ public class AssignmentViewActivity extends BaseActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e(TAG, "error");
                 hideProgressBar();
-                snackbar = Snackbar.make(binding.getRoot(), "Download Failed" ,Snackbar.LENGTH_LONG );
+                snackbar = Snackbar.make(binding.getRoot(), "Download Failed", Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
         });
@@ -504,49 +501,67 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     public void uploadFile() {
-        String upload_param = localStorage.getClassId()+":"+DOC_ASSIGNMENT+":"+period_id+":"+PUBLIC;
+        String upload_param = localStorage.getClassId() + ":" + DOC_ASSIGNMENT + ":" + period_id + ":" + PUBLIC;
+        //manoj
         File uploadfile = new File(imagepath);
         RequestBody filebody = RequestBody.create(MediaType.parse("image/*"),
                 uploadfile);
+//jiaur
+        RequestBody coverRequestFile = null;
+        MultipartBody.Part photo1 = null;
+        File file1 = new File(imagepath);
+        coverRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file1);
+        photo1 = MultipartBody.Part.createFormData("file", file1.getName(), coverRequestFile);
+        if (imagepath.length() == 0) {
+            Toast.makeText(context, "Please select one file", Toast.LENGTH_SHORT).show();
+        } else {
 
-        RequestBody note = RequestBody.create(MediaType.parse("text/plain"),
-                class_note.getNote_title());
+            RequestBody note = RequestBody.create(MediaType.parse("text/plain"),
+                    class_note.getNote_title());
 
-        RequestBody title = RequestBody.create(MediaType.parse("text/plain"),
-                class_note.getNote_title());
+            RequestBody title = RequestBody.create(MediaType.parse("text/plain"),
+                    class_note.getNote_title());
 
-        RequestBody uploadparam = RequestBody.create(MediaType.parse("text/plain"),
-                upload_param);
+            RequestBody uploadparam = RequestBody.create(MediaType.parse("text/plain"),
+                    upload_param);
+           /* String note = class_note.getNote_title();
 
-        showProgressBar();
-        Call<ResponseBody> call = null;
-        call =   APIClient
-                .getInstance()
-                .getApiInterface()
-                .uploadDoc(localStorage.getKeyUserToken(), filebody,title, note ,uploadparam);
+            String title = class_note.getNote_title();*/
 
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                hideProgressBar();
-                if(response.isSuccessful()) {
-                    snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully ,Snackbar.LENGTH_LONG );
-                    snackbar.show();
-                } else {
-                    Log.d(TAG, "server contact failed");
-                    snackbar = Snackbar.make(binding.getRoot(), "upload Failed" ,Snackbar.LENGTH_LONG );
+
+            showProgressBar();
+            Call<ResponseBody> call = null;
+            call = ApiClientFile
+                    .getInstance()
+                    .getApiInterface()
+                    .uploadDoc(localStorage.getKeyUserToken(), photo1, title, note, uploadparam);
+            Log.d(TAG, "khhkjhkh:" + call.request());
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    hideProgressBar();
+                    Log.d(TAG, "jljl:" + response.toString());
+                    if (response.isSuccessful()) {
+                        snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully, Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    } else {
+                        Log.d(TAG, "server contact failed");
+                        snackbar = Snackbar.make(binding.getRoot(), "upload Failed", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e(TAG, "error");
+                    hideProgressBar();
+                    snackbar = Snackbar.make(binding.getRoot(), "upload Failed", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
-            }
+            });
+        }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e(TAG, "error");
-                hideProgressBar();
-                snackbar = Snackbar.make(binding.getRoot(), "upload Failed" ,Snackbar.LENGTH_LONG );
-                snackbar.show();
-            }
-        });
+
     }
 
 

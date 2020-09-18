@@ -3,6 +3,7 @@ package com.app.trueleap.Retrofit;
 import com.app.trueleap.auth.LoginModel;
 import com.app.trueleap.home.studentsubject.Subject;
 import io.reactivex.Single;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -40,7 +41,11 @@ public interface APIInterface {
     @Multipart
     @POST(UPLOAD)
     Call<ResponseBody> uploadDoc(@Header("Authorization") String token,
-                                 @Part("file\"; filename=\"pp.png\" ") RequestBody file,
+                                 @Part MultipartBody.Part file,
+                                // @Part("file\"; filename=\"pp.png\" ") RequestBody file,
+                                /* @Query("title") String title,
+                                 @Query("note") String note,
+                                 @Query("uploadparam") String uploadparam,*/
                                  @Part("title") RequestBody title,
                                  @Part("note") RequestBody note,
                                  @Part("uploadparam") RequestBody uploadparam);

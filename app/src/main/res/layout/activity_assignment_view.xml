@@ -19,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_marginHorizontal="@dimen/margin_10dp"
         android:layout_marginVertical="@dimen/margin_10dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,7 +132,7 @@
                 android:id="@+id/assignment_text_excerpt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/module_assignment"
+                android:text="Assignment"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/textsize_s" />
 
@@ -194,6 +195,7 @@
                 </com.google.android.material.button.MaterialButton>
 
                 <com.google.android.material.button.MaterialButton
+                    android:visibility="gone"
                     android:id="@+id/upload_assignment"
                     android:layout_width="match_parent"
                     android:text="@string/upload"
@@ -295,12 +297,14 @@
                 android:background="@color/grey" />
 
             <LinearLayout
+                android:gravity="center"
                 android:orientation="vertical"
                 android:layout_marginTop="@dimen/margin_10dp"
                 android:id="@+id/images_to_upload"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="90dp">
 
                 <FrameLayout
                     android:layout_width="100dp"
@@ -325,6 +329,7 @@
                 </FrameLayout>
 
                 <TextView
+                    android:gravity="center"
                     android:id="@+id/doc_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -334,6 +339,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
+                    android:layout_gravity="center"
                     android:id="@+id/submit_Assignment"
                     android:layout_width="wrap_content"
                     android:text="@string/submit_assignment"

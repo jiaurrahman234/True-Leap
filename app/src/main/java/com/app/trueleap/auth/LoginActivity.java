@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.databinding.ActivityLoginBinding;
 import com.app.trueleap.home.MainActivity;
 import com.app.trueleap.R;
@@ -23,12 +24,20 @@ import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.Constants;
 import com.app.trueleap.external.DatabaseHelper;
+import com.app.trueleap.home.studentsubject.model.ClassModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+
+import static com.app.trueleap.external.CommonFunctions.saveJSONToCache;
 
 public class LoginActivity extends BaseActivity {
 
@@ -41,16 +50,14 @@ public class LoginActivity extends BaseActivity {
     DatabaseHelper databaseHelper;
     String fcm_token;
     ActivityLoginBinding binding;
-    AuthViewModel viewModel;
     JSONObject updateWrapperObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        viewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
         updateWrapperObj = new JSONObject();
-        initObserver();
+        //initObserver();
         initLister();
     }
 
@@ -71,8 +78,9 @@ public class LoginActivity extends BaseActivity {
                                     Log.d(TAG, "login detail: " + updateWrapperObj.toString());
                                     RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                                             (new JSONObject(updateWrapperObj.toString())).toString());
-                                    viewModel.loginUser(body);
-                                    showProgressBar();
+                                    //viewModel.loginUser(body);
+                                    callApiData(body);
+
                                 } else {
                                     binding.loginPassword.setError(getString(R.string.required_field));
                                 }
@@ -94,21 +102,52 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void initObserver() {
-        viewModel.isApiSuccess.observe(this, it -> {
+    private void callApiData(RequestBody body) {
+        try {
+            showProgressBar();
+            Call<ResponseBody> call = APIClient
+                    .getInstance()
+                    .getApiInterface()
+                    .loginUser(body);
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    try {
+                        hideProgressBar();
+                        if (response.code()==200){
+                            String response_data = response.body().string();
+                            JSONObject jsonObject = new JSONObject(response_data);
+
+                            localStorage.createUserLoginSession(jsonObject.getString("token"), jsonObject.getString("id"),
+                                    jsonObject.getJSONObject("profile").getString("rollNumber"), jsonObject.getJSONObject("profile").getString("phoneNumber"),
+                                    jsonObject.getJSONObject("profile").getJSONArray("class").getJSONObject(0).getString("classid"),
+                                    jsonObject.getJSONObject("profile").getJSONArray("class").getJSONObject(0).getString("section"), true);
+                            localStorage.setAutodownload(true);
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        }else{
+                            String errorBody = response.errorBody().string();
+                            Log.d(TAG, "error data: " + errorBody);
+                            JSONObject jsonObject = new JSONObject(errorBody);
+                            CommonFunctions.showSnackView(binding.rootlayout,jsonObject.getString("desc") );
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        hideProgressBar();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressBar();
+                }
+            });
+        } catch (Exception e) {
             hideProgressBar();
-        });
-        viewModel.userData.observe(this, it -> {
-            Log.d(TAG, "Successfully login " + it.id);
-            localStorage.createUserLoginSession(it.token, it.id, it.profile.rollNumber, it.profile.phoneNumber, it.profile.classDataArrayList.get(0).classid, it.profile.classDataArrayList.get(0).section, true);
-            localStorage.setAutodownload(true);
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        });
-        viewModel.errorData.observe(this, it -> {
-            //CommonFunctions.showSnackView(binding.rootlayout, it.errorDesc_);
-            CommonFunctions.showSnackView(binding.rootlayout, "Login error");
-        });
+            e.printStackTrace();
+        }
     }
 
     @Override

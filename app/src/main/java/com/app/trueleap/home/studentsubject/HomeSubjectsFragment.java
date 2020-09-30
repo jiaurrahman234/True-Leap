@@ -22,7 +22,6 @@ import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
 import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
-import com.app.trueleap.home.studentsubject.viewModel.SubjectViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,7 +48,6 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
     ArrayList<ClassModel> Subjects;
     subject_adapter Subject_adpater;
     FragmentManager fragmentManager;
-    SubjectViewModel viewModel;
 
     public HomeSubjectsFragment() {
         // Required empty public constructor

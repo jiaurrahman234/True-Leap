@@ -24,13 +24,13 @@ public interface APIInterface {
 
     @Headers("Content-Type: application/json")
     @POST(LOGIN)
-    Single<LoginModel> loginUser(@Body RequestBody body);
+    Call<ResponseBody> loginUser(@Body RequestBody body);
 
     @GET(SUBJECTS)
     Call<ResponseBody> getSubjects(@Header("Authorization") String token, @Query("ismobile") boolean ismobile);
 
-    @GET(SUBJECTS)
-    Single<Subject> getSubjectsData(@Header("Authorization") String token , @Query("ismobile") boolean ismobile);
+   /* @GET(SUBJECTS)
+    Single<Subject> getSubjectsData(@Header("Authorization") String token , @Query("ismobile") boolean ismobile);*/
 
    /* @GET(DOCUMENT)
     Single<Subject> getDocument(@Header("Authorization") String token , @Query("periodid")  String periodid , @Query("documentid") String documentid );*/

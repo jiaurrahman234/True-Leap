@@ -25,8 +25,6 @@ import com.app.trueleap.home.studentsubject.model.ClassModel;
 import java.util.ArrayList;
 
 public class AssignmentActivity extends BaseActivity implements assignmentClickListener {
-
-
     Intent intent;
     String subject_name;
     ActivityAssignmentBinding binding;

@@ -61,7 +61,6 @@ public class SettingsActivity extends BaseActivity {
             }else{
                 binding.autoDownload.setChecked(false);
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -73,7 +72,6 @@ public class SettingsActivity extends BaseActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -105,12 +103,13 @@ public class SettingsActivity extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 return true;
-           /* case R.id.action_settings:
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                return true;*/
 
+                /*
+                case R.id.action_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                return true;
+                */
         }
         return super.onOptionsItemSelected(item);
     }

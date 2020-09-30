@@ -60,6 +60,7 @@ public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapte
             }
         }
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.assignment_note_row_layout, parent, false);

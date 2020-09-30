@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import static com.app.trueleap.external.Constants.EXCERPT_LENGTH;
 
 public class ClassnoteModel implements Parcelable {
-
     String id;
     String note_title;
     String note_text;

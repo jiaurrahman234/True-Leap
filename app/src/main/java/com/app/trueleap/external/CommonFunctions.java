@@ -240,7 +240,7 @@ public class CommonFunctions {
         }
     }
 
-    private retrivedata<CartProduct> retrieveCart(){
+   private retrivedata<CartProduct> retrieveCart(){
         try {
             // Load in an object
             ObjectInputStream in = null;

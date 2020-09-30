@@ -37,7 +37,6 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,7 +48,6 @@ import static com.app.trueleap.external.CommonFunctions.getJSONFromCache;
 import static com.app.trueleap.external.CommonFunctions.getdateValue;
 
 public class CalenderViewActivity extends BaseActivity  {
-
     Intent intent;
     Context context;
     ArrayList<ClassModel> Subjects;
@@ -65,7 +63,6 @@ public class CalenderViewActivity extends BaseActivity  {
         setContentView(R.layout.activity_base);
         initData();
     }
-
     private void initData() {
         Subjects = new ArrayList<>();
         context= CalenderViewActivity.this;
@@ -151,7 +148,6 @@ public class CalenderViewActivity extends BaseActivity  {
                                                 documentsModelArrayList,
                                                 assignmentModelArrayList));
                             }
-
                         } else {
                             Subjects.add(
                                     new ClassModel(
@@ -166,12 +162,9 @@ public class CalenderViewActivity extends BaseActivity  {
                                             documentsModelArrayList,
                                             assignmentModelArrayList));
                         }
-
-
                     } else {
                         break;
                     }
-
                 }
             }
 
@@ -251,7 +244,6 @@ public class CalenderViewActivity extends BaseActivity  {
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

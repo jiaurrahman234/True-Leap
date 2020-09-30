@@ -65,7 +65,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                         Log.d(TAG, "khkhf: " + calendarModelArrayList.size() + ", " + classId + " , " + calendarModelArrayList.get(i).getId());
                         //CalendarModel calendarModel = calendarModelArrayList.get(i);
                         if (Integer.parseInt(classId) == calendarModelArrayList.get(i).getId()) {
-
                             Log.d(TAG, "khkhf: " + calendarModelArrayList.get(i).getPeriodId());
                             for (int j = 0; j < classModelArrayList.size(); j++) {
                                 ClassModel classModel = classModelArrayList.get(j);
@@ -73,7 +72,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                 if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {
                                     Log.d(TAG, "hkghfg: " + classModel.getSubject());
                                     if (!classModel.getDocumentsModelArrayList().isEmpty()) {
-
                                         for (int k = 0; k < classModel.getDocumentsModelArrayList().size(); k++) {
                                             DocumentsModel documentsModel = classModel.getDocumentsModelArrayList().get(k);
                                             classnoteModelArrayList.add(new ClassnoteModel(

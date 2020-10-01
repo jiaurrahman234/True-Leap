@@ -18,6 +18,7 @@ import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.base.BaseFragment;
 import com.app.trueleap.classcalenderview.CalenderViewActivity;
 import com.app.trueleap.databinding.FragmentSubjectsBinding;
+import com.app.trueleap.documentSearch.SearchActivity;
 import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
@@ -26,6 +27,7 @@ import com.app.trueleap.home.studentsubject.model.ClassModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
@@ -82,9 +84,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
         context = getContext();
         fragmentManager = getActivity().getSupportFragmentManager();
         localStorage = LocalStorage.getInstance(context);
-     /* viewModel = ViewModelProviders.of(this).get(SubjectViewModel.class);*/
         initdata();
-        //initObserver();
         initListeners();
         return binding.getRoot();
     }
@@ -104,6 +104,12 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
     }*/
 
     private void initListeners() {
+        binding.searchLyt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
 
     }
 
@@ -263,23 +269,23 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
             Call<ResponseBody> call = APIClient
                     .getInstance()
                     .getApiInterface()
-                    .getSubjects(localStorage.getKeyUserToken(),true);
+                    .getSubjects(localStorage.getKeyUserToken(), true);
 
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                     try {
-                        Log.d(TAG,"hkghkf: "+call.request());
+                        Log.d(TAG, "hkghkf: " + call.request());
                         hideProgressView();
-                        if (response.code()==200){
+                        if (response.code() == 200) {
                             String response_data = response.body().string();
-                            saveJSONToCache(getActivity(),response_data);
+                            saveJSONToCache(getActivity(), response_data);
                             JSONArray jsonArray = new JSONArray(response_data);
                             Log.d(TAG, "subject response: " + jsonArray.length());
-                            if (jsonArray.length()>0){
+                            if (jsonArray.length() > 0) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONArray json_array_at_level_1 = jsonArray.getJSONArray(i);
-                                    if (json_array_at_level_1.length()>0){
+                                    if (json_array_at_level_1.length() > 0) {
                                         JSONObject classJsonObject = json_array_at_level_1.getJSONObject(0);
 
                                         ArrayList<String> daysArraylist = new ArrayList<>();
@@ -297,19 +303,18 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                                                 classJsonObject.getString("endtime"), daysArraylist,
                                                 classJsonObject.getString("class"),
                                                 classJsonObject.getString("section"),
-                                                classJsonObject.getString("subject"),null,null));
+                                                classJsonObject.getString("subject"), null, null));
                                     }
                                 }
-                            }
-                            else {
+                            } else {
 
                             }
                             populateSubjectListing();
-                        }else{
+                        } else {
                             String errorBody = response.errorBody().string();
                             Log.d(TAG, "error data: " + errorBody);
                             JSONObject jsonObject = new JSONObject(errorBody);
-                            CommonFunctions.showSnackView(binding.rootlayout,jsonObject.getString("desc") );
+                            CommonFunctions.showSnackView(binding.rootlayout, jsonObject.getString("desc"));
                         }
 
                     } catch (Exception e) {
@@ -317,6 +322,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                         hideProgressView();
                     }
                 }
+
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     hideProgressView();
@@ -340,8 +346,8 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
     public void onClicked(int position) {
 
         Intent intent = new Intent(getContext(), CalenderViewActivity.class);
-        intent.putExtra("uniqueperiodid",Subjects.get(position).getUniqueperiodid());
-        intent.putExtra("subject_name",Subjects.get(position).getSubject());
+        intent.putExtra("uniqueperiodid", Subjects.get(position).getUniqueperiodid());
+        intent.putExtra("subject_name", Subjects.get(position).getSubject());
         startActivity(intent);
 
         /* ClassmaterialtypeFragment clsmtypeFragment = new ClassmaterialtypeFragment().newInstance(

@@ -45,10 +45,10 @@ public class SplashActivity extends BaseActivity {
     private void mainMethod() {
         try {
             if (localStorage.isUserLoggedIn()) {
-                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
         } catch (Exception e) {

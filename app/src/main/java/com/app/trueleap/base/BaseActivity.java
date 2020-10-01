@@ -61,7 +61,7 @@ public class BaseActivity extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             gson = new Gson();
-            context = getApplicationContext();
+            context = BaseActivity.this;
             fragmentManager = getSupportFragmentManager();
             localStorage = new LocalStorage(getApplicationContext());
             progressDialog = new ProgressDialog(BaseActivity.this);

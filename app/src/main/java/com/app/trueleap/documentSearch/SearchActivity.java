@@ -1,9 +1,15 @@
 package com.app.trueleap.documentSearch;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
@@ -44,50 +50,55 @@ public class SearchActivity extends BaseActivity implements recyclerviewClickLis
         intent = getIntent();
         context = SearchActivity.this;
         initToolbar();
-        initData();
+        initListner();
     }
 
-    private void initToolbar() {
-        TextView toolbar_tv;
-        Toolbar toolbar;
-        toolbar_tv = (TextView) findViewById(R.id.toolbar_tv);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    private void initListner() {
+        binding.searchTerm.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (binding.searchTerm.getText().toString().trim().length()>2){
+                        searchCall(binding.searchTerm.getText().toString());
+                    }else{
+                        Toast.makeText(context, "Minimum search text length is 3", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
-    private void initData() {
+    private void searchCall(String data) {
         searchresult = new ArrayList<>();
         try {
             showProgressBar();
             Call<ResponseBody> call = APIClient
                     .getInstance()
                     .getApiInterface()
-                    .globalsearch("test");
+                    .globalsearch(data);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                     try {
-                        Log.d(TAG,"hkghkf: "+call.request());
                         hideProgressBar();
                         String response_data = response.body().string();
                         JSONArray jsonArray = new JSONArray(response_data);
-                        Log.d(TAG, "subject response: " + jsonArray.length());
-
-                        String count ;
-
-                        if (jsonArray.length()>1){
-                            JSONObject resultObject = jsonArray.getJSONObject(0);
-                            count = resultObject.getString("count");
+                        int count=0 ;
+                        count = jsonArray.getJSONObject(0).getInt("count");
+                        binding.searchCount.setText(Integer.toString(count)+" records found");
+                        if (count>0) {
+                            binding.rvSearchresult.setVisibility(View.VISIBLE);
                             for (int i = 1; i < jsonArray.length(); i++) {
-                                resultObject = jsonArray.getJSONObject(i);
-                                    searchresult.add(new SresultItem(resultObject.getString("file"),
-                                    resultObject.getString("content")));
+                                JSONObject resultObject = jsonArray.getJSONObject(i);
+                                searchresult.add(new SresultItem(resultObject.getString("file"),
+                                        resultObject.getString("content")));
                             }
                             populateSearchResult();
-                        }
-                        else {
-                           count = jsonArray.getJSONObject(0).getString("count");
+                        } else {
+                            binding.rvSearchresult.setVisibility(View.GONE);
+                            Toast.makeText(SearchActivity.this, "No data found", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

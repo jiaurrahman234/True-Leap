@@ -1,8 +1,5 @@
 package com.app.trueleap.Retrofit;
 
-import com.app.trueleap.auth.LoginModel;
-import com.app.trueleap.home.studentsubject.Subject;
-import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -15,6 +12,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+
 import static com.app.trueleap.Retrofit.APIConstants.DOCUMENT;
 import static com.app.trueleap.Retrofit.APIConstants.LOGIN;
 import static com.app.trueleap.Retrofit.APIConstants.SUBJECTS;
@@ -28,12 +26,6 @@ public interface APIInterface {
 
     @GET(SUBJECTS)
     Call<ResponseBody> getSubjects(@Header("Authorization") String token, @Query("ismobile") boolean ismobile);
-
-   /* @GET(SUBJECTS)
-    Single<Subject> getSubjectsData(@Header("Authorization") String token , @Query("ismobile") boolean ismobile);*/
-
-   /* @GET(DOCUMENT)
-    Single<Subject> getDocument(@Header("Authorization") String token , @Query("periodid")  String periodid , @Query("documentid") String documentid );*/
 
     @GET(DOCUMENT)
     Call<ResponseBody> getDocument(@Header("Authorization") String token, @Query("periodid")  String periodid , @Query("documentid") String documentid);

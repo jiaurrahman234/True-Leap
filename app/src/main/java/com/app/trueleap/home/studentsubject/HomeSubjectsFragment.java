@@ -18,6 +18,7 @@ import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.base.BaseFragment;
 import com.app.trueleap.classcalenderview.CalenderViewActivity;
 import com.app.trueleap.databinding.FragmentSubjectsBinding;
+import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
 import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
@@ -270,39 +271,47 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                     try {
                         Log.d(TAG,"hkghkf: "+call.request());
                         hideProgressView();
-                        String response_data = response.body().string();
-                        saveJSONToCache(getActivity(),response_data);
-                        JSONArray jsonArray = new JSONArray(response_data);
-                        Log.d(TAG, "subject response: " + jsonArray.length());
-                        if (jsonArray.length()>0){
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONArray json_array_at_level_1 = jsonArray.getJSONArray(i);
-                                if (json_array_at_level_1.length()>0){
-                                    JSONObject classJsonObject = json_array_at_level_1.getJSONObject(0);
+                        if (response.code()==200){
+                            String response_data = response.body().string();
+                            saveJSONToCache(getActivity(),response_data);
+                            JSONArray jsonArray = new JSONArray(response_data);
+                            Log.d(TAG, "subject response: " + jsonArray.length());
+                            if (jsonArray.length()>0){
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONArray json_array_at_level_1 = jsonArray.getJSONArray(i);
+                                    if (json_array_at_level_1.length()>0){
+                                        JSONObject classJsonObject = json_array_at_level_1.getJSONObject(0);
 
-                                    ArrayList<String> daysArraylist = new ArrayList<>();
-                                    JSONArray days = classJsonObject.getJSONArray("days");
-                                    for (int j = 0; j < days.length(); j++) {
-                                        daysArraylist.add(days.getString(j));
+                                        ArrayList<String> daysArraylist = new ArrayList<>();
+                                        JSONArray days = classJsonObject.getJSONArray("days");
+                                        for (int j = 0; j < days.length(); j++) {
+                                            daysArraylist.add(days.getString(j));
+                                        }
+
+                                        Subjects.add(new ClassModel(classJsonObject.getString("uniqueperiodid"),
+                                                classJsonObject.getString("teacher"),
+                                                classJsonObject.getString("uniqueteacherid"),
+                                                classJsonObject.getString("startdate"),
+                                                classJsonObject.getString("enddate"),
+                                                classJsonObject.getString("starttime"),
+                                                classJsonObject.getString("endtime"), daysArraylist,
+                                                classJsonObject.getString("class"),
+                                                classJsonObject.getString("section"),
+                                                classJsonObject.getString("subject"),null,null));
                                     }
-
-                                    Subjects.add(new ClassModel(classJsonObject.getString("uniqueperiodid"),
-                                    classJsonObject.getString("teacher"),
-                                    classJsonObject.getString("uniqueteacherid"),
-                                    classJsonObject.getString("startdate"),
-                                    classJsonObject.getString("enddate"),
-                                    classJsonObject.getString("starttime"),
-                                    classJsonObject.getString("endtime"), daysArraylist,
-                                    classJsonObject.getString("class"),
-                                    classJsonObject.getString("section"),
-                                    classJsonObject.getString("subject"),null,null));
                                 }
                             }
-                        }
-                        else {
+                            else {
 
+                            }
+                            populateSubjectListing();
+                        }else{
+                            String errorBody = response.errorBody().string();
+                            Log.d(TAG, "error data: " + errorBody);
+                            JSONObject jsonObject = new JSONObject(errorBody);
+                            CommonFunctions.showSnackView(binding.rootlayout,jsonObject.getString("desc") );
                         }
-                        populateSubjectListing();
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         hideProgressView();

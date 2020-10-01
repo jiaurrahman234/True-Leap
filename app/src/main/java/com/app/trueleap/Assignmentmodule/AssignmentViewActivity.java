@@ -73,14 +73,11 @@ import static com.app.trueleap.external.Constants.REQUEST_DOCUMENT;
 import static com.app.trueleap.external.Constants.TAKE_IMAGE;
 
 public class AssignmentViewActivity extends BaseActivity {
-
     Intent intent;
     ActivityAssignmentViewBinding binding;
-    ImageView Assignmentimage;
     Bitmap uplaod_image;
     private static String IMAGE_DIRECTORY = "";
     private String imagepath = "";
-    Context context;
     ClassnoteModel class_note;
     String subject_name, period_id;
     Snackbar snackbar;
@@ -90,113 +87,89 @@ public class AssignmentViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_assignment_view);
-        intent = getIntent();
-        if (intent.getExtras() != null) {
-            class_note = (ClassnoteModel) intent.getExtras().getParcelable("assignment");
-            subject_name = (String) intent.getStringExtra("subject_name");
-            period_id = intent.getStringExtra("period_id");
-        }
-        context = AssignmentViewActivity.this;
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         IMAGE_DIRECTORY = "/" + getString(R.string.app_name);
-
         initToolbar();
         initdata();
         initListener();
     }
 
-    private void initToolbar() {
-        TextView toolbar_tv;
-        Toolbar toolbar;
-        toolbar_tv = (TextView) findViewById(R.id.toolbar_tv);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-
     private void initListener() {
-        binding.takePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takeImage();
-            }
-        });
+        try{
+            binding.takePhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    takeImage();
+                }
+            });
+            binding.addPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PickImage();
+                }
+            });
+            binding.uploadDoc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    performFileSearch();
+                }
+            });
+            binding.openDocument.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
+                    if (docfile.exists()) {
+                        openFile(docfile);
+                    } else {
+                        if (hasPermissionToDownload(((Activity) context))) {
+                            download_file();
+                        }
+                    }
 
-        binding.addPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PickImage();
-            }
-        });
-
-        binding.uploadDoc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performFileSearch();
-            }
-        });
-
-        binding.openDocument.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
-                if (docfile.exists()) {
-                    openFile(docfile);
-                } else {
+                }
+            });
+            binding.submitAssignment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     if (hasPermissionToDownload(((Activity) context))) {
-                        download_file();
+                        uploadFile();
                     }
                 }
-
-            }
-        });
-
-        binding.submitAssignment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (hasPermissionToDownload(((Activity) context))) {
-                    uploadFile();
-                }
-            }
-        });
-
-
-        binding.download.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isStoragePermissionGranted()) {
-                    downLoadFile();
-                }
-            }
-        });
-
-        binding.fileTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
-                if (docfile.exists()) {
-                    openFile(docfile);
-                } else {
-                    if (hasPermissionToDownload(((Activity) context))) {
-                        download_file();
+            });
+            binding.download.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isStoragePermissionGranted()) {
+                        downLoadFile();
                     }
                 }
-            }
-        });
+            });
+            binding.fileTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
+                    if (docfile.exists()) {
+                        openFile(docfile);
+                    } else {
+                        if (hasPermissionToDownload(((Activity) context))) {
+                            download_file();
+                        }
+                    }
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void downLoadFile() {
         try {
-            //author jiaur
-            File directory = new File(
-                    Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
-            // have the object build the directory structure, if needed.
+            File directory = new File(Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
             if (!directory.exists()) {
                 directory.mkdirs();
             }
-            //author manoj
             File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
             if (docfile.exists()) {
                 openFile(docfile);
@@ -217,7 +190,6 @@ public class AssignmentViewActivity extends BaseActivity {
                 Log.v(TAG, "Permission is granted");
                 return true;
             } else {
-
                 Log.v(TAG, "Permission is revoked");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
                 return false;
@@ -229,15 +201,17 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     private void PickImage() {
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("image/*");
-
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
-
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-        startActivityForResult(chooserIntent, PICK_IMAGE);
+        try{
+            Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            getIntent.setType("image/*");
+            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickIntent.setType("image/*");
+            Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+            startActivityForResult(chooserIntent, PICK_IMAGE);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -259,6 +233,12 @@ public class AssignmentViewActivity extends BaseActivity {
 
     private void initdata() {
         try {
+            intent = getIntent();
+            if (intent.getExtras() != null) {
+                class_note = (ClassnoteModel) intent.getExtras().getParcelable("assignment");
+                subject_name = (String) intent.getStringExtra("subject_name");
+                period_id = intent.getStringExtra("period_id");
+            }
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
             binding.sujectName.setText(subject_name + " Assignments");
@@ -269,14 +249,17 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     private void renderContent() {
-        binding.assignmentTitle.setText(class_note.getNote_title());
-        binding.assignmentTextExcerpt.setText(class_note.getNote_text());
-        binding.date.setText(parse_date(class_note.getUploaded_date()));
-
-        if (class_note.getNote_doc_file() != null) {
-            binding.fileName.setText(class_note.getNote_doc_file());
-        } else {
-            binding.fileTitle.setVisibility(View.GONE);
+        try{
+            binding.assignmentTitle.setText(class_note.getNote_title());
+            binding.assignmentTextExcerpt.setText(class_note.getNote_text());
+            binding.date.setText(parse_date(class_note.getUploaded_date()));
+            if (class_note.getNote_doc_file() != null) {
+                binding.fileName.setText(class_note.getNote_doc_file());
+            } else {
+                binding.fileTitle.setVisibility(View.GONE);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -355,32 +338,22 @@ public class AssignmentViewActivity extends BaseActivity {
         } else {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                // permission was granted, yay! Do the
-                // contacts-related task you need to do.
                 downLoadFile();
             } else {
                 Toast.makeText(context, "Can't download file", Toast.LENGTH_SHORT).show();
-                // permission denied, boo! Disable the
-                // functionality that depends on this permission.
             }
             return;
         }
     }
 
-
     public String saveImage(Bitmap myBitmap) {
-
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
         try {
-
             File uploadDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + "upload");
             if (!uploadDirectory.isDirectory()) {
                 uploadDirectory.mkdir();
-                Log.d("ewfdewd", "fwew");
             }
-            //File uploadablefile = new File(uploadDirectory, period_id+ "_" + class_note.getId() + ".jpg");
             File uploadablefile = new File(uploadDirectory, "asssign" + ".jpg");
             if (uploadablefile.exists()) {
                 uploadablefile.delete();
@@ -392,7 +365,6 @@ public class AssignmentViewActivity extends BaseActivity {
                     new String[]{uploadablefile.getPath()},
                     new String[]{"image/jpeg"}, null);
             fo.close();
-            Log.d("TAG", "File Saved::" + uploadablefile.getAbsolutePath());
             return uploadablefile.getAbsolutePath();
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -400,94 +372,45 @@ public class AssignmentViewActivity extends BaseActivity {
         return "";
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_change_lang:
-                showLanguageDialog();
-                return true;
-            case R.id.action_logout:
-                try {
-                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
-                    builder.setTitle(context.getResources().getString(R.string.confirm))
-                            .setIcon(R.drawable.logo)
-                            .setMessage(context.getResources().getString(R.string.exit_msg))
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    localStorage.logoutUser();
-                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, null);
-                    AlertDialog alertDialog = builder.create();
-                    if (!((Activity) context).isFinishing()) {
-                        alertDialog.show();
-                    }
-                    alertTheme(alertDialog);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return true;
-           /* case R.id.action_settings:
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                return true;*/
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
     private void download_file() {
-        showProgressBar();
-        Call<ResponseBody> call = null;
-        call = ApiClientFile
-                .getInstance()
-                .getApiInterface()
-                .getDocument(localStorage.getKeyUserToken(), period_id, class_note.getId());
+        try{
+            showProgressBar();
+            Call<ResponseBody> call = null;
+            call = ApiClientFile
+                    .getInstance()
+                    .getApiInterface()
+                    .getDocument(localStorage.getKeyUserToken(), period_id, class_note.getId());
 
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                hideProgressBar();
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "server contacted and has file");
-                    boolean writtenToDisk = writeResponseBodyToDisk(response.body(), class_note.getId(), class_note.getNote_doc_file(), class_note.getDoc_type());
-                    Log.d(TAG, "file download was a success? " + writtenToDisk);
-                    snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully, Snackbar.LENGTH_LONG)
-                            .setAction(R.string.open, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    File billFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
-                                    openFile(billFile);
-                                }
-                            });
-                    snackbar.show();
-                } else {
-                    Log.d(TAG, "server contact failed");
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    hideProgressBar();
+                    if (response.isSuccessful()) {
+                        boolean writtenToDisk = writeResponseBodyToDisk(response.body(), class_note.getId(), class_note.getNote_doc_file(), class_note.getDoc_type());
+                        snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully, Snackbar.LENGTH_LONG)
+                                .setAction(R.string.open, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        File billFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
+                                        openFile(billFile);
+                                    }
+                                });
+                        snackbar.show();
+                    } else {
+                        snackbar = Snackbar.make(binding.getRoot(), "Download Failed", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressBar();
                     snackbar = Snackbar.make(binding.getRoot(), "Download Failed", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e(TAG, "error");
-                hideProgressBar();
-                snackbar = Snackbar.make(binding.getRoot(), "Download Failed", Snackbar.LENGTH_LONG);
-                snackbar.show();
-            }
-        });
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void openFile(File file) {
@@ -527,9 +450,7 @@ public class AssignmentViewActivity extends BaseActivity {
            /* String note = class_note.getNote_title();
 
             String title = class_note.getNote_title();*/
-
-
-            showProgressBar();
+           showProgressBar();
             Call<ResponseBody> call = null;
             call = ApiClientFile
                     .getInstance()
@@ -550,7 +471,6 @@ public class AssignmentViewActivity extends BaseActivity {
                         snackbar.show();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     Log.e(TAG, "error");
@@ -560,9 +480,5 @@ public class AssignmentViewActivity extends BaseActivity {
                 }
             });
         }
-
-
     }
-
-
 }

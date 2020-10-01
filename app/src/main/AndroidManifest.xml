@@ -22,7 +22,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".documentSearch.SearchActivity"></activity>
+        <activity android:name=".documentSearch.SearchDetailActivity"></activity>
+        <activity android:name=".documentSearch.SearchActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

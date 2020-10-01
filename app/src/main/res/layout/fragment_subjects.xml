@@ -4,8 +4,8 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/margin_10dp"
-    android:layout_marginVertical="@dimen/margin_10dp"
+android:layout_marginHorizontal="@dimen/margin_10dp"
+android:layout_marginVertical="@dimen/margin_10dp"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 tools:context="home.studentsubject.HomeSubjectsFragment">
 
@@ -47,8 +47,8 @@ tools:context="home.studentsubject.HomeSubjectsFragment">
             android:textSize="@dimen/textsize_m" />
 
     </LinearLayout>
-    </LinearLayout>
 
+</LinearLayout>
 
 <androidx.core.widget.NestedScrollView
     app:layout_constraintTop_toBottomOf="@+id/header_info"
@@ -60,6 +60,7 @@ tools:context="home.studentsubject.HomeSubjectsFragment">
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_subject"
             android:layout_width="match_parent"

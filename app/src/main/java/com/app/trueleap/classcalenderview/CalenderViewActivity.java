@@ -174,7 +174,6 @@ public class CalenderViewActivity extends BaseActivity  {
                 count++;
             }
 
-
             String[] time = (Subjects.get(0).getStarttime().split("[:.]"));
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(getdateValue(Subjects.get(0).getStartdate()));
@@ -189,7 +188,6 @@ public class CalenderViewActivity extends BaseActivity  {
         int countx = 1;
         CalendarView calendarView;
         calendarView = findViewById(R.id.calendarView);
-
         List<Calendar> calendars = new ArrayList<>();
         List<EventDay> events = new ArrayList<>();
         for (int i = Subjects.size() - 1; i >= 0 && countx < 8; i--) {

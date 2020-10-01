@@ -256,6 +256,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
     private void initdata() {
         binding.studentClass.setText(localStorage.getClassId());
         binding.studentSection.setText(localStorage.getSectionId());
+
         Subjects = new ArrayList<>();
         try {
             showProgressView();
@@ -272,6 +273,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                         hideProgressView();
                         String response_data = response.body().string();
                         saveJSONToCache(getActivity(),response_data);
+
                         JSONArray jsonArray = new JSONArray(response_data);
                         Log.d(TAG, "subject response: " + jsonArray.length());
                         if (jsonArray.length()>0){

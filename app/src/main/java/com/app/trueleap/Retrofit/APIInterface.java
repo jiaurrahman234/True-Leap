@@ -16,6 +16,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 import static com.app.trueleap.Retrofit.APIConstants.DOCUMENT;
+import static com.app.trueleap.Retrofit.APIConstants.GLOBALSEARCH;
 import static com.app.trueleap.Retrofit.APIConstants.LOGIN;
 import static com.app.trueleap.Retrofit.APIConstants.SUBJECTS;
 import static com.app.trueleap.Retrofit.APIConstants.UPLOAD;
@@ -37,6 +38,9 @@ public interface APIInterface {
 
     @GET(DOCUMENT)
     Call<ResponseBody> getDocument(@Header("Authorization") String token, @Query("periodid")  String periodid , @Query("documentid") String documentid);
+
+    @GET(GLOBALSEARCH)
+    Call<ResponseBody> globalsearch(@Query("searchfor")  String searchterm );
 
     @Multipart
     @POST(UPLOAD)

@@ -1,7 +1,6 @@
 package com.app.trueleap.Assignmentmodule.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.trueleap.Assignmentmodule.interfaces.assignmentClickListener;
-import com.app.trueleap.Assignmentmodule.model.AssignmentModel;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
+
 import java.util.ArrayList;
 
 import static com.app.trueleap.external.CommonFunctions.parse_date;
@@ -75,7 +74,6 @@ public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapte
 
     @Override
     public int getItemCount() {
-        Log.d("fsdc","erefefefe"+mValues.size());
         return mValues.size();
     }
 }

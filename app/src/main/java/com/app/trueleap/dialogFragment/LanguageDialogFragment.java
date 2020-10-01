@@ -139,7 +139,6 @@ public class LanguageDialogFragment extends DialogFragment {
             }*/
     }
 
-
     @Override
     public void onCancel(DialogInterface dialogInterface) {
         super.onCancel(dialogInterface);

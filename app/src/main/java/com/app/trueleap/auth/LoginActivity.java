@@ -6,30 +6,19 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.app.trueleap.Retrofit.APIClient;
-import com.app.trueleap.databinding.ActivityLoginBinding;
-import com.app.trueleap.home.MainActivity;
 import com.app.trueleap.R;
+import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.base.BaseActivity;
+import com.app.trueleap.databinding.ActivityLoginBinding;
 import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.Constants;
-import com.app.trueleap.external.DatabaseHelper;
-import com.app.trueleap.home.studentsubject.model.ClassModel;
+import com.app.trueleap.home.MainActivity;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -37,18 +26,9 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-import static com.app.trueleap.external.CommonFunctions.saveJSONToCache;
-
 public class LoginActivity extends BaseActivity {
 
     String TAG = LoginActivity.class.getSimpleName();
-    private static EditText phone, password;
-    private static Button loginButton;
-    private static TextView forgotPassword, signUp;
-    private static CheckBox show_hide_password;
-    private static LinearLayout loginLayout;
-    DatabaseHelper databaseHelper;
-    String fcm_token;
     ActivityLoginBinding binding;
     JSONObject updateWrapperObj;
 
@@ -57,7 +37,6 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         updateWrapperObj = new JSONObject();
-        //initObserver();
         initLister();
     }
 
@@ -75,23 +54,18 @@ public class LoginActivity extends BaseActivity {
                                     binding.loginPassword.setError(null);
                                     updateWrapperObj.put("email", binding.loginEmail.getText().toString());
                                     updateWrapperObj.put("password", binding.loginPassword.getText().toString());
-                                    Log.d(TAG, "login detail: " + updateWrapperObj.toString());
                                     RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                                             (new JSONObject(updateWrapperObj.toString())).toString());
-                                    //viewModel.loginUser(body);
                                     callApiData(body);
-
                                 } else {
                                     binding.loginPassword.setError(getString(R.string.required_field));
                                 }
-
                             } else {
                                 binding.loginEmail.setError(getString(R.string.email_error));
                             }
                         } else {
                             binding.loginEmail.setError(getString(R.string.required_field));
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -109,7 +83,6 @@ public class LoginActivity extends BaseActivity {
                     .getInstance()
                     .getApiInterface()
                     .loginUser(body);
-
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
@@ -118,7 +91,6 @@ public class LoginActivity extends BaseActivity {
                         if (response.code()==200){
                             String response_data = response.body().string();
                             JSONObject jsonObject = new JSONObject(response_data);
-
                             localStorage.createUserLoginSession(jsonObject.getString("token"), jsonObject.getString("id"),
                                     jsonObject.getJSONObject("profile").getString("rollNumber"), jsonObject.getJSONObject("profile").getString("phoneNumber"),
                                     jsonObject.getJSONObject("profile").getJSONArray("class").getJSONObject(0).getString("classid"),
@@ -132,13 +104,11 @@ public class LoginActivity extends BaseActivity {
                             JSONObject jsonObject = new JSONObject(errorBody);
                             CommonFunctions.showSnackView(binding.rootlayout,jsonObject.getString("desc") );
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                         hideProgressBar();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     hideProgressBar();
@@ -154,6 +124,4 @@ public class LoginActivity extends BaseActivity {
     public void onBackPressed() {
         exitApp();
     }
-
-
 }

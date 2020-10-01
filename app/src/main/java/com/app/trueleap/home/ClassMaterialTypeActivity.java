@@ -46,15 +46,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
         initListeners();
     }
 
-    private void initToolbar() {
-        TextView toolbar_tv;
-        Toolbar toolbar;
-        toolbar_tv = (TextView) findViewById(R.id.toolbar_tv);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-
     private void initListeners() {
         binding.actionClassnote.setOnClickListener(new View.OnClickListener() {
             @Override

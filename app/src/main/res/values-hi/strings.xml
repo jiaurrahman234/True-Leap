@@ -60,4 +60,15 @@
         <string name="downloaded_successfully">सफलतापूर्वक डाउनलोड किया गया</string>
         <string name="submit_assignment">असाइनमेंट जमा करें</string>
 
+        <!--- Grade Book -->
+        <string name="grade_type">Grade Type</string>
+        <string name="grade_weight">Grade Weight</string>
+        <string name="grade_name">Grade Name</string>
+        <string name="compulsary">Compulsary</string>
+        <string name="compulsary_pass_mark"> Compulsary Pass Mark</string>
+        <string name="assessment_date">Assessment Date</string>
+        <string name="out_of">Out of</string>
+        <string name="best_out_of">Best Out of</string>
+        <string name="part_of_midterm_grade"> Part of Midterm Grade</string>
+
 </resources>

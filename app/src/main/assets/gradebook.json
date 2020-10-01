@@ -1,0 +1,22 @@
+[{
+  "gradetype": "quiz",
+  "gradeweight": "23",
+  "gradename": "something",
+  "compulsary": true,
+  "compulsarypassmark": "100",
+  "assessmentdate": "09/28/2020",
+  "outof": "100",
+  "bestoutof": "100",
+  "partofmidtermgrade": false
+}, {
+  "gradetype": "midterm",
+  "gradeweight": "30",
+  "gradename": "something",
+  "compulsary": true,
+  "compulsarypassmark": "100",
+  "assessmentdate": "09/16/2020",
+  "outof": "100",
+  "bestoutof": "100",
+  "partofmidtermgrade": true
+}]
+

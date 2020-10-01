@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/grad_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="9"
+        android:paddingVertical="@dimen/spacing_s"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/grade_type"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="@dimen/spacing_xs"
+           android:textSize="@dimen/textsize_xs"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/grade_weight"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="@dimen/spacing_xs"
+           android:textSize="@dimen/textsize_xs"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/grade_name"
+            android:layout_width="0dp"
+            android:paddingHorizontal="@dimen/spacing_xs"
+            android:layout_weight="1"
+            android:textAlignment="center"
+           android:textSize="@dimen/textsize_xs"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/compulsary"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="@dimen/spacing_xs"
+           android:textSize="@dimen/textsize_xs"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/compulsarypassmark"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:paddingHorizontal="@dimen/spacing_xs"
+           android:textSize="@dimen/textsize_xs"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:paddingHorizontal="@dimen/spacing_xs"
+           android:textSize="@dimen/textsize_xs"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/out_of"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="@dimen/spacing_xs"
+           android:textSize="@dimen/textsize_xs"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/best_out_of"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="@dimen/spacing_xs"
+           android:textSize="@dimen/textsize_xs"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/part_ofmidterm_grade"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="@dimen/spacing_xs"
+           android:textSize="@dimen/textsize_xs"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <View
+        android:background="@color/grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
+    </View>
+
+</LinearLayout>

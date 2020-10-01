@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.documentSearch.SearchActivity;
+import com.app.trueleap.gradebook.GradebookActivity;
 import com.app.trueleap.home.MainActivity;
 
 
@@ -45,10 +46,10 @@ public class SplashActivity extends BaseActivity {
     private void mainMethod() {
         try {
             if (localStorage.isUserLoggedIn()) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), GradebookActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), GradebookActivity.class));
                 finish();
             }
         } catch (Exception e) {

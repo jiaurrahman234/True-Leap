@@ -22,7 +22,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".documentSearch.SearchDetailActivity"></activity>
+        <activity android:name=".localization.ChangeLanguageActivity"></activity>
+        <activity android:name=".gradebook.GradebookActivity" />
+        <activity android:name=".documentSearch.SearchDetailActivity" />
         <activity android:name=".documentSearch.SearchActivity" />
 
         <provider

@@ -35,6 +35,7 @@ import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.dialogFragment.LanguageDialogFragment;
 import com.app.trueleap.external.LocalStorage;
+import com.app.trueleap.localization.ChangeLanguageActivity;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -108,14 +109,15 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showLanguageDialog(){
-        Fragment LanguageDialogFragment = getSupportFragmentManager().findFragmentByTag("language_dialog");
+        startActivity(new Intent(this, ChangeLanguageActivity.class));
+       /* Fragment LanguageDialogFragment = getSupportFragmentManager().findFragmentByTag("language_dialog");
         DialogFragment LanguageDialog = (DialogFragment) LanguageDialogFragment;
         if (LanguageDialog == null) {
             com.app.trueleap.dialogFragment.LanguageDialogFragment languageDialog = new LanguageDialogFragment();
             FragmentManager transaction = getSupportFragmentManager();
             languageDialog.setCancelable(false);
             languageDialog.show(transaction, "language_dialog");
-        }
+        }*/
     }
 
 

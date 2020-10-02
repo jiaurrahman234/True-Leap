@@ -1,6 +1,8 @@
 package com.app.trueleap.external;
 import com.daimajia.androidanimations.library.BuildConfig;
 
+import java.text.SimpleDateFormat;
+
 public class Constants {
     public static String NO_INTERNET = "No internet connection!";
     public static String APP_LINK = "https://play.google.com/store/apps/details?id="+ BuildConfig.APPLICATION_ID;
@@ -16,4 +18,5 @@ public class Constants {
 
     public static final int LANG_INDIAN = 1;
     public static final int LANG_FOREIGN = 2;
+
 }

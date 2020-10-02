@@ -269,7 +269,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
             Call<ResponseBody> call = APIClient
                     .getInstance()
                     .getApiInterface()
-                    .getSubjects(localStorage.getKeyUserToken(), true);
+                    .getSubjects(localStorage.getKeyUserToken(), false);
 
             call.enqueue(new Callback<ResponseBody>() {
                 @Override

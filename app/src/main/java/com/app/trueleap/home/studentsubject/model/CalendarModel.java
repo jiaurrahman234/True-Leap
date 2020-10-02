@@ -6,23 +6,23 @@ import android.os.Parcelable;
 import java.util.Calendar;
 
 public class CalendarModel  implements Parcelable {
-    int id;
+    String date;
     String periodId;
     Calendar calendar;
 
-    public CalendarModel(int id, String periodId) {
-        this.id = id;
+    public CalendarModel(String date, String periodId) {
+        this.date = date;
         this.periodId = periodId;
     }
 
-    public CalendarModel(int id, String periodId, Calendar calendar) {
-        this.id = id;
+    public CalendarModel(String date, String periodId, Calendar calendar) {
+        this.date = date;
         this.periodId = periodId;
         this.calendar = calendar;
     }
 
     protected CalendarModel(Parcel in) {
-        id = in.readInt();
+        date = in.readString();
         periodId = in.readString();
     }
 
@@ -38,12 +38,12 @@ public class CalendarModel  implements Parcelable {
         }
     };
 
-    public int getId() {
-        return id;
+    public String getDate() {
+        return date;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getPeriodId() {
@@ -61,7 +61,7 @@ public class CalendarModel  implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeString(date);
         dest.writeString(periodId);
     }
 }

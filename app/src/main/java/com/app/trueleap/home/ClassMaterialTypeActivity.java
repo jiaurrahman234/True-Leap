@@ -21,6 +21,7 @@ import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.FragmentClassmaterialtypeBinding;
+import com.app.trueleap.gradebook.GradebookActivity;
 import com.app.trueleap.home.studentsubject.model.CalendarModel;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
 import com.app.trueleap.home.studentsubject.model.DocumentsModel;
@@ -33,7 +34,7 @@ import static com.app.trueleap.external.CommonFunctions.parse_date;
 
 public class ClassMaterialTypeActivity extends BaseActivity {
     FragmentClassmaterialtypeBinding binding;
-    String sujectName = "", classId = "";
+    String sujectName = "", classDate = "";
     ArrayList<ClassModel> classModelArrayList;
     ArrayList<CalendarModel> calendarModelArrayList;
 
@@ -53,15 +54,10 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                 try {
                     ArrayList<ClassnoteModel> classnoteModelArrayList = new ArrayList<>();
                     for (int i = 0; i < calendarModelArrayList.size(); i++) {
-                        Log.d(TAG, "khkhf: " + calendarModelArrayList.size() + ", " + classId + " , " + calendarModelArrayList.get(i).getId());
-                        //CalendarModel calendarModel = calendarModelArrayList.get(i);
-                        if (Integer.parseInt(classId) == calendarModelArrayList.get(i).getId()) {
-                            Log.d(TAG, "khkhf: " + calendarModelArrayList.get(i).getPeriodId());
+                        if (classDate.equalsIgnoreCase(calendarModelArrayList.get(i).getDate())) {
                             for (int j = 0; j < classModelArrayList.size(); j++) {
                                 ClassModel classModel = classModelArrayList.get(j);
-                                Log.d(TAG, "vvcvc: " + calendarModelArrayList.get(i).getPeriodId() + "," + classModel.getUniqueperiodid());
                                 if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {
-                                    Log.d(TAG, "hkghfg: " + classModel.getSubject());
                                     if (!classModel.getDocumentsModelArrayList().isEmpty()) {
                                         for (int k = 0; k < classModel.getDocumentsModelArrayList().size(); k++) {
                                             DocumentsModel documentsModel = classModel.getDocumentsModelArrayList().get(k);
@@ -100,16 +96,10 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                             try {
                                                                 ArrayList<ClassnoteModel> AssignmentModelArrayList = new ArrayList<>();
                                                                 for (int i = 0; i < calendarModelArrayList.size(); i++) {
-                                                                    Log.d(TAG, "khkhf: " + calendarModelArrayList.size() + ", " + classId + " , " + calendarModelArrayList.get(i).getId());
-                                                                    //CalendarModel calendarModel = calendarModelArrayList.get(i);
-                                                                    if (Integer.parseInt(classId) == calendarModelArrayList.get(i).getId()) {
-
-                                                                        Log.d(TAG, "khkhf: " + calendarModelArrayList.get(i).getPeriodId());
+                                                                   if (classDate.equalsIgnoreCase(calendarModelArrayList.get(i).getDate())) {
                                                                         for (int j = 0; j < classModelArrayList.size(); j++) {
                                                                             ClassModel classModel = classModelArrayList.get(j);
-                                                                            Log.d(TAG, "vvcvc: " + calendarModelArrayList.get(i).getPeriodId() + "," + classModel.getUniqueperiodid());
                                                                             if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {
-                                                                                Log.d(TAG, "hkghfg: " + classModel.getSubject());
                                                                                 if (!classModel.getAssgnmentModelArrayList().isEmpty()) {
                                                                                     for (int k = 0; k < classModel.getAssgnmentModelArrayList().size(); k++) {
                                                                                         DocumentsModel documentsModel = classModel.getAssgnmentModelArrayList().get(k);
@@ -144,6 +134,12 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                         }
                                                     }
         );
+        binding.actionGradebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, GradebookActivity.class).putExtra("subject_name",sujectName));
+            }
+        });
     }
 
     private void initdata() {
@@ -152,7 +148,7 @@ public class ClassMaterialTypeActivity extends BaseActivity {
             if (intent.getExtras() != null) {
                 classModelArrayList = new ArrayList<>();
                 calendarModelArrayList = new ArrayList<>();
-                classId = intent.getStringExtra("class_id");
+                classDate = intent.getStringExtra("classDate");
                 sujectName = intent.getStringExtra("subject_name");
                 //classModelArrayList = (ArrayList<ClassModel>) intent.getExtras().getSerializable("class_data");
                 calendarModelArrayList = (ArrayList<CalendarModel>) intent.getExtras().getSerializable("calendar_data");
@@ -165,10 +161,9 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                 }.getType();
                 classModelArrayList = gson.fromJson(jsonClass, type);
             }
-            Log.d(TAG, "classModelArrayList " + classId + "," + calendarModelArrayList.size() + " , " + classModelArrayList.size());
 
             for (int i = 0; i < calendarModelArrayList.size(); i++) {
-                if (Integer.parseInt(classId) == calendarModelArrayList.get(i).getId()) {
+                if (classDate.equalsIgnoreCase(calendarModelArrayList.get(i).getDate())) {
                     for (int j = 0; j < classModelArrayList.size(); j++) {
                         ClassModel classModel = classModelArrayList.get(j);
                         if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {

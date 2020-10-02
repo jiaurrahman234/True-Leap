@@ -1,18 +1,23 @@
 package com.app.trueleap.gradebook;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityGradebookBinding;
 import com.app.trueleap.gradebook.adapter.grade_book_adapter;
 import com.app.trueleap.gradebook.model.GradeItem;
 import com.app.trueleap.interfaces.recyclerviewClickListener;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -28,7 +33,7 @@ public class GradebookActivity extends BaseActivity implements recyclerviewClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_gradebook);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_gradebook);
         intent = getIntent();
         context = GradebookActivity.this;
         initToolbar();
@@ -84,33 +89,42 @@ public class GradebookActivity extends BaseActivity implements recyclerviewClick
     }*/
 
     private void initdata() {
-        gradeItems = new ArrayList<>();
-                 try {
-                        JSONArray jsonArray = loadAssetsJsonArray("gradebook.json", context );
-                        if(jsonArray.length()>0){
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject resultObject = jsonArray.getJSONObject(i);
-                                gradeItems.add(
-                                        new GradeItem(resultObject.getString("gradetype"),
-                                                resultObject.getDouble("gradeweight"),
-                                                resultObject.getString("gradename"),
-                                                resultObject.getBoolean("compulsary"),
-                                                resultObject.getDouble("compulsarypassmark"),
-                                                resultObject.getString("assessmentdate"),
-                                                resultObject.getDouble("outof"),
-                                                resultObject.getDouble("bestoutof"),
-                                                resultObject.getBoolean("partofmidtermgrade"))
-                                );
-                            }
-                            populateGradbook();
-                        } else {
-                            binding.gradebookData.setVisibility(View.GONE);
-                            Toast.makeText(context, "No data found", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        try {
+            binding.studentClass.setText(localStorage.getClassId());
+            binding.studentSection.setText(localStorage.getSectionId());
+            binding.sujectName.setText(intent.getStringExtra("subject_name"));
+            gradeItems = new ArrayList<>();
+            try {
+                JSONArray jsonArray = loadAssetsJsonArray("gradebook.json", context);
+                if (jsonArray.length() > 0) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject resultObject = jsonArray.getJSONObject(i);
+                        gradeItems.add(
+                                new GradeItem(resultObject.getString("gradetype"),
+                                        resultObject.getDouble("gradeweight"),
+                                        resultObject.getString("gradename"),
+                                        resultObject.getBoolean("compulsary"),
+                                        resultObject.getDouble("compulsarypassmark"),
+                                        resultObject.getString("assessmentdate"),
+                                        resultObject.getDouble("outof"),
+                                        resultObject.getDouble("bestoutof"),
+                                        resultObject.getBoolean("partofmidtermgrade"))
+                        );
                     }
+                    populateGradbook();
+                } else {
+                    binding.gradebookData.setVisibility(View.GONE);
+                    Toast.makeText(context, "No data found", Toast.LENGTH_SHORT).show();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void populateGradbook() {
         grade_book_adapter = new grade_book_adapter(context, gradeItems, this);

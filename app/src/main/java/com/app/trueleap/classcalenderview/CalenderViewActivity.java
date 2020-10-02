@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.databinding.DataBindingUtil;
+
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
+import com.app.trueleap.databinding.ActivityBaseBinding;
 import com.app.trueleap.home.ClassMaterialTypeActivity;
 import com.app.trueleap.home.studentsubject.model.CalendarModel;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
@@ -21,31 +24,38 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.app.trueleap.external.CommonFunctions.calenderView;
 import static com.app.trueleap.external.CommonFunctions.getJSONFromCache;
 import static com.app.trueleap.external.CommonFunctions.getdateValue;
+import static com.app.trueleap.external.CommonFunctions.simpleDateFormat;
 
-public class CalenderViewActivity extends BaseActivity  {
+public class CalenderViewActivity extends BaseActivity {
     Intent intent;
     ArrayList<ClassModel> Subjects;
     String Subject_name;
     String selecteduniqueperiodid;
     ArrayList<ClassModel> classModelArrayList = new ArrayList<>();
     ArrayList<CalendarModel> calendarModelArrayList = new ArrayList<>();
+    ActivityBaseBinding binding;
+    Calendar calendarMinDate = Calendar.getInstance();
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_base);
         initData();
     }
 
     private void initData() {
+        binding.studentClass.setText(localStorage.getClassId());
+        binding.studentSection.setText(localStorage.getSectionId());
         Subjects = new ArrayList<>();
         intent = getIntent();
         if (intent.getExtras() != null) {
@@ -65,9 +75,10 @@ public class CalenderViewActivity extends BaseActivity  {
                     }
                 }
                 JSONArray subject_class = classes.getJSONArray(position_to_show);
-                for (int j = 0; j < subject_class.length(); j++) {
+                for (int j = 1; j < subject_class.length(); j++) {
                     Date curDate = new Date();
                     String startDate = subject_class.getJSONObject(j).getString("startdate");
+                    calendarMinDate.setTime(getdateValue(subject_class.getJSONObject(1).getString("startdate")));
                     Date classDate = getdateValue(startDate);
                     if (classDate.compareTo(curDate) < 0) {
                         ArrayList<DocumentsModel> documentsModelArrayList = new ArrayList<>();
@@ -146,9 +157,10 @@ public class CalenderViewActivity extends BaseActivity  {
                 classModelArrayList.add(Subjects.get(i));
                 count++;
             }
-            String[] time = (Subjects.get(0).getStarttime().split("[:.]"));
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(getdateValue(Subjects.get(0).getStartdate()));
+            //String[] time = (Subjects.get(0).getStarttime().split("[:.]"));
+
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -159,20 +171,22 @@ public class CalenderViewActivity extends BaseActivity  {
         int countx = 1;
         CalendarView calendarView;
         calendarView = findViewById(R.id.calendarView);
-
+        //calendarView.setClickable(false);
+        calendarView.setMinimumDate(calendarMinDate);
         List<Calendar> calendars = new ArrayList<>();
         List<EventDay> events = new ArrayList<>();
         for (int i = Subjects.size() - 1; i >= 0 && countx < 8; i--) {
             Calendar calendar = Calendar.getInstance();
-            Log.d(TAG,"cscd "+Subjects.get(i).getStartdate());
+            Log.d(TAG, "cscd " + Subjects.get(i).getStartdate());
             calendar.setTime(getdateValue(Subjects.get(i).getStartdate()));
             calendars.add(calendar);
-            calendarModelArrayList.add(new CalendarModel(i, Subjects.get(i).getUniqueperiodid()));
+
+            Log.d(TAG, "dteeeeee: " + calenderView(Subjects.get(i).getStartdate()));
+            calendarModelArrayList.add(new CalendarModel(calenderView(Subjects.get(i).getStartdate()), Subjects.get(i).getUniqueperiodid()));
             EventDay eventDay = new EventDay(calendar, R.drawable.ic_baseline_menu_book_24);
             events.add(eventDay);
-            // events = calendarView.getEvents();
             Log.d(TAG, " Events: " + events);
-            countx++ ;
+            countx++;
         }
         calendarView.setEvents(events);
         calendarView.setHighlightedDays(calendars);
@@ -183,23 +197,19 @@ public class CalenderViewActivity extends BaseActivity  {
             public void onDayClick(EventDay eventDay) {
                 Calendar clickedDayCalendar = eventDay.getCalendar();
                 try {
-                    Toast.makeText(context, "Clicked " + classModelArrayList.size(), Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "ghlglk: " + classModelArrayList.size());
-                    Gson gson = new Gson();
-                    String classData = gson.toJson(classModelArrayList);
-                    localStorage.setClass(classData);
-                    startActivity(new Intent(CalenderViewActivity.this, ClassMaterialTypeActivity.class)
-                            .putExtra("subject_name", Subject_name)
-                            .putExtra("class_id", Integer.toString(1))
-                            .putExtra("calendar_data", calendarModelArrayList));
-
-            /*for (int i=0;i<classModelArrayList.size();i++){
-                ClassModel classModel = classModelArrayList.get(i);
-                Log.d(TAG,"jhljgj: "+classModel.getStartdate());
-                if (!classModel.getDocumentsModelArrayList().isEmpty()){
-                    Log.d(TAG,"xcxcx: "+classModel.getDocumentsModelArrayList().size());
-                }
-            }*/
+                    String dateFormat = simpleDateFormat.format(eventDay.getCalendar().getTime());
+                    for (int i=0;i<calendarModelArrayList.size();i++){
+                        if (calendarModelArrayList.get(i).getDate().equalsIgnoreCase(dateFormat)){
+                            Gson gson = new Gson();
+                            String classData = gson.toJson(classModelArrayList);
+                            localStorage.setClass(classData);
+                            startActivity(new Intent(CalenderViewActivity.this, ClassMaterialTypeActivity.class)
+                                    .putExtra("subject_name", Subject_name)
+                                    .putExtra("classDate", dateFormat)
+                                    .putExtra("calendar_data", calendarModelArrayList));
+                            break;
+                        }
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();

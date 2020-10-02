@@ -48,6 +48,7 @@ public class CommonFunctions {
     public static String NO_INTERNET = "No Internet";
     private static String CACHE_FILE = "classes.srl";
     final static long MAX_FILE_AGE = 1000 * 60 * 60 * 24 * 2;
+    public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public static void showSnackView(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
@@ -113,6 +114,23 @@ public class CommonFunctions {
         }
         return null;
 
+    }
+
+    public static String calenderView (String date_to_parse){
+
+        String datepattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(datepattern);
+
+        String formatted_date="";
+        try {
+            Date inputdateFormat = dateFormat.parse(date_to_parse);
+            formatted_date = simpleDateFormat.format(inputdateFormat);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return formatted_date;
     }
 
     public static String parse_date (String date_to_parse){

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">True Leap</string>
+    <string name="module_assignment">असाईनमेंट्स</string>
+    <string name="module_quiz">प्रश्नावली</string>
+    <string name="module_classnote">वर्गातील नोट्स</string>
+    <string name="module_gradebook">ग्रेड बुक</string>
+    <string name="module_message">संदेश</string>
+    <string name="str_uploaded_on">यारोजी अपलोड केलेले</string>
+    <string name="Class_title">संदेश</string>
+    <string name="view_details">दृश्य तपशील</string>
+    <string name="login">लॉगिन</string>
+    <string name="email">ईमेल</string>
+    <string name="password">पासवर्ड</string>
+    <string name="email_error">अवैधईमेल</string>
+    <string name="required_field">आवश्यक</string>
+    <string name="action_change_lang">भाषा बदला</string>
+    <string name="action_settings">भाषा बदला</string>
+    <string name="action_logout">लॉग आऊट </string>
+    <string name="download_permission_explaination">फाईल डाउनलोड - बाह्य संचयन परवानगीसाठी लिहा </string>
+    <string name="download_permission_grant">परवानगी मंजूर करा </string>
+    <string name="download">डाउनलोड करा </string>
+    <string name="open">दस्तऐवज उघड </string>
+    <string name="upload">अपलोड करा </string>
+    <string name="take_photo">फोटो काढा </string>
+    <string name="open_gallery">गॅलरी उघडा </string>
+    <string name="add_document">दस्तऐवज जोडा </string>
+    <string name="auto_download">स्वयं डाउनलोड करा </string>
+    <string name="english">इंग्रजी </string>
+    <string name="hindi">हिंदी </string>
+    <string name="select_language">भाषा निवडा </string>
+    <string name="confirm">पुष्टी करा </string>
+    <string name="logout_msg">आपल्याला खरोखरच बाहेर पडायचे आहे का? </string>
+    <string name="exit_msg">आपल्याला खरोखरच लॉगआऊट करायचे आहे का? </string>
+    <string name="downloaded_successfully">यशस्वीपणे अपलोड केले </string>
+    <string name="uploaded_successfully">यशस्वीपणे अपलोड केले </string>
+    <string name="submit_assignment">असाईनमेंट सबमिट करा </string>
+
+    <!--- Grade Book -->
+    <string name="grade_type">Grade Type</string>
+    <string name="grade_weight">Grade Weight</string>
+    <string name="grade_name">Grade Name</string>
+    <string name="compulsary">Compulsary</string>
+    <string name="compulsary_pass_mark"> Compulsary Pass Mark</string>
+    <string name="assessment_date">Assessment Date</string>
+    <string name="out_of">Out of</string>
+    <string name="best_out_of">Best Out of</string>
+    <string name="part_of_midterm_grade"> Part of Midterm Grade</string>
+</resources>

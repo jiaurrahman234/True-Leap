@@ -1,0 +1,62 @@
+[
+  {
+    "lang_id" : 1,
+    "language_name" : "English",
+    "language_code" : "en",
+    "type" : 2
+  },
+  {
+    "lang_id" : 2,
+    "language_name" : "Assamese",
+    "language_code" : "as",
+    "type" : 1
+  },
+  {
+    "lang_id" : 3,
+    "language_name" : "Bengali",
+    "language_code" : "bn",
+    "type" : 1
+  },
+  {
+    "lang_id" : 4,
+    "language_name" : "Bodo",
+    "language_code" : "brx",
+    "type" : 1
+  },
+  {
+    "lang_id" : 5,
+    "language_name" : "Hindi",
+    "language_code" : "hi",
+    "type" : 1
+  },
+  {
+    "lang_id" : 6,
+    "language_name" : "Khasi",
+    "language_code" : "kha",
+    "type" : 1
+  },
+  {
+    "lang_id" : 7,
+    "language_name" : "Marathi",
+    "language_code" : "mr",
+    "type" : 1
+  },
+  {
+    "lang_id" : 8,
+    "language_name" : "Oriya",
+    "language_code" : "or",
+    "type" : 1
+  },
+  {
+    "lang_id" : 9,
+    "language_name" : "Punjabi",
+    "language_code" : "pa",
+    "type" : 1
+  },
+  {
+    "lang_id" : 10,
+    "language_name" : "Tamil",
+    "language_code" : "ta",
+    "type" : 1
+  }
+]

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">True Leap</string>
+    <string name="module_assignment"> வகுப்பீடு </string>
+    <string name="module_quiz"> வினாவிடைப்போட்டி</string>
+    <string name="module_classnote"> வகுப்புகுறிப்புகள்</string>
+    <string name="module_gradebook"> தரவரிசைபுத்தகம் </string>
+    <string name="module_message"> குறுஞ்செய்தி </string>
+    <string name="str_uploaded_on"> பதிவேற்றப்பட்டது </string>
+    <string name="Class_title"> குறுஞ்செய்தி </string>
+    <string name="view_details"> விவரங்கள்காண </string>
+    <string name="login"> உள்நுழை </string>
+    <string name="email"> மின்னஞ்சல் </string>
+    <string name="password"> கடவுச்சொல் </string>
+    <string name="email_error"> செல்லுபடியாகாதமின்னஞ்சல் </string>
+    <string name="required_field"> தேவை </string>
+    <string name="action_change_lang"> மொழிமாற்றம் </string>
+    <string name="action_settings"> மொழிமாற்றம் </string>
+    <string name="action_logout"> வெளியேறு </string>
+    <string name="download_permission_explaination"> கோப்புபதிவிறக்கம்–வெளிப்புறசேமிப்புஅனுமதிக்காகஎழுதுக </string>
+    <string name="download_permission_grant"> அனுமதிகொடு </string>
+    <string name="download"> பதிவிறக்கம் </string>
+    <string name="open"> ஆவணத்தைதிற </string>
+    <string name="upload"> பதிவேற்றம் </string>
+    <string name="take_photo"> புகைப்படம்எடு </string>
+    <string name="open_gallery"> காட்சியகம்திற </string>
+    <string name="add_document"> ஆவணத்தைஇனை </string>
+    <string name="auto_download"> தன்னியலானபதிவிறக்கம் </string>
+    <string name="english"> ஆங்கிலம் </string>
+    <string name="hindi"> இந்தி </string>
+    <string name="select_language"> மொழியைத்தேர்ந்தெடு </string>
+    <string name="confirm"> உறுதிசெய் </string>
+    <string name="logout_msg"> நீங்கள்உண்மையாகவேமூடவிரும்புகிறீர்களா?</string>
+    <string name="exit_msg"> நீங்கள்உண்மையாகவேவெளியேறவிரும்புகிறீர்களா?</string>
+    <string name="downloaded_successfully"> வெற்றிகரமாகபதிவிறக்கப்பட்டது </string>
+    <string name="uploaded_successfully"> வெற்றிகரமாகபதிவேற்றப்பட்டது </string>
+    <string name="submit_assignment"> வகுப்பீட்டைசமர்ப்பி </string>
+
+
+    <!--- Grade Book -->
+    <string name="grade_type">Grade Type</string>
+    <string name="grade_weight">Grade Weight</string>
+    <string name="grade_name">Grade Name</string>
+    <string name="compulsary">Compulsary</string>
+    <string name="compulsary_pass_mark"> Compulsary Pass Mark</string>
+    <string name="assessment_date">Assessment Date</string>
+    <string name="out_of">Out of</string>
+    <string name="best_out_of">Best Out of</string>
+    <string name="part_of_midterm_grade"> Part of Midterm Grade</string>
+</resources>

@@ -13,4 +13,7 @@ public class Constants {
     public static final String DOC_NOTE = "N";
     public static final String PUBLIC= "public";
     public static final String PRIVATE= "private";
+
+    public static final int LANG_INDIAN = 1;
+    public static final int LANG_FOREIGN = 2;
 }

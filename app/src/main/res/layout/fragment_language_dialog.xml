@@ -39,6 +39,8 @@
             app:checkedChip="@id/english"
             android:layout_marginVertical="@dimen/textsize_l"
             android:layout_height="wrap_content">
+
+
             <com.google.android.material.chip.Chip
                 android:id="@+id/english"
                 android:layout_width="match_parent"

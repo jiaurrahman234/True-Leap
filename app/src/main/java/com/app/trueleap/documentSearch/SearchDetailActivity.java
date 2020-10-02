@@ -2,11 +2,7 @@ package com.app.trueleap.documentSearch;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
-
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivitySearchDetailBinding;

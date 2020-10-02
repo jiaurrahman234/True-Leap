@@ -60,6 +60,7 @@
     <string name="exit_msg">Do you really want to logout?</string>
 
     <string name="downloaded_successfully">Downloaded Successfully</string>
+    <string name="uploaded_successfully">">Uploaded Successfully</string>
     <string name="submit_assignment">Submit Assignment</string>
 
     <!--- Grade Book -->

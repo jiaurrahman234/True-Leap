@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">True Leap</string>
+    <string name="module_assignment">অ্যাসাইনমেন্ট</string>
+    <string name="module_quiz">ক্যুইজ</string>
+    <string name="module_classnote">ক্লাস নোটগুলো</string>
+    <string name="module_gradebook">গ্রেড বুক</string>
+    <string name="module_message">মেসেজ</string>
+    <string name="str_uploaded_on">এতে আপলোড হয়েছে</string>
+    <string name="Class_title">মেসেজ</string>
+    <string name="view_details">বিশদ দেখুন</string>
+    <string name="login">লগইন করুন</string>
+    <string name="email">ইমেল</string>
+    <string name="password">পাসওয়ার্ড</string>
+    <string name="email_error">অকার্যকর ইমেল</string>
+    <string name="required_field">আবশ্যক</string>
+    <string name="action_change_lang">ভাষা পরিবর্তন করুন</string>
+    <string name="action_settings">ভাষা পরিবর্তন করুন</string>
+    <string name="action_logout">লগআউট করুন</string>
+    <string name="download_permission_explaination">ফাইল ডাউনলোড - বাহ্যিক সঞ্চয়স্থানে অনুমতি</string>
+    <string name="download_permission_grant">অনুমতি দিন</string>
+    <string name="download">ডাউনলোড করুন</string>
+    <string name="open">ডকুমেন্ট খুলুন</string>
+    <string name="upload">আপলোড করুন</string>
+    <string name="take_photo">ফটো তুলুন</string>
+    <string name="open_gallery">গ্যালারি খুলুন</string>
+    <string name="add_document">ডকুমেন্ট যোগ করুন</string>
+    <string name="auto_download">স্বতঃ ডাউনলোড</string>
+    <string name="english">ভাষা</string>
+    <string name="hindi">হিন্দি</string>
+    <string name="select_language">ভাষা নির্বাচন করুন</string>
+    <string name="confirm">নিশ্চিত করুন</string>
+    <string name="logout_msg">আপনি কি সত্যিই প্রস্থান করতে চান?</string>
+    <string name="exit_msg">আপনি কি সত্যিই লগআউট করতে চান?</string>
+    <string name="downloaded_successfully">সফলভাবে ডাউনলোড হয়েছে</string>
+    <string name="uploaded_successfully">সফলভাবে আপলোড হয়েছে</string>
+    <string name="submit_assignment">অ্যাসাইনমেন্ট জমা দিন</string>
+
+
+
+    <!--- Grade Book -->
+    <string name="grade_type">Grade Type</string>
+    <string name="grade_weight">Grade Weight</string>
+    <string name="grade_name">Grade Name</string>
+    <string name="compulsary">Compulsary</string>
+    <string name="compulsary_pass_mark"> Compulsary Pass Mark</string>
+    <string name="assessment_date">Assessment Date</string>
+    <string name="out_of">Out of</string>
+    <string name="best_out_of">Best Out of</string>
+    <string name="part_of_midterm_grade"> Part of Midterm Grade</string>
+</resources>

@@ -58,6 +58,7 @@
         <string name="logout_msg">क्या आप वास्तव में बाहर निकलना चाहते हैं?</string>
         <string name="exit_msg">क्या आप वास्तव में लॉगआउट करना चाहते हैं?</string>
         <string name="downloaded_successfully">सफलतापूर्वक डाउनलोड किया गया</string>
+        <string name="uploaded_successfully">">सफलतापूर्वक अपलोड किया गया</string>
         <string name="submit_assignment">असाइनमेंट जमा करें</string>
 
         <!--- Grade Book -->

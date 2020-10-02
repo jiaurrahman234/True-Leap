@@ -13,6 +13,7 @@ import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.documentSearch.SearchActivity;
 import com.app.trueleap.gradebook.GradebookActivity;
 import com.app.trueleap.home.MainActivity;
+import com.app.trueleap.localization.ChangeLanguageActivity;
 
 
 public class SplashActivity extends BaseActivity {
@@ -46,10 +47,10 @@ public class SplashActivity extends BaseActivity {
     private void mainMethod() {
         try {
             if (localStorage.isUserLoggedIn()) {
-                startActivity(new Intent(getApplicationContext(), GradebookActivity.class));
+                startActivity(new Intent(getApplicationContext(), ChangeLanguageActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(getApplicationContext(), GradebookActivity.class));
+                startActivity(new Intent(getApplicationContext(), ChangeLanguageActivity.class));
                 finish();
             }
         } catch (Exception e) {

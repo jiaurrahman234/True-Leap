@@ -39,12 +39,12 @@ public class LanguageDialogFragment extends DialogFragment {
         activity = (Activity) context;
         localStorage = new LocalStorage(context);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_language_dialog, null);
         binding = DataBindingUtil.bind(view);
 
         language = view.findViewById(R.id.language);
+
         Log.d("TAG","language "+localStorage.getSelectedLanguage());
         switch (localStorage.getSelectedLanguage()) {
             case "en":

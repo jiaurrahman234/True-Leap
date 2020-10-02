@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">True Leap</string>
+    <string name="module_assignment">କାର୍ଯ୍ୟଗୁଡିକ</string>
+    <string name="module_quiz">କୁଇଜ୍‍</string>
+    <string name="module_classnote">କ୍ଲାସ୍‍ ନୋଟ୍ସ</string>
+    <string name="module_gradebook">ଗ୍ରେଡ୍‍ ବୁକ୍‍</string>
+    <string name="module_message">ବାର୍ତ୍ତା</string>
+    <string name="str_uploaded_on">ଅପଲୋଡ୍‍ ହୋଇଛି</string>
+    <string name="Class_title">ବାର୍ତ୍ତା</string>
+    <string name="view_details">ବିବରଣୀ ଦେଖନ୍ତୁ</string>
+    <string name="login">ଲଗ୍‍ଇନ୍‍</string>
+    <string name="email">ଇମେଲ୍‍</string>
+    <string name="password">ପାସୱାର୍ଡ</string>
+    <string name="email_error">ଭୁଲ୍‍ ଇମେଲ୍‍</string>
+    <string name="required_field">ଆବଶ୍ୟକ</string>
+    <string name="action_change_lang">ଭାଷା ବଦଳାନ୍ତୁ</string>
+    <string name="action_settings">ଭାଷା ବଦଳାନ୍ତୁ</string>
+    <string name="action_logout">ଲଗ୍‍ଆଉଟ୍‍ କରନ୍ତୁ</string>
+    <string name="download_permission_explaination">ଫାଇଲ୍‍ ଡାଉନଲୋଡ୍‍ - ଆପଣଙ୍କର ବାହ୍ୟ ଷ୍ଟୋରେଜ୍‍ ଅନୁମତି ପାଇଁ ଲେଖନ୍ତୁ</string>
+    <string name="download_permission_grant">ଅନୁମତି ଅନୁମୋଦନ କରନ୍ତୁ</string>
+    <string name="download">ଡାଉନଲୋଡ୍‍ କରନ୍ତୁ</string>
+    <string name="open">ଡକ୍ୟୁମେଣ୍ଟ ଖୋଲନ୍ତୁ</string>
+    <string name="upload">ଅପଲୋଡ୍‍ କରନ୍ତୁ</string>
+    <string name="take_photo">ଫଟୋ ଉଠାନ୍ତୁ</string>
+    <string name="open_gallery">ଗ୍ୟାଲେରୀ ଖୋଲନ୍ତୁ</string>
+    <string name="add_document">ଡକ୍ୟୁମେଣ୍ଟ ଯୋଡନ୍ତୁ</string>
+    <string name="auto_download">ସ୍ବତଃ ଡାଉନଲୋଡ୍‍</string>
+    <string name="english">ଇଂରାଜୀ</string>
+    <string name="hindi">ହିନ୍ଦୀ</string>
+    <string name="select_language">ଭାଷା ବାଛନ୍ତୁ</string>
+    <string name="confirm">ସୁନିଶ୍ଚିତ କରନ୍ତୁ</string>
+    <string name="logout_msg">ଆପଣ ପ୍ରକୃତରେ ବାହାରି ଯିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="exit_msg">ଆପଣ ପ୍ରକୃତରେ ଲଗ୍‍ଆଉଟ୍‍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="downloaded_successfully">ସଫଳତାର ସହ ଡାଉନଲୋଡ୍‍ କରନ୍ତୁ</string>
+    <string name="uploaded_successfully">ସଫଳତାର ସହ ଅପଲୋଡ୍‍ ହୋଇଛି</string>
+    <string name="submit_assignment">ନ୍ୟସ୍ତ ଦାଖଲ କରନ୍ତୁ</string>
+
+
+    <!--- Grade Book -->
+    <string name="grade_type">Grade Type</string>
+    <string name="grade_weight">Grade Weight</string>
+    <string name="grade_name">Grade Name</string>
+    <string name="compulsary">Compulsary</string>
+    <string name="compulsary_pass_mark"> Compulsary Pass Mark</string>
+    <string name="assessment_date">Assessment Date</string>
+    <string name="out_of">Out of</string>
+    <string name="best_out_of">Best Out of</string>
+    <string name="part_of_midterm_grade"> Part of Midterm Grade</string>
+</resources>

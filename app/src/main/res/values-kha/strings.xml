@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">True Leap</string>
+    <string name="module_assignment">Ki assignments</string>
+    <string name="module_quiz">Jingkyntip</string>
+    <string name="module_classnote">KI Jingthoh</string>
+    <string name="module_gradebook">kot ai kyrdan</string>
+    <string name="module_message">Khubor</string>
+    <string name="str_uploaded_on">Uploaded On</string>
+    <string name="Class_title">khubor</string>
+    <string name="view_details">Jingbataibniah</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="email_error">EmailBym Dei</string>
+    <string name="required_field">Ki badonkam</string>
+    <string name="action_change_lang">Pynkyllaktien</string>
+    <string name="action_settings">Pynkyllaktien</string>
+    <string name="action_logout">Logout</string>
+    <string name="download_permission_explaination">File Download - Write to external storage permission</string>
+    <string name="download_permission_grant">Ai jingbit</string>
+    <string name="download">Download</string>
+    <string name="open">Plie ki documents</string>
+    <string name="upload">Upload</string>
+    <string name="take_photo">Shondur</string>
+    <string name="open_gallery">plie ka gallery</string>
+    <string name="add_document">Ai kidocuments</string>
+    <string name="auto_download">Download hi</string>
+    <string name="english">KtienPhareng</string>
+    <string name="hindi">KtienDkhar</string>
+    <string name="select_language">Jiedktien</string>
+    <string name="confirm">Pyntikna</string>
+    <string name="logout_msg">Phi kwah ban mihnohnakane ka app?</string>
+    <string name="exit_msg">Phi kwah ban logout noh?</string>
+    <string name="downloaded_successfully">Lah dep download</string>
+    <string name="uploaded_successfully">Lah dep Upload</string>
+    <string name="submit_assignment">Phahiakiassignments</string>
+
+    <!--- Grade Book -->
+    <string name="grade_type">Grade Type</string>
+    <string name="grade_weight">Grade Weight</string>
+    <string name="grade_name">Grade Name</string>
+    <string name="compulsary">Compulsary</string>
+    <string name="compulsary_pass_mark"> Compulsary Pass Mark</string>
+    <string name="assessment_date">Assessment Date</string>
+    <string name="out_of">Out of</string>
+    <string name="best_out_of">Best Out of</string>
+    <string name="part_of_midterm_grade"> Part of Midterm Grade</string>
+
+
+</resources>

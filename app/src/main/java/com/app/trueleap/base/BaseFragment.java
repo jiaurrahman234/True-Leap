@@ -17,7 +17,7 @@ import com.app.trueleap.external.LocalStorage;
 import com.google.gson.Gson;
 
 public class BaseFragment extends Fragment {
-String TAG = BaseFragment.class.getSimpleName();
+    String TAG = BaseFragment.class.getSimpleName();
     public static Animation shakeAnimation;
     public static View view;
     public static LocalStorage localStorage;

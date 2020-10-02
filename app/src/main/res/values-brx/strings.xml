@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">True Leap</string>
+    <string name="module_assignment">एसाइनमेन्थफोर</string>
+    <string name="module_quiz">सोंलु खालामनाय</string>
+    <string name="module_classnote">थाखो नथफोर</string>
+    <string name="module_gradebook">ग्रेद बिजाब</string>
+    <string name="module_message">रादाब</string>
+    <string name="str_uploaded_on">आफलद जाबाय</string>
+    <string name="Class_title">रादाब</string>
+    <string name="view_details">दिथेलफोरखौ नाय</string>
+    <string name="login">लग इन</string>
+    <string name="email">इमेल</string>
+    <string name="password">फासवर्द</string>
+    <string name="email_error">खामानियाव खाथायै इमेल</string>
+    <string name="required_field">गोनां</string>
+    <string name="action_change_lang">राव सोलाय</string>
+    <string name="action_settings">राव सोलाय</string>
+    <string name="action_logout">लगआउथ</string>
+    <string name="download_permission_explaination">फाइल दाउनलद–एखस्थारनेल स्थरेज फारमिसननो लिर</string>
+    <string name="download_permission_grant">गनायथि हो</string>
+    <string name="download">दाउनलद</string>
+    <string name="open">फोरमान बिलायखौ खेव</string>
+    <string name="upload">आफलद खालाम</string>
+    <string name="take_photo">सावगारि ला</string>
+    <string name="open_gallery">गेलारिखौ खेव</string>
+    <string name="add_document">फोरमान बिलायखौ दाजाब</string>
+    <string name="auto_download">गावनो गाव दाउनलद खालाम</string>
+    <string name="english">इंराजि</string>
+    <string name="hindi">हिन्दि</string>
+    <string name="select_language">राव सायख’</string>
+    <string name="confirm">रोखा खालाम</string>
+    <string name="logout_msg">थारैनो ओंखारनो लुबैदों ना?</string>
+    <string name="exit_msg">थारैनो लगआउथ खालामनो लुबैदों ना?</string>
+    <string name="downloaded_successfully">दाउनलद जाबाय</string>
+    <string name="uploaded_successfully">आफलद जाबाय</string>
+    <string name="submit_assignment">फोरमान बिलायखौ गथायना हो</string>
+
+    <!--- Grade Book -->
+    <string name="grade_type">Grade Type</string>
+    <string name="grade_weight">Grade Weight</string>
+    <string name="grade_name">Grade Name</string>
+    <string name="compulsary">Compulsary</string>
+    <string name="compulsary_pass_mark"> Compulsary Pass Mark</string>
+    <string name="assessment_date">Assessment Date</string>
+    <string name="out_of">Out of</string>
+    <string name="best_out_of">Best Out of</string>
+    <string name="part_of_midterm_grade"> Part of Midterm Grade</string>
+
+
+</resources>

@@ -17,9 +17,7 @@ import com.app.trueleap.interfaces.recyclerviewClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-
 
 import static com.app.trueleap.external.CommonFunctions.loadAssetsJsonArray;
 

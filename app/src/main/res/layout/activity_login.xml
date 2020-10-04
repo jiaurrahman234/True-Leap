@@ -15,7 +15,7 @@
             android:layout_marginVertical="@dimen/spacing_m"
             android:paddingTop="@dimen/spacing_xl"
             card_view:cardBackgroundColor="@color/white"
-            card_view:cardCornerRadius="8dp"
+            card_view:cardCornerRadius="15dp"
             card_view:contentPadding="@dimen/spacing_xl"
             card_view:cardElevation="18dp">
 

@@ -8,6 +8,8 @@
     <string name="module_classnote">Class Notes</string>
     <string name="module_gradebook">Grade Book</string>
     <string name="module_message">Message</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="str_uploaded_on">Uploaded On</string>
     <string name="Class_title">Message</string>

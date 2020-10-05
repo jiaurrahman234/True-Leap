@@ -4,13 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
-import com.app.trueleap.databinding.ActivityBaseBinding;
+import com.app.trueleap.databinding.ActivityCalenderViewBinding;
 import com.app.trueleap.home.ClassMaterialTypeActivity;
 import com.app.trueleap.home.studentsubject.model.CalendarModel;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
@@ -24,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,14 +40,15 @@ public class CalenderViewActivity extends BaseActivity {
     String selecteduniqueperiodid;
     ArrayList<ClassModel> classModelArrayList = new ArrayList<>();
     ArrayList<CalendarModel> calendarModelArrayList = new ArrayList<>();
-    ActivityBaseBinding binding;
+    ActivityCalenderViewBinding binding;
     Calendar calendarMinDate = Calendar.getInstance();
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_base);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_calender_view);
+        initToolbar();
         initData();
     }
 

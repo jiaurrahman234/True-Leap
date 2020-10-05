@@ -81,6 +81,7 @@ public class AssignmentViewActivity extends BaseActivity {
     ClassnoteModel class_note;
     String subject_name, period_id;
     Snackbar snackbar;
+    Uri uridata=null;
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
     @Override
@@ -297,15 +298,18 @@ public class AssignmentViewActivity extends BaseActivity {
         }
 
         if (requestCode == REQUEST_DOCUMENT) {
-            Uri uri = data.getData();
-            String uriString = uri.toString();
+            //Uri uri = data.getData();
+            uridata = data.getData();
+            String uriString = uridata.toString();
             File myFile = new File(uriString);
             String path = myFile.getAbsolutePath();
+            Log.d(TAG,"jkhkj: "+path);
+            imagepath = path;
             String displayName = null;
             if (uriString.startsWith("content://")) {
                 Cursor cursor = null;
                 try {
-                    cursor = getContentResolver().query(uri, null, null, null, null);
+                    cursor = getContentResolver().query(uridata, null, null, null, null);
                     if (cursor != null && cursor.moveToFirst()) {
                         displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         binding.imagesToUpload.setVisibility(View.VISIBLE);
@@ -424,12 +428,11 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     public void uploadFile() {
-        String upload_param = localStorage.getClassId() + ":" + DOC_ASSIGNMENT + ":" + period_id + ":" + PUBLIC;
-        //manoj
-        File uploadfile = new File(imagepath);
-        RequestBody filebody = RequestBody.create(MediaType.parse("image/*"),
-                uploadfile);
-//jiaur
+        String name="Manoj";
+        RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), name);
+
+        String upload_param = localStorage.getClassId() + ":AS" + ":" + localStorage.getId();
+
         RequestBody coverRequestFile = null;
         MultipartBody.Part photo1 = null;
         File file1 = new File(imagepath);
@@ -444,18 +447,22 @@ public class AssignmentViewActivity extends BaseActivity {
 
             RequestBody title = RequestBody.create(MediaType.parse("text/plain"),
                     class_note.getNote_title());
+            RequestBody sectionBody = RequestBody.create(MediaType.parse("text/plain"),
+                    localStorage.getSectionId());
+            RequestBody documentnumberBody = RequestBody.create(MediaType.parse("text/plain"),
+                    class_note.getId());
+            RequestBody uniqueperiodidBody = RequestBody.create(MediaType.parse("text/plain"),
+                    period_id);
 
             RequestBody uploadparam = RequestBody.create(MediaType.parse("text/plain"),
                     upload_param);
-           /* String note = class_note.getNote_title();
 
-            String title = class_note.getNote_title();*/
            showProgressBar();
             Call<ResponseBody> call = null;
             call = ApiClientFile
                     .getInstance()
                     .getApiInterface()
-                    .uploadDoc(localStorage.getKeyUserToken(), photo1, title, note, uploadparam);
+                    .uploadDoc(localStorage.getKeyUserToken(), photo1, title, note, uploadparam,nameBody,sectionBody,documentnumberBody,uniqueperiodidBody);
             Log.d(TAG, "khhkjhkh:" + call.request());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -463,7 +470,7 @@ public class AssignmentViewActivity extends BaseActivity {
                     hideProgressBar();
                     Log.d(TAG, "jljl:" + response.toString());
                     if (response.isSuccessful()) {
-                        snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully, Snackbar.LENGTH_LONG);
+                        snackbar = Snackbar.make(binding.getRoot(), R.string.uploaded_successfully, Snackbar.LENGTH_LONG);
                         snackbar.show();
                     } else {
                         Log.d(TAG, "server contact failed");

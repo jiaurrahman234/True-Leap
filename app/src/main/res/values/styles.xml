@@ -12,6 +12,11 @@
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
 
+    <style name="NavigationView" parent="AppTheme">
+        <item name="android:listDivider">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
 
     <style name="CustomEditStyle" parent="Widget.AppCompat.EditText">
         <item name="colorControlNormal">@color/colorPrimary</item>

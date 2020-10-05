@@ -44,7 +44,11 @@ public interface APIInterface {
                                  @Query("uploadparam") String uploadparam,*/
                                  @Part("title") RequestBody title,
                                  @Part("note") RequestBody note,
-                                 @Part("uploadparam") RequestBody uploadparam);
+                                 @Part("uploadparam") RequestBody uploadparam,
+                                 @Part("submittedby") RequestBody submittedby,
+                                 @Part("section") RequestBody section,
+                                 @Part("documentnumber") RequestBody documentnumber,
+                                 @Part("assignmentperiod") RequestBody assignmentperiod);
 
     @GET("version")
     Call<ResponseBody> getVersion();

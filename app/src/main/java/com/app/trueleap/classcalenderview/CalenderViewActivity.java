@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil;
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityCalenderviewBinding;
-import com.app.trueleap.databinding.ActivityCalenderviewBindingImpl;
 import com.app.trueleap.home.ClassMaterialTypeActivity;
 import com.app.trueleap.home.studentsubject.model.CalendarModel;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
@@ -49,6 +48,7 @@ public class CalenderViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_calenderview);
+        initToolbar();
         initData();
     }
 

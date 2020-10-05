@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class AssignmentActivity extends BaseActivity implements assignmentClickListener {
     Intent intent;
-    String subject_name,class_date;
+    String subject_name,class_date, period_id;
     ActivityAssignmentBinding binding;
     ArrayList<ClassModel> classModelArrayList;
     ArrayList<ClassnoteModel> assignment;
@@ -40,6 +40,7 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
                 classModelArrayList = new ArrayList<>();
                 subject_name = intent.getStringExtra("subject_name");
                 class_date = intent.getStringExtra("class_date");
+                period_id = intent.getStringExtra("period_id");
                 assignment = (ArrayList<ClassnoteModel>) intent.getExtras().getSerializable("assignment");
             }
             binding.studentClass.setText(localStorage.getClassId());
@@ -70,6 +71,7 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
         intent.putExtra("assignment",assignment.get(position));
         intent.putExtra("subject_name",subject_name);
         intent.putExtra("class_date",class_date);
+        intent.putExtra("period_id",period_id);
         startActivity(intent);
     }
 }

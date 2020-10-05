@@ -28,7 +28,7 @@ public class SresultItem {
     }
 
     public String get_content_exceprt() {
-        String d_text = content;
+        String d_text = content.replaceAll("[\\n ]", "");;
         if (d_text.equals("null") || d_text.isEmpty() || d_text == "") {
             return "No Text";
         } else if (d_text.length() > EXCERPT_LENGTH) {

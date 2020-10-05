@@ -4,13 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
-import com.app.trueleap.databinding.ActivityBaseBinding;
+import com.app.trueleap.databinding.ActivityCalenderviewBinding;
+import com.app.trueleap.databinding.ActivityCalenderviewBindingImpl;
 import com.app.trueleap.home.ClassMaterialTypeActivity;
 import com.app.trueleap.home.studentsubject.model.CalendarModel;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
@@ -24,7 +24,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,14 +41,14 @@ public class CalenderViewActivity extends BaseActivity {
     String selecteduniqueperiodid;
     ArrayList<ClassModel> classModelArrayList = new ArrayList<>();
     ArrayList<CalendarModel> calendarModelArrayList = new ArrayList<>();
-    ActivityBaseBinding binding;
+    ActivityCalenderviewBinding binding;
     Calendar calendarMinDate = Calendar.getInstance();
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_base);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_calenderview);
         initData();
     }
 
@@ -62,6 +61,7 @@ public class CalenderViewActivity extends BaseActivity {
             selecteduniqueperiodid = intent.getStringExtra("uniqueperiodid");
             Subject_name = intent.getStringExtra("subject_name");
         }
+        binding.sujectName.setText(Subject_name);
         JSONArray classes = getJSONFromCache(this);
         try {
             if (classes != null) {
@@ -94,7 +94,8 @@ public class CalenderViewActivity extends BaseActivity {
                                             documentObj.getString("filename"),
                                             documentObj.getString("type"),
                                             documentObj.getString("title"),
-                                            documentObj.getString("note")
+                                            documentObj.getString("note"),
+                                            documentObj.optString("validupto")
                                     ));
                                 }
                                 for (int k = 0; k < AssignmentArray.length(); k++) {
@@ -104,7 +105,8 @@ public class CalenderViewActivity extends BaseActivity {
                                             documentObj.getString("filename"),
                                             documentObj.getString("type"),
                                             documentObj.getString("title"),
-                                            documentObj.getString("note")
+                                            documentObj.getString("note"),
+                                            documentObj.optString("validupto")
                                     ));
                                 }
                                 Subjects.add(

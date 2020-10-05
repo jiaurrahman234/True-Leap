@@ -18,8 +18,14 @@ public class SearchDetailActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_detail);
         intent = getIntent();
         context = SearchDetailActivity.this;
+        initdata();
         initToolbar();
         initData();
+    }
+
+    private void initdata() {
+        binding.studentClass.setText(localStorage.getClassId());
+        binding.studentSection.setText(localStorage.getSectionId());
     }
 
     private void initData() {

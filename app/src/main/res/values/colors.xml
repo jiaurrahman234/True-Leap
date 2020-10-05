@@ -3,8 +3,6 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#3f51b5</color>
     <color name="colorAccent">#3f51b5</color>
-    <color name="red_400">#2ec66d</color>
-    <color name="green">#4CAF50</color>
     <color name="white">#FFFFFF</color>
     <color name="primary_text">#212121</color>
     <color name="tint">#4D000000</color>
@@ -12,33 +10,19 @@
     <color name="desc_text_color_grey">#9B9797</color>
     <color name="white_greyish">#EEEEEE</color>
     <color name="dark_grey">#aaaaaa</color>
-
     <color name="secondary_text">#727272</color>
-
     <color name="border_Color">#a1a1a1</color>
-
     <color name="black">#000</color>
     <color name="gray_btn_bg_color">#D0D0D0</color>
     <color name="text_color_grey">#837E7E</color>
     <color name="text_color">#575757</color>
-
     <color name="red_500">#F44336</color>
-
-
     <color name="color_tranparent">#40000000</color>
     <color name="colordevider">#f1f2f4</color>
-
-
-    <color name="yellow">#f8d64e</color>
-
     <color name="agendacolor">#8E9097</color>
-
-
     <color name="colorSub">#b0afaf</color>
     <color name="colorTex">#585858</color>
     <color name="color">#767578</color>
-
     <color name="toolbar">#efefef</color>
     <color name="toolbar_text">#8f000000</color>
-    <color name="accent">#2789e4</color>
 </resources>

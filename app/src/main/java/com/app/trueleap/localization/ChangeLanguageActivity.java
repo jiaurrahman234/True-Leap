@@ -3,6 +3,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
@@ -12,6 +14,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.app.trueleap.R;
+import com.app.trueleap.SplashActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityChangeLanguageBinding;
 import com.app.trueleap.gradebook.model.GradeItem;
@@ -37,10 +40,13 @@ public class ChangeLanguageActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         binding = DataBindingUtil.setContentView(this,R.layout.activity_change_language);
         context = ChangeLanguageActivity.this;
         intent = getIntent();
-        initToolbar();
         initdata();
     }
 
@@ -118,6 +124,14 @@ public class ChangeLanguageActivity extends BaseActivity {
                     return null;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        startActivity(new Intent(this, SplashActivity.class));
+        finish();
     }
 
 }

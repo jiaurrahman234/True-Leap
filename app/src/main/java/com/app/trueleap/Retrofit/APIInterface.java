@@ -32,7 +32,7 @@ public interface APIInterface {
     Call<ResponseBody> getDocument(@Header("Authorization") String token, @Query("periodid")  String periodid , @Query("documentid") String documentid);
 
     @GET(GLOBALSEARCH)
-    Call<ResponseBody> globalsearch(@Query("searchfor")  String searchterm );
+    Call<ResponseBody> globalsearch(@Header("Authorization") String token, @Query("searchfor")  String searchterm );
 
     @Multipart
     @POST(UPLOAD)

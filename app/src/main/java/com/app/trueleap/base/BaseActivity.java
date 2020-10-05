@@ -67,8 +67,6 @@ public class BaseActivity extends AppCompatActivity {
             localStorage = new LocalStorage(getApplicationContext());
             progressDialog = new ProgressDialog(BaseActivity.this);
             //NetworkCheck.isNetworkAvailable(getApplicationContext());
-
-
             AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(context);
             Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
@@ -110,14 +108,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public void showLanguageDialog(){
         startActivity(new Intent(this, ChangeLanguageActivity.class));
-       /* Fragment LanguageDialogFragment = getSupportFragmentManager().findFragmentByTag("language_dialog");
-        DialogFragment LanguageDialog = (DialogFragment) LanguageDialogFragment;
-        if (LanguageDialog == null) {
-            com.app.trueleap.dialogFragment.LanguageDialogFragment languageDialog = new LanguageDialogFragment();
-            FragmentManager transaction = getSupportFragmentManager();
-            languageDialog.setCancelable(false);
-            languageDialog.show(transaction, "language_dialog");
-        }*/
     }
 
 
@@ -220,9 +210,9 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_change_lang:
+          /*  case R.id.action_change_lang:
                 showLanguageDialog();
-                return true;
+                return true;*/
             case R.id.action_logout:
                 try {
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);

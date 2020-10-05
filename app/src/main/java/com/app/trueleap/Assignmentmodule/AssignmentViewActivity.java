@@ -79,7 +79,7 @@ public class AssignmentViewActivity extends BaseActivity {
     private static String IMAGE_DIRECTORY = "";
     private String imagepath = "";
     ClassnoteModel class_note;
-    String subject_name, period_id;
+    String subject_name, period_id, class_date;
     Snackbar snackbar;
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
@@ -237,11 +237,13 @@ public class AssignmentViewActivity extends BaseActivity {
             if (intent.getExtras() != null) {
                 class_note = (ClassnoteModel) intent.getExtras().getParcelable("assignment");
                 subject_name = (String) intent.getStringExtra("subject_name");
+                class_date = (String) intent.getStringExtra("class_date");
                 period_id = intent.getStringExtra("period_id");
             }
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
             binding.sujectName.setText(subject_name + " Assignments");
+            binding.classDate.setText(class_date);
             renderContent();
         } catch (Exception e) {
             e.printStackTrace();
@@ -252,6 +254,11 @@ public class AssignmentViewActivity extends BaseActivity {
         try{
             binding.assignmentTitle.setText(class_note.getNote_title());
             binding.assignmentTextExcerpt.setText(class_note.getNote_text());
+            if(class_note.getValidupto()!=null) {
+                binding.dueDate.setText(parse_date(class_note.getValidupto()));
+            }else {
+                binding.dueDate.setText("--");
+            }
             binding.date.setText(parse_date(class_note.getUploaded_date()));
             if (class_note.getNote_doc_file() != null) {
                 binding.fileName.setText(class_note.getNote_doc_file());
@@ -448,9 +455,9 @@ public class AssignmentViewActivity extends BaseActivity {
             RequestBody uploadparam = RequestBody.create(MediaType.parse("text/plain"),
                     upload_param);
            /* String note = class_note.getNote_title();
-
             String title = class_note.getNote_title();*/
-           showProgressBar();
+
+            showProgressBar();
             Call<ResponseBody> call = null;
             call = ApiClientFile
                     .getInstance()

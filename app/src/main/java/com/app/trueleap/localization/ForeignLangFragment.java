@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.app.trueleap.R;
+import com.app.trueleap.SplashActivity;
 import com.app.trueleap.base.BaseFragment;
 import com.app.trueleap.databinding.FragmentForeignLangBinding;
 import com.app.trueleap.localization.model.LanguageModel;
@@ -110,7 +111,7 @@ public class ForeignLangFragment extends BaseFragment {
                 getContext().getResources().updateConfiguration(config, getContext().getResources().getDisplayMetrics());
         }
         //refresh activity
-        Intent intent = getActivity().getIntent();
+        Intent intent = new Intent(getActivity(), SplashActivity.class);
         getActivity().finish();
         startActivity(intent);
     }

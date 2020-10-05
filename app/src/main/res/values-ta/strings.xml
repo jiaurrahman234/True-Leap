@@ -37,7 +37,6 @@
     <string name="uploaded_successfully"> வெற்றிகரமாகபதிவேற்றப்பட்டது </string>
     <string name="submit_assignment"> வகுப்பீட்டைசமர்ப்பி </string>
 
-
     <!--- Grade Book -->
     <string name="grade_type">Grade Type</string>
     <string name="grade_weight">Grade Weight</string>

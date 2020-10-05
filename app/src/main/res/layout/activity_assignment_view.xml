@@ -138,7 +138,9 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
@@ -146,7 +148,34 @@
                     android:gravity="right"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="5">
+                    android:layout_marginRight="@dimen/spacing_xl"
+                    android:layout_weight="3">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/due_on"
+                        android:textStyle=""
+                        android:textColor="@color/red_500"
+                        android:textSize="@dimen/textsize_xs" />
+
+                    <TextView
+                        android:id="@+id/due_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_time"
+                        android:textStyle="bold"
+                        android:textColor="@color/red_500"
+                        android:textSize="@dimen/textsize_xs" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:gravity="right"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="3">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,14 +183,14 @@
                         android:text="@string/str_uploaded_on"
                         android:textColor="@color/text_color_grey"
                         android:textSize="@dimen/textsize_xs"
-                        android:textStyle="italic" />
+                        android:textStyle="" />
 
                     <TextView
                         android:id="@+id/date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/date_time"
-                        android:textStyle="italic|bold"
+                        android:textStyle="bold"
                         android:textColor="@color/text_color_grey"
                         android:textSize="@dimen/textsize_xs" />
                 </LinearLayout>

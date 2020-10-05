@@ -49,8 +49,14 @@ public class SearchActivity extends BaseActivity implements recyclerviewClickLis
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         intent = getIntent();
         context = SearchActivity.this;
+        initdata();
         initToolbar();
         initListner();
+    }
+
+    private void initdata() {
+        binding.studentClass.setText(localStorage.getClassId());
+        binding.studentSection.setText(localStorage.getSectionId());
     }
 
     private void initListner() {
@@ -77,7 +83,7 @@ public class SearchActivity extends BaseActivity implements recyclerviewClickLis
             Call<ResponseBody> call = APIClient
                     .getInstance()
                     .getApiInterface()
-                    .globalsearch(data);
+                    .globalsearch(localStorage.getKeyUserToken(), data);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {

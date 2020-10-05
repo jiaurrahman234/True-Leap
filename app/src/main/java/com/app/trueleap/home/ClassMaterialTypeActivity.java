@@ -67,11 +67,12 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                     documentsModel.getNote(),
                                                     classModel.getStartdate(),
                                                     documentsModel.getFilename(),
-                                                    documentsModel.getType()));
+                                                    documentsModel.getType(),documentsModel.getValidupto()));
                                         }
                                         startActivity(new Intent(ClassMaterialTypeActivity.this, ClassNotesActivity.class)
                                                 .putExtra("period_id", classModel.getUniqueperiodid())
                                                 .putExtra("subject_name", sujectName)
+                                                .putExtra("class_date", binding.classDate.getText().toString())
                                                 .putExtra("class_note", classnoteModelArrayList));
 
                                     }else{
@@ -109,12 +110,13 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                                                                 documentsModel.getNote(),
                                                                                                 classModel.getStartdate(),
                                                                                                 documentsModel.getFilename(),
-                                                                                                documentsModel.getType()));
+                                                                                                documentsModel.getType(),documentsModel.getValidupto()));
                                                                                     }
 
                                                                                     startActivity(new Intent(ClassMaterialTypeActivity.this, AssignmentActivity.class)
                                                                                             .putExtra("period_id", classModel.getUniqueperiodid())
                                                                                             .putExtra("subject_name", sujectName)
+                                                                                            .putExtra("class_date", binding.classDate.getText().toString())
                                                                                             .putExtra("assignment", AssignmentModelArrayList));
                                                                                 }
                                                                                 else{

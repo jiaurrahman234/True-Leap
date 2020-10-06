@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Assignmentmodule.AssignmentViewActivity">
@@ -122,14 +121,13 @@
         android:layout_height="1dp">
     </View>
 
-
     <androidx.core.widget.NestedScrollView
         app:layout_constraintTop_toBottomOf="@+id/divider"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="@dimen/margin_10dp"
+        android:fillViewport="true"
         android:layout_marginVertical="@dimen/margin_10dp"
-        android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -140,16 +138,16 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_gravity="right"
+                android:gravity="right"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:gravity="right"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginRight="@dimen/spacing_xl"
-                    android:layout_weight="3">
+                    android:gravity="end"
+                    android:layout_marginRight="@dimen/spacing_xl">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -171,11 +169,10 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:gravity="right"
+                    android:layout_width="80dp"
+                    android:gravity="end"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="3">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -196,7 +193,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
             <TextView
                 android:id="@+id/assignment_title"
                 android:layout_width="match_parent"
@@ -205,19 +201,16 @@
                 android:textStyle="bold"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/textsize_m" />
-
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="2dp"
                 android:background="@color/grey" />
-
             <TextView
                 android:id="@+id/assignment_text_excerpt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Assignment"
+                android:text=""
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/textsize_s" />
 
@@ -227,7 +220,6 @@
                 android:layout_marginVertical="2dp"
                 android:layout_marginBottom="@dimen/margin_20dp"
                 android:background="@color/grey" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -256,26 +248,21 @@
 
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_marginHorizontal="60dp"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:layout_height="wrap_content">
-
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/download"
-                    android:layout_width="match_parent"
-                    app:cornerRadius="8dp"
+                    android:layout_width="wrap_content"
+                    app:cornerRadius="15dp"
+                    android:layout_gravity="center_horizontal"
                     android:text="@string/download"
                     android:layout_height="wrap_content">
                 </com.google.android.material.button.MaterialButton>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/open_document"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:text="@string/open"
-                    app:cornerRadius="8dp"
+                    app:cornerRadius="15dp"
                     android:layout_height="wrap_content">
                 </com.google.android.material.button.MaterialButton>
 
@@ -288,151 +275,169 @@
                     android:layout_height="wrap_content">
                 </com.google.android.material.button.MaterialButton>
 
-            </LinearLayout>
 
 
-            <LinearLayout
-                android:background="@color/cardview_light_background"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:id="@+id/upload_box"
+                android:fillViewport="true"
                 android:layout_marginTop="@dimen/margin_10dp"
-                android:gravity="center"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/take_photo"
-                    android:layout_width="80dp"
-                    android:gravity="center"
-                    app:cornerRadius="8dp"
+                    android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginRight="@dimen/margin_10dp"
-                    android:background="@color/border_Color"
-                    android:layout_height="80dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:src="@drawable/camera_icon"
-                        android:layout_height="40dp">
-                    </ImageView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/take_photo"
-                        android:textStyle="italic"
-                        android:textColor="@color/text_color_grey"
-                        android:textSize="@dimen/textsize_s" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/add_photo"
-                    android:layout_width="80dp"
-                    android:gravity="center"
-                    android:layout_marginRight="@dimen/margin_10dp"
-                    android:background="@color/border_Color"
-                    android:orientation="vertical"
-                    android:layout_height="80dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:src="@drawable/ic_baseline_add_24"
-                        android:layout_height="40dp">
-                    </ImageView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="@string/open_gallery"
-                        android:textStyle="italic"
-                        android:textColor="@color/text_color_grey"
-                        android:textSize="@dimen/textsize_s" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/upload_doc"
-                    android:layout_width="80dp"
-                    app:cornerRadius="8dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:background="@color/border_Color"
-                    android:layout_height="80dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:src="@drawable/ic_baseline_add_24"
-                        android:layout_height="40dp">
-                    </ImageView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="@string/add_document"
-                        android:textStyle="italic"
-                        android:textColor="@color/text_color_grey"
-                        android:textSize="@dimen/textsize_s" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="@dimen/margin_20dp"
-                android:background="@color/grey" />
-
-            <LinearLayout
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:id="@+id/images_to_upload"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="90dp">
-
-                <FrameLayout
-                    android:layout_width="100dp"
-                    android:background="@drawable/rounded"
-                    android:layout_height="120dp">
-
-                    <ImageView
-                        android:id="@+id/image_view"
-                        android:layout_width="100dp"
-                        android:layout_height="120dp">
-                    </ImageView>
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:id="@+id/remove_image"
-                        android:layout_width="40dp"
-                        android:padding="5dp"
-                        android:layout_gravity="right|top"
-                        android:background="@drawable/ic_baseline_remove_circle_outline_24"
-                        android:layout_height="40dp"/>
+                    android:background="@color/cardview_light_background"
+                    android:layout_width="match_parent"
+                    android:id="@+id/upload_box"
 
-                </FrameLayout>
+                    android:gravity="center_horizontal"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:gravity="center"
-                    android:id="@+id/doc_name"
+                    <LinearLayout
+                        android:id="@+id/take_photo"
+                        android:layout_width="80dp"
+                        android:gravity="center"
+                        app:cornerRadius="15dp"
+                        android:orientation="vertical"
+                        android:layout_marginRight="@dimen/margin_10dp"
+                        android:background="@color/border_Color"
+                        android:layout_height="80dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:src="@drawable/camera_icon"
+                            android:layout_height="40dp">
+                        </ImageView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/take_photo"
+                            android:textStyle="italic"
+                            android:textColor="@color/text_color_grey"
+                            android:textSize="@dimen/textsize_s" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/add_photo"
+                        android:layout_width="80dp"
+                        android:gravity="center"
+                        app:cornerRadius="15dp"
+                        android:layout_marginRight="@dimen/margin_10dp"
+                        android:background="@color/border_Color"
+                        android:orientation="vertical"
+                        android:layout_height="80dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:src="@drawable/ic_baseline_add_24"
+                            android:layout_height="40dp">
+                        </ImageView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="@string/open_gallery"
+                            android:textStyle="italic"
+                            android:textColor="@color/text_color_grey"
+                            android:textSize="@dimen/textsize_s" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/upload_doc"
+                        android:layout_width="80dp"
+                        app:cornerRadius="15dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:background="@color/border_Color"
+                        android:layout_height="80dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:src="@drawable/ic_baseline_add_24"
+                            android:layout_height="40dp">
+                        </ImageView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="@string/add_document"
+                            android:textStyle="italic"
+                            android:textColor="@color/text_color_grey"
+                            android:textSize="@dimen/textsize_s" />
+                    </LinearLayout>
+
+                </LinearLayout>
+                    <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="@dimen/margin_10dp"
+                    android:background="@color/grey" />
+                    <LinearLayout
+                    android:id="@+id/images_to_upload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/module_assignment"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/textsize_s" />
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <FrameLayout
+                        android:layout_width="100dp"
+                        android:layout_height="120dp"
+                        android:background="@drawable/rounded">
+
+                        <ImageView
+                            android:id="@+id/image_view"
+                            android:layout_width="100dp"
+                            android:layout_height="120dp"></ImageView>
+
+                        <LinearLayout
+                            android:id="@+id/remove_image"
+                            android:layout_width="26dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="right|top"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:layout_marginRight="@dimen/spacing_xs"
+                            android:background="@drawable/ic_baseline_remove_circle_outline_24"
+                            android:orientation="horizontal"
+                            android:padding="5dp" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/doc_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/module_assignment"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/textsize_s" />
 
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_gravity="center"
-                    android:id="@+id/submit_Assignment"
-                    android:layout_width="wrap_content"
-                    android:text="@string/submit_assignment"
-                    android:layout_height="wrap_content">
-                </com.google.android.material.button.MaterialButton>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/submit_Assignment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/submit_assignment"
+                        app:cornerRadius="15dp"></com.google.android.material.button.MaterialButton>
+
+                </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
 
             </LinearLayout>
-        </LinearLayout>
+
+
 
     </androidx.core.widget.NestedScrollView>
 

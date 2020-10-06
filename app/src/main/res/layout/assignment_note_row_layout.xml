@@ -38,7 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/due_on"
-                        android:textStyle=""
+                        android:textAlignment="textEnd"
                         android:textColor="@color/red_500"
                         android:textSize="@dimen/textsize_xs" />
 
@@ -47,6 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/date_time"
+                        android:textAlignment="textEnd"
                         android:textStyle="bold"
                         android:textColor="@color/red_500"
                         android:textSize="@dimen/textsize_xs" />

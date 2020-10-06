@@ -161,21 +161,27 @@ public class CommonFunctions {
 
     public static String parse_date (String date_to_parse){
 
-        String datepattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        String display_datepattern = "dd-MM-yyyy";
+        if(date_to_parse!=null) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(datepattern);
-        SimpleDateFormat display_dateFormat = new SimpleDateFormat(display_datepattern);
+            String datepattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+            String display_datepattern = "dd-MM-yyyy";
 
-        String formatted_date="";
-        try {
-            Date inputdateFormat = dateFormat.parse(date_to_parse);
-            formatted_date = display_dateFormat.format(inputdateFormat);
-        } catch (Exception e) {
-            e.printStackTrace();
+            SimpleDateFormat dateFormat = new SimpleDateFormat(datepattern);
+            SimpleDateFormat display_dateFormat = new SimpleDateFormat(display_datepattern);
+
+            String formatted_date = "";
+            try {
+                Date inputdateFormat = dateFormat.parse(date_to_parse);
+                formatted_date = display_dateFormat.format(inputdateFormat);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return formatted_date;
+        }else {
+            return  "";
         }
 
-        return formatted_date;
+
     }
 
     public static Date getdateValue(String date_to_parse){

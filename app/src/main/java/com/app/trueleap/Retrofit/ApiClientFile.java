@@ -30,6 +30,7 @@ public class ApiClientFile {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -110,7 +111,6 @@ public class ApiClientFile {
 
         OkHttpClient okHttpClient = httpClient.build();
 
-
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -119,6 +119,7 @@ public class ApiClientFile {
                     .client(getUnsafeOkHttpClient())
                     .build();
         }
+
         return retrofit;
     }
 }

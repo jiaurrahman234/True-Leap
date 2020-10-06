@@ -7,25 +7,25 @@
   },
   {
     "lang_id" : 2,
-    "language_name" : "Assamese",
+    "language_name" : "অসমীয়া",
     "language_code" : "as",
     "type" : 1
   },
   {
     "lang_id" : 3,
-    "language_name" : "Bengali",
+    "language_name" : "বাংলা",
     "language_code" : "bn",
     "type" : 1
   },
   {
     "lang_id" : 4,
-    "language_name" : "Bodo",
+    "language_name" : "बर'",
     "language_code" : "brx",
     "type" : 1
   },
   {
     "lang_id" : 5,
-    "language_name" : "Hindi",
+    "language_name" : "हिंदी",
     "language_code" : "hi",
     "type" : 1
   },
@@ -37,25 +37,25 @@
   },
   {
     "lang_id" : 7,
-    "language_name" : "Marathi",
+    "language_name" : "मराठी",
     "language_code" : "mr",
     "type" : 1
   },
   {
     "lang_id" : 8,
-    "language_name" : "Oriya",
+    "language_name" : "ଓଡ଼ିଆ",
     "language_code" : "or",
     "type" : 1
   },
   {
     "lang_id" : 9,
-    "language_name" : "Punjabi",
+    "language_name" : "ਪੰਜਾਬੀ",
     "language_code" : "pa",
     "type" : 1
   },
   {
     "lang_id" : 10,
-    "language_name" : "Tamil",
+    "language_name" : "தமிழ்",
     "language_code" : "ta",
     "type" : 1
   }

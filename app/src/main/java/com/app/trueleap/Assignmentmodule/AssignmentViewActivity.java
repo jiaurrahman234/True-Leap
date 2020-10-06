@@ -238,10 +238,12 @@ public class AssignmentViewActivity extends BaseActivity {
             if (intent.getExtras() != null) {
                 class_note = (ClassnoteModel) intent.getExtras().getParcelable("assignment");
                 subject_name = (String) intent.getStringExtra("subject_name");
+                class_date = (String) intent.getStringExtra("class_date");
                 period_id = intent.getStringExtra("period_id");
             }
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
+            binding.classDate.setText(class_date);
             binding.sujectName.setText(subject_name + " Assignments");
             renderContent();
         } catch (Exception e) {
@@ -254,6 +256,11 @@ public class AssignmentViewActivity extends BaseActivity {
             binding.assignmentTitle.setText(class_note.getNote_title());
             binding.assignmentTextExcerpt.setText(class_note.getNote_text());
             binding.date.setText(parse_date(class_note.getUploaded_date()));
+            if(!(class_note.getValidupto().equals(null))) {
+                binding.dueDate.setText(parse_date(class_note.getValidupto()));
+            }else {
+                binding.dueDate.setText("--");
+            }
             if (class_note.getNote_doc_file() != null) {
                 binding.fileName.setText(class_note.getNote_doc_file());
             } else {
@@ -380,7 +387,7 @@ public class AssignmentViewActivity extends BaseActivity {
         try{
             showProgressBar();
             Call<ResponseBody> call = null;
-            call = ApiClientFile
+            call =   ApiClientFile
                     .getInstance()
                     .getApiInterface()
                     .getDocument(localStorage.getKeyUserToken(), period_id, class_note.getId());
@@ -401,14 +408,14 @@ public class AssignmentViewActivity extends BaseActivity {
                                 });
                         snackbar.show();
                     } else {
-                        snackbar = Snackbar.make(binding.getRoot(), "Download Failed", Snackbar.LENGTH_LONG);
+                        snackbar = Snackbar.make(binding.getRoot(), "Download Failed 1", Snackbar.LENGTH_LONG);
                         snackbar.show();
                     }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     hideProgressBar();
-                    snackbar = Snackbar.make(binding.getRoot(), "Download Failed", Snackbar.LENGTH_LONG);
+                    snackbar = Snackbar.make(binding.getRoot(), "Download Failed 2", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             });

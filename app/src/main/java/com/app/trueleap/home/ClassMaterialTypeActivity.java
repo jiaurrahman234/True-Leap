@@ -64,6 +64,7 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                             classnoteModelArrayList.add(new ClassnoteModel(
                                                     documentsModel.getId(),
                                                     documentsModel.getTitle(),
+                                                    documentsModel.getFile_url(),
                                                     documentsModel.getNote(),
                                                     classModel.getStartdate(),
                                                     documentsModel.getFilename(),
@@ -107,6 +108,7 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                                                                                         AssignmentModelArrayList.add(new ClassnoteModel(
                                                                                                 documentsModel.getId(),
                                                                                                 documentsModel.getTitle(),
+                                                                                                documentsModel.getFile_url(),
                                                                                                 documentsModel.getNote(),
                                                                                                 classModel.getStartdate(),
                                                                                                 documentsModel.getFilename(),

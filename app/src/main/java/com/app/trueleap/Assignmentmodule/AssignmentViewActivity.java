@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.OpenableColumns;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -160,6 +161,17 @@ public class AssignmentViewActivity extends BaseActivity {
                     }
                 }
             });
+            binding.documentLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(class_note.getFile_url()));
+                        startActivity(browserIntent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -253,18 +265,29 @@ public class AssignmentViewActivity extends BaseActivity {
 
     private void renderContent() {
         try{
+            if (class_note.getFile_url().length() != 0) {
+                binding.documentLink.setVisibility(View.VISIBLE);
+                String styledText = "Document Link: <font color='" + getResources().getColor(R.color.colorPrimary) + "'>" + class_note.getFile_url() + "</font>";
+                binding.documentLink.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
+            } else {
+                binding.documentLink.setVisibility(View.GONE);
+            }
             binding.assignmentTitle.setText(class_note.getNote_title());
             binding.assignmentTextExcerpt.setText(class_note.getNote_text());
             binding.date.setText(parse_date(class_note.getUploaded_date()));
-            if(!(class_note.getValidupto().equals(null))) {
+            if(class_note.getValidupto().trim().length() !=0) {
                 binding.dueDate.setText(parse_date(class_note.getValidupto()));
             }else {
                 binding.dueDate.setText("--");
             }
-            if (class_note.getNote_doc_file() != null) {
+            if (class_note.getNote_doc_file().trim().length()!=0) {
                 binding.fileName.setText(class_note.getNote_doc_file());
+                binding.openDocument.setVisibility(View.VISIBLE);
+                binding.download.setVisibility(View.VISIBLE);
             } else {
                 binding.fileTitle.setVisibility(View.GONE);
+                binding.openDocument.setVisibility(View.GONE);
+                binding.download.setVisibility(View.GONE);
             }
         }catch (Exception e){
             e.printStackTrace();

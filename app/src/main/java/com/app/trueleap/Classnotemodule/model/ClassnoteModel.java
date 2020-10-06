@@ -7,16 +7,17 @@ import static com.app.trueleap.external.Constants.EXCERPT_LENGTH;
 
 public class ClassnoteModel implements Parcelable {
     String id;
-    String note_title;
+    String note_title,file_url;
     String note_text;
     String uploaded_date;
     String note_doc_file;
     String doc_type;
     String validupto;
 
-    public ClassnoteModel(String id, String note_title, String note_text, String uploaded_date, String note_doc_file, String doc_type, String validupto) {
+    public ClassnoteModel(String id, String note_title,String file_url, String note_text, String uploaded_date, String note_doc_file, String doc_type, String validupto) {
         this.id = id;
         this.note_title = note_title;
+        this.file_url = file_url;
         this.note_text = note_text;
         this.uploaded_date = uploaded_date;
         this.note_doc_file = note_doc_file;
@@ -27,6 +28,7 @@ public class ClassnoteModel implements Parcelable {
     protected ClassnoteModel(Parcel in) {
         id = in.readString();
         note_title = in.readString();
+        file_url = in.readString();
         note_text = in.readString();
         uploaded_date = in.readString();
         note_doc_file = in.readString();
@@ -60,6 +62,14 @@ public class ClassnoteModel implements Parcelable {
 
     public void setNote_title(String note_title) {
         this.note_title = note_title;
+    }
+
+    public String getFile_url() {
+        return file_url;
+    }
+
+    public void setFile_url(String file_url) {
+        this.file_url = file_url;
     }
 
     public String getNote_text() {
@@ -123,6 +133,7 @@ public class ClassnoteModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(note_title);
+        dest.writeString(file_url);
         dest.writeString(note_text);
         dest.writeString(uploaded_date);
         dest.writeString(note_doc_file);

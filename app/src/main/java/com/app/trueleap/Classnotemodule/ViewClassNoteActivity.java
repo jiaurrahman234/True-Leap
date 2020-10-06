@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
+import android.text.Html;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -33,7 +35,7 @@ public class ViewClassNoteActivity extends BaseActivity {
 
     ActivityViewClassNoteBinding binding;
     Intent intent;
-    String subject_name,period_id,class_date;
+    String subject_name, period_id, class_date;
     ClassnoteModel class_note;
     Snackbar snackbar;
 
@@ -50,7 +52,7 @@ public class ViewClassNoteActivity extends BaseActivity {
     }
 
     private void initData() {
-        try{
+        try {
             if (intent.getExtras() != null) {
                 class_note = (ClassnoteModel) intent.getExtras().getParcelable("class_note");
                 subject_name = (String) intent.getStringExtra("subject_name");
@@ -60,20 +62,27 @@ public class ViewClassNoteActivity extends BaseActivity {
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
             binding.classDate.setText(class_date);
-            binding.sujectName.setText(subject_name +" Class Notes");
+            binding.sujectName.setText(subject_name + " Class Notes");
             renderContent();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void renderContent() {
+        if (class_note.getFile_url().length() != 0) {
+            binding.documentLink.setVisibility(View.VISIBLE);
+            String styledText = "Document Link: <font color='" + getResources().getColor(R.color.colorPrimary) + "'>" + class_note.getFile_url() + "</font>";
+            binding.documentLink.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
+        } else {
+            binding.documentLink.setVisibility(View.GONE);
+        }
         binding.noteTitle.setText(class_note.getNote_title());
         binding.noteTextFull.setText(class_note.getNote_text());
         binding.noteDate.setText(parse_date(class_note.getUploaded_date()));
-        if(class_note.getNote_doc_file()!=null){
+        if (class_note.getNote_doc_file().trim().length() !=0) {
             binding.fileName.setText(class_note.getNote_doc_file());
-        }else {
+        } else {
             binding.fileTitle.setVisibility(View.GONE);
         }
     }
@@ -82,49 +91,62 @@ public class ViewClassNoteActivity extends BaseActivity {
         binding.fileTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file());
-                if(docfile.exists()){
+                File docfile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
+                if (docfile.exists()) {
                     openFile(docfile);
-                }else {
-                    if(hasPermissionToDownload(((Activity)context))){
+                } else {
+                    if (hasPermissionToDownload(((Activity) context))) {
                         download_file();
                     }
                 }
             }
         });
+
+        binding.documentLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(class_note.getFile_url()));
+                    startActivity(browserIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    private void download_file(){
+    private void download_file() {
         showProgressBar();
         Call<ResponseBody> call = null;
-        call =   ApiClientFile
+        call = ApiClientFile
                 .getInstance()
                 .getApiInterface()
-                .getDocument(localStorage.getKeyUserToken(),period_id,class_note.getId());
+                .getDocument(localStorage.getKeyUserToken(), period_id, class_note.getId());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 hideProgressBar();
                 if (response.isSuccessful()) {
-                    boolean writtenToDisk = writeResponseBodyToDisk(response.body() , class_note.getId() , class_note.getNote_doc_file(), class_note.getDoc_type() );
-                    snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully ,Snackbar.LENGTH_LONG )
+                    boolean writtenToDisk = writeResponseBodyToDisk(response.body(), class_note.getId(), class_note.getNote_doc_file(), class_note.getDoc_type());
+                    snackbar = Snackbar.make(binding.getRoot(), R.string.downloaded_successfully, Snackbar.LENGTH_LONG)
                             .setAction(R.string.open, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    File billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+class_note.getId()+"_"+class_note.getNote_doc_file());
+                                    File billFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + class_note.getId() + "_" + class_note.getNote_doc_file());
                                     openFile(billFile);
                                 }
                             });
                     snackbar.show();
                 } else {
-                    snackbar = Snackbar.make(binding.getRoot(), "Download Failed" ,Snackbar.LENGTH_LONG );
+                    snackbar = Snackbar.make(binding.getRoot(), "Download Failed", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hideProgressBar();
-                snackbar = Snackbar.make(binding.getRoot(), "Download Failed" ,Snackbar.LENGTH_LONG );
+                snackbar = Snackbar.make(binding.getRoot(), "Download Failed", Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
         });

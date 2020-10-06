@@ -54,7 +54,7 @@ public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapte
             note_text.setText(item.get_doucument_exceprt());
             note_date.setText(parse_date(item.getUploaded_date()));
 
-            if(!(item.getValidupto().equals(null))) {
+            if(item.getValidupto().trim().length() !=0) {
                 due_on.setText(parse_date(item.getValidupto()));
             }else {
                 due_on.setText("--");

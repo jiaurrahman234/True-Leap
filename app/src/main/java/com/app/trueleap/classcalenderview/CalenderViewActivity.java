@@ -89,22 +89,43 @@ public class CalenderViewActivity extends BaseActivity {
                             if (documentArray.length() > 0 || AssignmentArray.length() > 0) {
                                 for (int k = 0; k < documentArray.length(); k++) {
                                     JSONObject documentObj = documentArray.getJSONObject(k);
+
+                                    String title = "", linkUrl = "";
+                                    if (checkTextContains(documentObj.getString("title"))) {
+                                        title = documentObj.getString("title").substring(0, documentObj.getString("title").indexOf("trueleaplinkurl"));
+                                        linkUrl = documentObj.getString("title").substring(documentObj.getString("title").indexOf("trueleaplinkurl") + 15);
+                                    } else {
+                                        title = documentObj.getString("title");
+                                        linkUrl = "";
+                                    }
+
                                     documentsModelArrayList.add(new DocumentsModel(
                                             documentObj.getString("id"),
                                             documentObj.getString("filename"),
                                             documentObj.getString("type"),
-                                            documentObj.getString("title"),
+                                            title,
+                                            linkUrl,
                                             documentObj.getString("note"),
                                             documentObj.optString("validupto")
                                     ));
                                 }
                                 for (int k = 0; k < AssignmentArray.length(); k++) {
                                     JSONObject documentObj = AssignmentArray.getJSONObject(k);
+                                    String title = "", linkUrl = "";
+                                    if (checkTextContains(documentObj.getString("title"))) {
+                                        title = documentObj.getString("title").substring(0, documentObj.getString("title").indexOf("trueleaplinkurl"));
+                                        linkUrl = documentObj.getString("title").substring(documentObj.getString("title").indexOf("trueleaplinkurl") + 15);
+                                    } else {
+                                        title = documentObj.getString("title");
+                                        linkUrl = "";
+                                    }
+
                                     assignmentModelArrayList.add(new DocumentsModel(
                                             documentObj.getString("id"),
                                             documentObj.getString("filename"),
                                             documentObj.getString("type"),
-                                            documentObj.getString("title"),
+                                            title,
+                                            linkUrl,
                                             documentObj.getString("note"),
                                             documentObj.optString("validupto")
                                     ));
@@ -162,11 +183,19 @@ public class CalenderViewActivity extends BaseActivity {
             //String[] time = (Subjects.get(0).getStarttime().split("[:.]"));
 
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
         setupCalander();
+    }
+
+    boolean checkTextContains(String text) {
+        try {
+            return text.indexOf("trueleaplinkurl") != -1 ? true : false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private void setupCalander() {
@@ -200,8 +229,8 @@ public class CalenderViewActivity extends BaseActivity {
                 Calendar clickedDayCalendar = eventDay.getCalendar();
                 try {
                     String dateFormat = simpleDateFormat.format(eventDay.getCalendar().getTime());
-                    for (int i=0;i<calendarModelArrayList.size();i++){
-                        if (calendarModelArrayList.get(i).getDate().equalsIgnoreCase(dateFormat)){
+                    for (int i = 0; i < calendarModelArrayList.size(); i++) {
+                        if (calendarModelArrayList.get(i).getDate().equalsIgnoreCase(dateFormat)) {
                             Gson gson = new Gson();
                             String classData = gson.toJson(classModelArrayList);
                             localStorage.setClass(classData);

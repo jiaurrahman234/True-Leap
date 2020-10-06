@@ -32,6 +32,7 @@ public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapte
         public TextView note_title;
         public TextView note_text;
         public TextView note_date;
+        public TextView due_on;
         public LinearLayout view_all_note;
         ClassnoteModel item;
         int position_data;
@@ -42,6 +43,7 @@ public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapte
             note_text = v.findViewById(R.id.note_text_excerpt);
             note_title = v.findViewById(R.id.note_title);
             note_date = v.findViewById(R.id.note_date);
+            due_on = v.findViewById(R.id.due_date);
             view_all_note = v.findViewById(R.id.view_detail);
             view_all_note.setOnClickListener(this);
         }
@@ -51,6 +53,12 @@ public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapte
             note_title.setText(item.getNote_title());
             note_text.setText(item.get_doucument_exceprt());
             note_date.setText(parse_date(item.getUploaded_date()));
+
+            if(!(item.getValidupto().equals(null))) {
+                due_on.setText(parse_date(item.getValidupto()));
+            }else {
+                due_on.setText("--");
+            }
         }
         @Override
         public void onClick(View view) {

@@ -4,14 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class DocumentsModel implements Parcelable {
-    String id,filename,type,title,note;
+    String id,filename,type,title,note, validupto ;
 
-    public DocumentsModel(String id, String filename, String type, String title, String note) {
+    public DocumentsModel(String id, String filename, String type, String title, String note, String validupto) {
         this.id = id;
         this.filename = filename;
         this.type = type;
         this.title = title;
         this.note = note;
+        this.validupto = validupto;
     }
 
     protected DocumentsModel(Parcel in) {
@@ -20,6 +21,7 @@ public class DocumentsModel implements Parcelable {
         type = in.readString();
         title = in.readString();
         note = in.readString();
+        validupto = in.readString();
     }
 
     public static final Creator<DocumentsModel> CREATOR = new Creator<DocumentsModel>() {
@@ -74,6 +76,14 @@ public class DocumentsModel implements Parcelable {
         this.note = note;
     }
 
+    public String getValidupto() {
+        return validupto;
+    }
+
+    public void setValidupto(String validupto) {
+        this.validupto = validupto;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -86,5 +96,6 @@ public class DocumentsModel implements Parcelable {
         dest.writeString(type);
         dest.writeString(title);
         dest.writeString(note);
+        dest.writeString(validupto);
     }
 }

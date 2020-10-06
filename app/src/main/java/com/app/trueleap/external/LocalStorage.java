@@ -102,7 +102,7 @@ public class LocalStorage {
     }
 
     public String getSelectedLanguage() {
-        return sharedPreferences.getString(SELECTED_LANGUAGE, "en");
+        return sharedPreferences.getString(SELECTED_LANGUAGE, null);
     }
 
     public void setSelectedLanguage(String lang) {

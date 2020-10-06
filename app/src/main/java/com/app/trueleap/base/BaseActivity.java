@@ -111,14 +111,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public void showLanguageDialog(){
         startActivity(new Intent(this, ChangeLanguageActivity.class));
-       /* Fragment LanguageDialogFragment = getSupportFragmentManager().findFragmentByTag("language_dialog");
-        DialogFragment LanguageDialog = (DialogFragment) LanguageDialogFragment;
-        if (LanguageDialog == null) {
-            com.app.trueleap.dialogFragment.LanguageDialogFragment languageDialog = new LanguageDialogFragment();
-            FragmentManager transaction = getSupportFragmentManager();
-            languageDialog.setCancelable(false);
-            languageDialog.show(transaction, "language_dialog");
-        }*/
     }
 
 

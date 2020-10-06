@@ -12,14 +12,16 @@ public class ClassnoteModel implements Parcelable {
     String uploaded_date;
     String note_doc_file;
     String doc_type;
+    String validupto;
 
-    public ClassnoteModel(String id, String note_title, String note_text, String uploaded_date, String note_doc_file, String doc_type) {
+    public ClassnoteModel(String id, String note_title, String note_text, String uploaded_date, String note_doc_file, String doc_type, String validupto) {
         this.id = id;
         this.note_title = note_title;
         this.note_text = note_text;
         this.uploaded_date = uploaded_date;
         this.note_doc_file = note_doc_file;
         this.doc_type = doc_type;
+        this.validupto = validupto;
     }
 
     protected ClassnoteModel(Parcel in) {
@@ -29,6 +31,7 @@ public class ClassnoteModel implements Parcelable {
         uploaded_date = in.readString();
         note_doc_file = in.readString();
         doc_type = in.readString();
+        validupto = in.readString();
     }
 
     public static final Creator<ClassnoteModel> CREATOR = new Creator<ClassnoteModel>() {
@@ -91,6 +94,14 @@ public class ClassnoteModel implements Parcelable {
         this.doc_type = doc_type;
     }
 
+    public String getValidupto() {
+        return validupto;
+    }
+
+
+    public void setValidupto(String validupto) {
+        this.validupto = validupto;
+    }
 
     public String get_doucument_exceprt() {
         String d_text = note_text;
@@ -116,5 +127,6 @@ public class ClassnoteModel implements Parcelable {
         dest.writeString(uploaded_date);
         dest.writeString(note_doc_file);
         dest.writeString(doc_type);
+        dest.writeString(validupto);
     }
 }

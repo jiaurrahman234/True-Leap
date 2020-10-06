@@ -33,7 +33,7 @@ public class ViewClassNoteActivity extends BaseActivity {
 
     ActivityViewClassNoteBinding binding;
     Intent intent;
-    String subject_name,period_id;
+    String subject_name,period_id,class_date;
     ClassnoteModel class_note;
     Snackbar snackbar;
 
@@ -55,9 +55,11 @@ public class ViewClassNoteActivity extends BaseActivity {
                 class_note = (ClassnoteModel) intent.getExtras().getParcelable("class_note");
                 subject_name = (String) intent.getStringExtra("subject_name");
                 period_id = (String) intent.getStringExtra("period_id");
+                class_date = (String) intent.getStringExtra("class_date");
             }
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
+            binding.classDate.setText(class_date);
             binding.sujectName.setText(subject_name +" Class Notes");
             renderContent();
         }catch (Exception e){

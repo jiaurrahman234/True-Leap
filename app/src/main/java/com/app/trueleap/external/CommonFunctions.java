@@ -133,7 +133,7 @@ public class CommonFunctions {
         return formatted_date;
     }
 
-    public static String parse_date (String date_to_parse){
+    public static String parse_date_time (String date_to_parse){
 
         String datepattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         String display_datepattern = "dd-MM-yyyy 'at' HH:mm";
@@ -156,6 +156,32 @@ public class CommonFunctions {
         String formattedDate = outputFormatter.format(date);*/
 
         return formatted_date;
+    }
+
+
+    public static String parse_date (String date_to_parse){
+
+        if(date_to_parse!=null) {
+
+            String datepattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+            String display_datepattern = "dd-MM-yyyy";
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(datepattern);
+            SimpleDateFormat display_dateFormat = new SimpleDateFormat(display_datepattern);
+
+            String formatted_date = "";
+            try {
+                Date inputdateFormat = dateFormat.parse(date_to_parse);
+                formatted_date = display_dateFormat.format(inputdateFormat);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return formatted_date;
+        }else {
+            return  "";
+        }
+
+
     }
 
     public static Date getdateValue(String date_to_parse){

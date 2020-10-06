@@ -99,30 +99,35 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/spacing_xl">
 
-            <EditText
-                android:id="@+id/search_term"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_baseline_search_24"
-                android:imeOptions="actionSearch"
-                android:singleLine="true"></EditText>
 
+                <EditText
+                    android:id="@+id/search_term"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search"
+                    android:textColorHint="@color/text_color"
+                    android:drawableRight="@drawable/ic_baseline_search_24"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"></EditText>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/search_count"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/spacing_xl"
-            app:layout_constraintTop_toBottomOf="@+id/search_card"
-            tools:ignore="MissingConstraints" />
+            android:textColor="@color/text_color"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:layout_marginHorizontal="@dimen/spacing_xl"
+            app:layout_constraintTop_toBottomOf="@+id/search_card" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
             android:paddingHorizontal="@dimen/spacing_xl"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/search_count">
 
             <LinearLayout

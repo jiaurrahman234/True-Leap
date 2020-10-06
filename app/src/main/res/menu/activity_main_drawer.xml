@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tools">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_changeLanguage"
+            android:icon="@drawable/ic_baseline_language_24"
+            android:title="Change Language" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_auto_download"
+            android:icon="@drawable/ic_download"
+            android:title="Auto Download Documents" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_baseline_power_settings_new_24"
+            android:title="Logout" />
+    </group>
+
+
+</menu>

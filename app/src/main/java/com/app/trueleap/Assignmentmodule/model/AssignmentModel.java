@@ -103,5 +103,4 @@ public class AssignmentModel implements  Parcelable{
         dest.writeString(note_doc_file);
         dest.writeString(doc_type);
     }
-
 }

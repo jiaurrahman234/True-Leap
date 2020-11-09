@@ -9,20 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
-
 import androidx.databinding.DataBindingUtil;
-
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivitySplashBinding;
-import com.app.trueleap.documentSearch.SearchActivity;
-import com.app.trueleap.gradebook.GradebookActivity;
 import com.app.trueleap.home.MainActivity;
 import com.app.trueleap.localization.ChangeLanguageActivity;
-
-import org.w3c.dom.Text;
-
 
 public class SplashActivity extends BaseActivity {
     String TAG = SplashActivity.class.getSimpleName();
@@ -42,6 +34,7 @@ public class SplashActivity extends BaseActivity {
             binding.versionName.setText(pInfo.versionName);
             initListener();
             if(localStorage.getSelectedLanguage()!=null) {
+               binding.animationView.setVisibility(View.VISIBLE);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -50,6 +43,7 @@ public class SplashActivity extends BaseActivity {
                 }, 3000);
             }else {
                 binding.languageBox.setVisibility(View.VISIBLE);
+                binding.animationView.setVisibility(View.GONE);
             }
 
         } catch (Exception e) {

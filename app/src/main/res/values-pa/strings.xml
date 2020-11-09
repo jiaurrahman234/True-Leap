@@ -18,6 +18,7 @@
     <string name="action_change_lang">ਭਾਸ਼ਾ ਬਦਲੋ</string>
     <string name="action_settings">ਭਾਸ਼ਾ ਬਦਲੋ</string>
     <string name="action_logout">ਲੌਗ ਆਉਟ ਕਰੋ</string>
+    <string name="action_notification">Notifications </string>
     <string name="download_permission_explaination">ਫ਼ਾਈਲਡਾਉਨਲੋਡ–ਬਾਹਰੀ ਸਟੋਰੇਜ ਤੇ ਸੰਪਾਦਨ ਅਨੁਮਤੀ</string>
     <string name="download_permission_grant">ਅਨੁਮਤੀ ਪ੍ਰਦਾਨ ਕਰੋ</string>
     <string name="download">ਡਾਉਨਲੋਡ ਕਰੋ</string>

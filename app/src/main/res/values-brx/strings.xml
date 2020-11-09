@@ -17,6 +17,7 @@
     <string name="action_change_lang">राव सोलाय</string>
     <string name="action_settings">राव सोलाय</string>
     <string name="action_logout">लगआउथ</string>
+    <string name="action_notification">Notifications </string>
     <string name="download_permission_explaination">फाइल दाउनलद–एखस्थारनेल स्थरेज फारमिसननो लिर</string>
     <string name="download_permission_grant">गनायथि हो</string>
     <string name="download">दाउनलद</string>

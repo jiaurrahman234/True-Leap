@@ -136,7 +136,7 @@ public class CommonFunctions {
     public static String parse_date_time (String date_to_parse){
 
         String datepattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        String display_datepattern = "dd-MM-yyyy 'at' HH:mm";
+        String display_datepattern = "dd-MM-yyyy 'at' hh:mm a";
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(datepattern);
         SimpleDateFormat display_dateFormat = new SimpleDateFormat(display_datepattern);
@@ -149,7 +149,7 @@ public class CommonFunctions {
             e.printStackTrace();
         }
 
-     /*   DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+     /* DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy 'at' HH:mm", Locale.ENGLISH);
 
         LocalDate date = LocalDate.parse(date_to_parse, inputFormatter);

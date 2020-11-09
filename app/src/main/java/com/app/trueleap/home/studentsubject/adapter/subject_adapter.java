@@ -1,18 +1,15 @@
 package com.app.trueleap.home.studentsubject.adapter;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.app.trueleap.R;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
 import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
-
 import java.util.ArrayList;
 
 public class subject_adapter extends RecyclerView.Adapter<subject_adapter.ViewHolder> {
@@ -65,7 +62,7 @@ public class subject_adapter extends RecyclerView.Adapter<subject_adapter.ViewHo
 
     @Override
     public int getItemCount() {
-        Log.d("fsdc","erefefefe"+mValues.size());
+        Log.d("fsdc","erefefefe:"+ mValues.size());
         return mValues.size();
     }
 }

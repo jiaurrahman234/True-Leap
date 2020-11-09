@@ -7,9 +7,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.databinding.DataBindingUtil;
-
 import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.base.BaseActivity;
@@ -17,9 +15,7 @@ import com.app.trueleap.databinding.ActivityLoginBinding;
 import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.Constants;
 import com.app.trueleap.home.MainActivity;
-
 import org.json.JSONObject;
-
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -37,10 +33,10 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         updateWrapperObj = new JSONObject();
-        initLister();
+        initListner();
     }
 
-    private void initLister() {
+    private void initListner() {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +48,7 @@ public class LoginActivity extends BaseActivity {
                                 binding.loginEmail.setError(null);
                                 if (!TextUtils.isEmpty(binding.loginPassword.getText().toString())) {
                                     binding.loginPassword.setError(null);
+
                                     updateWrapperObj.put("email", binding.loginEmail.getText().toString());
                                     updateWrapperObj.put("password", binding.loginPassword.getText().toString());
                                     RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
@@ -91,8 +88,10 @@ public class LoginActivity extends BaseActivity {
                         if (response.code()==200){
                             String response_data = response.body().string();
                             JSONObject jsonObject = new JSONObject(response_data);
-                            localStorage.createUserLoginSession(jsonObject.getString("token"), jsonObject.getString("id"),
-                                    jsonObject.getJSONObject("profile").getString("rollNumber"), jsonObject.getJSONObject("profile").getString("phoneNumber"),
+                            localStorage.createUserLoginSession(
+                                    jsonObject.getString("token"), jsonObject.getString("id"),
+                                    jsonObject.getJSONObject("profile").getString("rollNumber"),
+                                    jsonObject.getJSONObject("profile").getString("phoneNumber"),
                                     jsonObject.getJSONObject("profile").getJSONArray("class").getJSONObject(0).getString("classid"),
                                     jsonObject.getJSONObject("profile").getJSONArray("class").getJSONObject(0).getString("section"), true);
                             localStorage.setAutodownload(true);

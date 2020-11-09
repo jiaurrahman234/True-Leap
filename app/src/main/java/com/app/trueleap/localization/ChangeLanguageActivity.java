@@ -43,7 +43,6 @@ public class ChangeLanguageActivity extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         binding = DataBindingUtil.setContentView(this,R.layout.activity_change_language);
         context = ChangeLanguageActivity.this;
         intent = getIntent();
@@ -62,9 +61,7 @@ public class ChangeLanguageActivity extends BaseActivity {
             tabLayout.setupWithViewPager(viewPager);
             viewPager.setOffscreenPageLimit(2);
         } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        {  e.printStackTrace();  }
     }
 
     private void loadlanguage() {

@@ -7,16 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-
-/**
- * Created by USER on 12/15/2017.
- */
-
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Logcat tag
     private static final String LOG = "DatabaseHelper";
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "LOCALFARMAR";
+    private static final String DATABASE_NAME = "TRUELEAP";
     public static final String TABLE_FCM_TOKEN = "TABLE_FCM_TOKEN";
     public static final String FCM_TOKEN = "FCM_TOKEN";
 
@@ -74,6 +69,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return data;
     }
-
-
 }

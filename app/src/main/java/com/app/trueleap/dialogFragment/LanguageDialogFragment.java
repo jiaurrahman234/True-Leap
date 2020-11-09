@@ -83,7 +83,6 @@ public class LanguageDialogFragment extends DialogFragment {
             }
         });
 
-
         builder.setView(view)
                 // Add action buttons
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

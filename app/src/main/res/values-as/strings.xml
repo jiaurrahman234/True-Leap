@@ -17,6 +17,7 @@
         <string name="action_change_lang">ভাষা পৰিৱৰ্তন কৰক</string>
         <string name="action_settings">ভাষা পৰিৱৰ্তন কৰক</string>
         <string name="action_logout">লগ আউট কৰক</string>
+        <string name="action_notification">Notifications </string>
         <string name="download_permission_explaination">ফাইল ডাউনলোড – বাহ্যিক সংগ্রহৰ অনুমতিৰ বাবে লিখক</string>
         <string name="download_permission_grant">অনুমতি দিয়ক</string>
         <string name="download">ডাউনলোড</string>

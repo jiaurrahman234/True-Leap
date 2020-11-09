@@ -17,6 +17,7 @@
     <string name="action_change_lang">Pynkyllaktien</string>
     <string name="action_settings">Pynkyllaktien</string>
     <string name="action_logout">Logout</string>
+    <string name="action_notification">Notifications </string>
     <string name="download_permission_explaination">File Download - Write to external storage permission</string>
     <string name="download_permission_grant">Ai jingbit</string>
     <string name="download">Download</string>

@@ -10,11 +10,14 @@ public class Constants {
     public static final int CAMERA_REQUEST = 1888;
     public static final int MY_CAMERA_PERMISSION_CODE = 100;
     public static final int EXCERPT_LENGTH = 120;
+    public static final int NOTIF_EXCERPT_LENGTH = 20;
 
     public static final String DOC_ASSIGNMENT= "A";
     public static final String DOC_NOTE = "N";
     public static final String PUBLIC= "public";
     public static final String PRIVATE= "private";
+
+    public static final String READNOTIFICATION= "r";
 
     public static final int LANG_INDIAN = 1;
     public static final int LANG_FOREIGN = 2;

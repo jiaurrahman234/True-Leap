@@ -20,6 +20,7 @@
         <string name="action_change_lang">भाषा बदलो</string>
         <string name="action_settings">भाषा बदलो</string>
         <string name="action_logout">लॉग आउट</string>
+        <string name="action_notification">Notifications </string>
 
         <string name="download_permission_explaination">File Download - Write to external storage permission</string>
         <string name="download_permission_grant">Grant Permission</string>

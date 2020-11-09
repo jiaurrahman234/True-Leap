@@ -1,6 +1,4 @@
 package com.app.trueleap.base;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -14,17 +12,11 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.TextView;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -33,10 +25,12 @@ import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieFrameInfo;
 import com.airbnb.lottie.value.SimpleLottieValueCallback;
 import com.app.trueleap.R;
-import com.app.trueleap.auth.LoginActivity;
-import com.app.trueleap.dialogFragment.LanguageDialogFragment;
+import com.app.trueleap.Retrofit.APIClient;
+import com.app.trueleap.external.Constants;
 import com.app.trueleap.external.LocalStorage;
+import com.app.trueleap.interfaces.responseCallback;
 import com.app.trueleap.localization.ChangeLanguageActivity;
+import com.app.trueleap.notification.NotificationModel;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -44,6 +38,14 @@ import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 import com.google.gson.Gson;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.ArrayList;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class BaseActivity extends AppCompatActivity {
     public static final String TAG = BaseActivity.class.getSimpleName();
@@ -57,7 +59,6 @@ public class BaseActivity extends AppCompatActivity {
     private int REQUEST_CODE_UPDATE = 1201;
     public FragmentManager fragmentManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
@@ -68,7 +69,6 @@ public class BaseActivity extends AppCompatActivity {
             localStorage = new LocalStorage(getApplicationContext());
             progressDialog = new ProgressDialog(BaseActivity.this);
             //NetworkCheck.isNetworkAvailable(getApplicationContext());
-
 
             AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(context);
             Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
@@ -89,12 +89,10 @@ public class BaseActivity extends AppCompatActivity {
 
                 }
             });
-
             initializeProgressDialog();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void initializeProgressDialog() {
@@ -201,17 +199,106 @@ public class BaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar;
         actionBar = getSupportActionBar();
-        //actionBar.setTitle(title);
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
+
+    public void getNotifications(responseCallback responsecallback) {
+        ArrayList<NotificationModel> notificationlist = new ArrayList<>();
+        JSONObject userObj = new JSONObject();
+        try {
+            userObj.put("userid", localStorage.getId());
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                    (userObj.toString()));
+
+            Call<ResponseBody> call = APIClient
+                    .getInstance()
+                    .getApiInterface()
+                    .notification(localStorage.getKeyUserToken(), body);
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    try {
+                        String response_data = response.body().string();
+                        JSONArray jsonArray = new JSONArray(response_data);
+                        if (jsonArray.length()>0) {
+                            int count=0;
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject resultObject = jsonArray.getJSONObject(i);
+                                notificationlist.add(
+                                        new NotificationModel(
+                                                resultObject.getString("notificationid"),
+                                                resultObject.getJSONObject("message").getString("note"),
+                                                resultObject.getJSONObject("message").getString("document"),
+                                                resultObject.getString("sentby"),
+                                                resultObject.getString("date"),
+                                                resultObject.getBoolean("viewed"))
+                                );
+                                if(!resultObject.getBoolean("viewed")){
+                                    count++;
+                                }
+                            }
+                            localStorage.setNotificationCount(count);
+                        } else {
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (responsecallback != null) {
+                        responsecallback.onSuccess(notificationlist);
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return super.onOptionsItemSelected(item);
     }
+
+    public void readNotifications(String notificationid) {
+        JSONObject userObj = new JSONObject();
+        try {
+            userObj.put("userid", localStorage.getId());
+            userObj.put("notificationid", notificationid);
+            userObj.put("status", Constants.READNOTIFICATION);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                    (userObj.toString()));
+
+            Call<ResponseBody> call = APIClient
+                    .getInstance()
+                    .getApiInterface()
+                    .updatenotification(localStorage.getKeyUserToken(), body);
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    try {
+                        String response_data = response.body().string();
+                        JSONObject responseObj = new JSONObject(response_data);
+                        responseObj.getString("code");
+                        responseObj.getString("desc");
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    /*if (responsecallback != null) {
+                        responsecallback.onSuccess(notificationlist);
+                    }*/
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

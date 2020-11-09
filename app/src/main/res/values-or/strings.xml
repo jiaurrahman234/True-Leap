@@ -18,6 +18,7 @@
     <string name="action_change_lang">ଭାଷା ବଦଳାନ୍ତୁ</string>
     <string name="action_settings">ଭାଷା ବଦଳାନ୍ତୁ</string>
     <string name="action_logout">ଲଗ୍‍ଆଉଟ୍‍ କରନ୍ତୁ</string>
+    <string name="action_notification">Notifications </string>
     <string name="download_permission_explaination">ଫାଇଲ୍‍ ଡାଉନଲୋଡ୍‍ - ଆପଣଙ୍କର ବାହ୍ୟ ଷ୍ଟୋରେଜ୍‍ ଅନୁମତି ପାଇଁ ଲେଖନ୍ତୁ</string>
     <string name="download_permission_grant">ଅନୁମତି ଅନୁମୋଦନ କରନ୍ତୁ</string>
     <string name="download">ଡାଉନଲୋଡ୍‍ କରନ୍ତୁ</string>

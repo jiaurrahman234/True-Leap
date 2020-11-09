@@ -15,6 +15,7 @@ public class LocalStorage {
     private static final String SECTION_ID = "SECTION_ID";
     private static final String AUTODOWNLOAD = "AUTODOWNLOAD";
     private static final String SELECTED_LANGUAGE = "selected_language";
+    private static final String NOTIFICATION_COUNT = "notification_count";
     private static LocalStorage instance = null;
     SharedPreferences sharedPreferences;
     Editor editor;
@@ -58,7 +59,7 @@ public class LocalStorage {
         editor = sharedPreferences.edit();
         editor.putBoolean(IS_USER_LOGIN, isLogin);
         editor.putString(TOKEN, token);
-        editor.putString(ID, token);
+        editor.putString(ID, id);
         editor.putString(ROLL_NUMBER, rollNumber);
         editor.putString(USER_PHONE, phoneNumber);
         editor.putString(CLASS_ID, classid);
@@ -94,6 +95,15 @@ public class LocalStorage {
         return sharedPreferences.getString(SECTION_ID, "");
     }
 
+    public int getNotificationCount() {
+        return sharedPreferences.getInt(NOTIFICATION_COUNT, 0);
+    }
+
+    public void setNotificationCount(int count) {
+        editor = sharedPreferences.edit();
+        editor.putInt(NOTIFICATION_COUNT, count);
+        editor.commit();
+    }
 
     public void logoutUser() {
         editor = sharedPreferences.edit();

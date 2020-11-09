@@ -18,6 +18,7 @@
     <string name="action_change_lang">भाषा बदला</string>
     <string name="action_settings">भाषा बदला</string>
     <string name="action_logout">लॉग आऊट </string>
+    <string name="action_notification">Notifications </string>
     <string name="download_permission_explaination">फाईल डाउनलोड - बाह्य संचयन परवानगीसाठी लिहा </string>
     <string name="download_permission_grant">परवानगी मंजूर करा </string>
     <string name="download">डाउनलोड करा </string>

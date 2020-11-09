@@ -1,19 +1,12 @@
 package com.app.trueleap.Assignmentmodule;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
-
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -24,34 +17,28 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.FileUtils;
 import android.os.StrictMode;
 import android.provider.OpenableColumns;
 import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.webkit.MimeTypeMap;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
-import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.Retrofit.ApiClientFile;
-import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
-import com.app.trueleap.databinding.ActivityAssignmentBinding;
 import com.app.trueleap.databinding.ActivityAssignmentViewBinding;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.channels.FileChannel;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -60,16 +47,12 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.app.trueleap.external.CommonFunctions.getExtensionType;
 import static com.app.trueleap.external.CommonFunctions.hasPermissionToDownload;
 import static com.app.trueleap.external.CommonFunctions.parse_date;
 import static com.app.trueleap.external.CommonFunctions.writeResponseBodyToDisk;
 import static com.app.trueleap.external.Constants.CAMERA_REQUEST;
-import static com.app.trueleap.external.Constants.DOC_ASSIGNMENT;
 import static com.app.trueleap.external.Constants.MY_CAMERA_PERMISSION_CODE;
 import static com.app.trueleap.external.Constants.PICK_IMAGE;
-import static com.app.trueleap.external.Constants.PUBLIC;
 import static com.app.trueleap.external.Constants.REQUEST_DOCUMENT;
 import static com.app.trueleap.external.Constants.TAKE_IMAGE;
 
@@ -82,7 +65,7 @@ public class AssignmentViewActivity extends BaseActivity {
     ClassnoteModel class_note;
     String subject_name, period_id, class_date;
     Snackbar snackbar;
-    Uri uridata=null;
+    Uri uridata = null;
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
     @Override
@@ -135,7 +118,7 @@ public class AssignmentViewActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     if (hasPermissionToDownload(((Activity) context))) {
-                        uploadFile();
+                        uploadFile(imagepath);
                     }
                 }
             });
@@ -207,7 +190,7 @@ public class AssignmentViewActivity extends BaseActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
                 return false;
             }
-        } else { //permission is automatically granted on sdk<23 upon installation
+        } else {
             Log.v(TAG, "Permission is granted");
             return true;
         }
@@ -238,10 +221,15 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     public void performFileSearch() {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf");
-        startActivityForResult(intent, REQUEST_DOCUMENT);
+//        Intent intent = new Intent();
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        intent.setType("*/*");
+//        startActivityForResult(intent, REQUEST_DOCUMENT);
+
+        Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.setType("*/*");
+        chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+        startActivityForResult(chooseFile, REQUEST_DOCUMENT);
     }
 
     private void initdata() {
@@ -302,6 +290,7 @@ public class AssignmentViewActivity extends BaseActivity {
                 try {
                     uplaod_image = (Bitmap) data.getExtras().get("data");
                     imagepath = saveImage(uplaod_image);
+                    Log.d(TAG, "image path " + imagepath);
                     binding.imagesToUpload.setVisibility(View.VISIBLE);
                     binding.imageView.setImageBitmap(uplaod_image);
                     binding.docName.setText("");
@@ -328,29 +317,16 @@ public class AssignmentViewActivity extends BaseActivity {
         }
 
         if (requestCode == REQUEST_DOCUMENT) {
-            //Uri uri = data.getData();
-            uridata = data.getData();
-            String uriString = uridata.toString();
-            File myFile = new File(uriString);
-            String path = myFile.getAbsolutePath();
-            Log.d(TAG,"jkhkj: "+path);
-            imagepath = path;
-            String displayName = null;
-            if (uriString.startsWith("content://")) {
-                Cursor cursor = null;
-                try {
-                    cursor = getContentResolver().query(uridata, null, null, null, null);
-                    if (cursor != null && cursor.moveToFirst()) {
-                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                        binding.imagesToUpload.setVisibility(View.VISIBLE);
-                        binding.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_picture_as_pdf_24));
-                        binding.docName.setText(displayName);
-                    }
-                } finally {
-                    cursor.close();
-                }
-            } else if (uriString.startsWith("file://")) {
-                displayName = myFile.getName();
+            if (!(data == null)) {
+                uridata = data.getData();
+                String uriString = uridata.getPath();
+                File myFile = new File(uriString);
+                String path = myFile.getAbsolutePath();
+                Log.d(TAG, "jkhkj: " + path);
+                imagepath = uridata.getPath();
+                String displayName = uridata.getLastPathSegment();
+                Log.d(TAG, "name" + displayName);
+                saveDocument(displayName, myFile);
                 binding.imagesToUpload.setVisibility(View.VISIBLE);
                 binding.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_picture_as_pdf_24));
                 binding.docName.setText(displayName);
@@ -382,7 +358,7 @@ public class AssignmentViewActivity extends BaseActivity {
 
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         try {
             File uploadDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + "upload");
             if (!uploadDirectory.isDirectory()) {
@@ -395,13 +371,43 @@ public class AssignmentViewActivity extends BaseActivity {
             uploadablefile.createNewFile();
             FileOutputStream fo = new FileOutputStream(uploadablefile);
             fo.write(bytes.toByteArray());
-            MediaScannerConnection.scanFile(context,
+            /*MediaScannerConnection.scanFile(context,
                     new String[]{uploadablefile.getPath()},
-                    new String[]{"image/jpeg"}, null);
+                    new String[]{"image/jpeg"}, null);*/
             fo.close();
             return uploadablefile.getAbsolutePath();
         } catch (IOException e1) {
             e1.printStackTrace();
+        }
+        return "";
+    }
+
+    public String saveDocument(String filename, File file) {
+        try {
+            File uploadDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + "upload");
+            if (!uploadDirectory.isDirectory()) {
+                uploadDirectory.mkdir();
+            }
+            File uploadablefile = new File(uploadDirectory, filename);
+            if (uploadablefile.exists()) {
+                uploadablefile.delete();
+            }
+
+                FileChannel in = new FileInputStream(file).getChannel();
+                FileChannel out = new FileOutputStream(uploadablefile).getChannel();
+
+                try {
+                    in.transferTo(0, in.size(), out);
+                } catch(Exception e){
+                    e.printStackTrace();
+                } finally {
+                    if (in != null)
+                        in.close();
+                    if (out != null)
+                        out.close();
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "";
     }
@@ -457,12 +463,10 @@ public class AssignmentViewActivity extends BaseActivity {
         }
     }
 
-    public void uploadFile() {
+    public void uploadFile(String imagepath) {
         String name="Manoj";
         RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), name);
-
         String upload_param = localStorage.getClassId() + ":AS" + ":" + localStorage.getId();
-
         RequestBody coverRequestFile = null;
         MultipartBody.Part photo1 = null;
         File file1 = new File(imagepath);
@@ -471,10 +475,8 @@ public class AssignmentViewActivity extends BaseActivity {
         if (imagepath.length() == 0) {
             Toast.makeText(context, "Please select one file", Toast.LENGTH_SHORT).show();
         } else {
-
             RequestBody note = RequestBody.create(MediaType.parse("text/plain"),
                     class_note.getNote_title());
-
             RequestBody title = RequestBody.create(MediaType.parse("text/plain"),
                     class_note.getNote_title());
             RequestBody sectionBody = RequestBody.create(MediaType.parse("text/plain"),
@@ -483,11 +485,9 @@ public class AssignmentViewActivity extends BaseActivity {
                     class_note.getId());
             RequestBody uniqueperiodidBody = RequestBody.create(MediaType.parse("text/plain"),
                     period_id);
-
             RequestBody uploadparam = RequestBody.create(MediaType.parse("text/plain"),
                     upload_param);
-
-           showProgressBar();
+            showProgressBar();
             Call<ResponseBody> call = null;
             call = ApiClientFile
                     .getInstance()

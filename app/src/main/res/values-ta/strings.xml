@@ -18,6 +18,7 @@
     <string name="action_change_lang"> மொழிமாற்றம் </string>
     <string name="action_settings"> மொழிமாற்றம் </string>
     <string name="action_logout"> வெளியேறு </string>
+    <string name="action_notification">Notifications </string>
     <string name="download_permission_explaination"> கோப்புபதிவிறக்கம்–வெளிப்புறசேமிப்புஅனுமதிக்காகஎழுதுக </string>
     <string name="download_permission_grant"> அனுமதிகொடு </string>
     <string name="download"> பதிவிறக்கம் </string>

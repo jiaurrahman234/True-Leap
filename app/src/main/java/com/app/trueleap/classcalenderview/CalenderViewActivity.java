@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
 import androidx.databinding.DataBindingUtil;
-
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityCalenderviewBinding;
@@ -18,11 +16,9 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.google.gson.Gson;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,7 +38,6 @@ public class CalenderViewActivity extends BaseActivity {
     ArrayList<CalendarModel> calendarModelArrayList = new ArrayList<>();
     ActivityCalenderviewBinding binding;
     Calendar calendarMinDate = Calendar.getInstance();
-
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,7 +197,6 @@ public class CalenderViewActivity extends BaseActivity {
         int countx = 1;
         CalendarView calendarView;
         calendarView = findViewById(R.id.calendarView);
-        //calendarView.setClickable(false);
         calendarView.setMinimumDate(calendarMinDate);
         List<Calendar> calendars = new ArrayList<>();
         List<EventDay> events = new ArrayList<>();

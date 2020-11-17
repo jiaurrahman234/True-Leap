@@ -81,7 +81,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         databaseHelper = new DatabaseHelper(this);
         ContentValues values1 = new ContentValues();
         values1.put(databaseHelper.FCM_TOKEN, token);
-        databaseHelper.saveInLocalStorage(DatabaseHelper.TABLE_FCM_TOKEN, values1);
+        databaseHelper.saveInLocalStorage(DatabaseHelper.TABLE_FILE_UPLOAD, values1);
         Log.d(TAG,"Data saved");
     }
 }

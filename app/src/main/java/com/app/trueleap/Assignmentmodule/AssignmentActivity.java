@@ -2,7 +2,10 @@ package com.app.trueleap.Assignmentmodule;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -12,11 +15,15 @@ import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityAssignmentBinding;
+import com.app.trueleap.external.Converter;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
+import com.app.trueleap.interfaces.responseCallback;
+import com.app.trueleap.notification.NotificationActivity;
+import com.app.trueleap.notification.NotificationModel;
 
 import java.util.ArrayList;
 
-public class AssignmentActivity extends BaseActivity implements assignmentClickListener {
+public class AssignmentActivity extends BaseActivity implements assignmentClickListener, responseCallback {
     Intent intent;
     String subject_name,class_date, period_id;
     ActivityAssignmentBinding binding;
@@ -31,6 +38,7 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
         intent = getIntent();
         initToolbar();
         initData();
+        getNotifications(this);
     }
 
     private void initData() {
@@ -74,4 +82,32 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
         intent.putExtra("period_id",period_id);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_notification);
+        menuItem.setIcon(Converter.convertLayoutToImage(this, localStorage.getNotificationCount(), R.drawable.ic_baseline_notifications_24));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_notification:
+                startActivity(new Intent(this, NotificationActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSuccess(@NonNull ArrayList<NotificationModel> value) {
+        if(value.size()>0) {
+            invalidateOptionsMenu();
+        }
+    }
+
+
 }

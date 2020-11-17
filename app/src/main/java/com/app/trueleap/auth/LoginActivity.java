@@ -23,11 +23,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class LoginActivity extends BaseActivity {
-
     String TAG = LoginActivity.class.getSimpleName();
     ActivityLoginBinding binding;
     JSONObject updateWrapperObj;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +33,6 @@ public class LoginActivity extends BaseActivity {
         updateWrapperObj = new JSONObject();
         initListner();
     }
-
     private void initListner() {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +69,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
-
     private void callApiData(RequestBody body) {
         try {
             showProgressBar();
@@ -92,8 +88,10 @@ public class LoginActivity extends BaseActivity {
                                     jsonObject.getString("token"), jsonObject.getString("id"),
                                     jsonObject.getJSONObject("profile").getString("rollNumber"),
                                     jsonObject.getJSONObject("profile").getString("phoneNumber"),
+                                    jsonObject.getJSONObject("profile").getString("fullname"),
                                     jsonObject.getJSONObject("profile").getJSONArray("class").getJSONObject(0).getString("classid"),
-                                    jsonObject.getJSONObject("profile").getJSONArray("class").getJSONObject(0).getString("section"), true);
+                                    jsonObject.getJSONObject("profile").getJSONArray("class").getJSONObject(0).getString("section"),
+                                    jsonObject.getJSONObject("profile").getJSONArray("class").getJSONObject(0).getString("semester"), true);
                             localStorage.setAutodownload(true);
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
@@ -118,7 +116,6 @@ public class LoginActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
-
     @Override
     public void onBackPressed() {
         exitApp();

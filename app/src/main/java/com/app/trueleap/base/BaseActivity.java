@@ -24,10 +24,17 @@ import com.airbnb.lottie.LottieProperty;
 import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieFrameInfo;
 import com.airbnb.lottie.value.SimpleLottieValueCallback;
+import com.app.trueleap.MessagingModule.chatResponseCallback;
+import com.app.trueleap.MessagingModule.model.messageModel;
 import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.APIClient;
+import com.app.trueleap.Retrofit.ApiClientChat;
+import com.app.trueleap.dialogFragment.NotifiactionDialogFragment;
+import com.app.trueleap.dialogFragment.sessionTimeoutFragment;
+import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.Constants;
 import com.app.trueleap.external.LocalStorage;
+import com.app.trueleap.external.Utils;
 import com.app.trueleap.interfaces.responseCallback;
 import com.app.trueleap.localization.ChangeLanguageActivity;
 import com.app.trueleap.notification.NotificationModel;
@@ -171,7 +178,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-
     public void exitApp() {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
@@ -219,35 +225,51 @@ public class BaseActivity extends AppCompatActivity {
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                    try {
-                        String response_data = response.body().string();
-                        JSONArray jsonArray = new JSONArray(response_data);
-                        if (jsonArray.length()>0) {
-                            int count=0;
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject resultObject = jsonArray.getJSONObject(i);
-                                notificationlist.add(
-                                        new NotificationModel(
-                                                resultObject.getString("notificationid"),
-                                                resultObject.getJSONObject("message").getString("note"),
-                                                resultObject.getJSONObject("message").getString("document"),
-                                                resultObject.getString("sentby"),
-                                                resultObject.getString("date"),
-                                                resultObject.getBoolean("viewed"))
-                                );
-                                if(!resultObject.getBoolean("viewed")){
-                                    count++;
-                                }
-                            }
-                            localStorage.setNotificationCount(count);
-                        } else {
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
-                    if (responsecallback != null) {
-                        responsecallback.onSuccess(notificationlist);
+                    if(response.isSuccessful()) {
+                        try {
+                            String response_data = response.body().string();
+                            JSONArray jsonArray = new JSONArray(response_data);
+                            if (jsonArray.length() > 0) {
+                                int count = 0;
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject resultObject = jsonArray.getJSONObject(i);
+                                    notificationlist.add(
+                                            new NotificationModel(
+                                                    resultObject.getString("notificationid"),
+                                                    resultObject.getJSONObject("message").getString("note"),
+                                                    resultObject.getJSONObject("message").getString("document"),
+                                                    resultObject.getString("sentby"),
+                                                    resultObject.getString("date"),
+                                                    resultObject.getBoolean("viewed"))
+                                    );
+                                    if (!resultObject.getBoolean("viewed")) {
+                                        count++;
+                                    }
+                                }
+                                localStorage.setNotificationCount(count);
+                            } else {
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        if (responsecallback != null) {
+                            responsecallback.onSuccess(notificationlist);
+                        }
+                    }else {
+                        try {
+                            String errorBody = response.errorBody().string();
+                            Log.d(TAG, "error data: " + errorBody);
+                            JSONObject jsonObject = new JSONObject(errorBody);
+                            if(jsonObject.getString("code").equals("402-AUTH-001")){
+                                showSesstionTimeout();
+                            }else {
+
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 @Override
@@ -258,6 +280,73 @@ public class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void getchatHistory(chatResponseCallback chatresponsecallback, String subject, String peroid_id ) {
+        ArrayList<messageModel> chatlist = new ArrayList<>();
+        JSONObject userObj = new JSONObject();
+        try {
+            userObj.put("class", localStorage.getClassId());
+            userObj.put("subject", subject);
+            userObj.put("section", localStorage.getSectionId());
+            userObj.put("semester", localStorage.getSemester());
+            userObj.put("period", peroid_id);
+            userObj.put("user", localStorage.getId());
+
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                    (userObj.toString()));
+
+            Call<ResponseBody> call = ApiClientChat
+                    .getInstance()
+                    .getApiInterface()
+                    .chatHistory(localStorage.getKeyUserToken(), body);
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+
+                    if (response.isSuccessful()){
+                        Log.d(TAG,"chat"+response.toString());
+                        try {
+                            String response_data = response.body().string();
+                            JSONObject jsonObj = new JSONObject(response_data);
+                            Log.d(TAG,"chat "+jsonObj.getBoolean("success"));
+                            if (jsonObj.getBoolean("success")) {
+                                JSONArray chat = jsonObj.getJSONArray("data");
+                                for (int i = 0; i < chat.length(); i++) {
+                                    JSONObject resultObject = chat.getJSONObject(i);
+                                    chatlist.add(new messageModel(
+                                            resultObject.getString("user"),
+                                            resultObject.getString("chatText"))
+                                    );
+                                }
+                            } else {
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    if (chatresponsecallback != null) {
+                        chatresponsecallback.onSucceschat(chatlist);
+                    }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showSesstionTimeout() {
+        sessionTimeoutFragment alert = new sessionTimeoutFragment();
+        FragmentManager transaction = getSupportFragmentManager();
+        alert.show(transaction, Utils.timeout_dialog_fragment);
+        alert.setCancelable(false);
     }
 
     public void readNotifications(String notificationid) {

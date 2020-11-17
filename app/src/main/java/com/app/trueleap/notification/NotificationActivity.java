@@ -73,7 +73,10 @@ public class NotificationActivity extends BaseActivity implements recyclerviewCl
     public void onSuccess(@NonNull ArrayList<NotificationModel> value) {
         if(value.size()>0) {
             notificationlist = value;
-            populateNotificationlist(value);
+            for(int i = value.size()-1; i>=0; i-- ){
+                notificationlist.add(value.get(i));
+            }
+            populateNotificationlist(notificationlist);
         }
     }
 }

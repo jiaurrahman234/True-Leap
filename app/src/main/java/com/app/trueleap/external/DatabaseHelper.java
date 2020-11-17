@@ -3,20 +3,22 @@ package com.app.trueleap.external;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    // Logcat tag
+
+    DatabaseHelper databaseHelper;
     private static final String LOG = "DatabaseHelper";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "TRUELEAP";
-    public static final String TABLE_FCM_TOKEN = "TABLE_FCM_TOKEN";
+    public static final String TABLE_FILE_UPLOAD = "TABLE_FILE_UPLOAD";
     public static final String FCM_TOKEN = "FCM_TOKEN";
 
 
-    private static final String CREATE_TABLE_FCM = "CREATE TABLE " + TABLE_FCM_TOKEN + "("
+    private static final String CREATE_TABLE_FCM = "CREATE TABLE " + TABLE_FILE_UPLOAD + "("
             + FCM_TOKEN + " TEXT " + ")";
 
     public DatabaseHelper(Context context) {
@@ -51,6 +53,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
+
     public String getFcmToken(String TABLE_NAME) {
         Cursor cursor = null;
         String data = "";
@@ -69,4 +73,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return data;
     }
+
+
 }

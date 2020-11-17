@@ -12,6 +12,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+
+import static com.app.trueleap.Retrofit.APIConstants.CHAT_HISTORY;
 import static com.app.trueleap.Retrofit.APIConstants.DOCUMENT;
 import static com.app.trueleap.Retrofit.APIConstants.GLOBALSEARCH;
 import static com.app.trueleap.Retrofit.APIConstants.LOGIN;
@@ -54,5 +56,9 @@ public interface APIInterface {
     @Headers("Content-Type: application/json")
     @POST(UPDATENOTIFICATION)
     Call<ResponseBody> updatenotification(@Header("Authorization") String token, @Body RequestBody body);
+
+    @Headers("Content-Type: application/json")
+    @POST(CHAT_HISTORY)
+    Call<ResponseBody> chatHistory(@Header("Authorization") String token, @Body RequestBody body);
 
 }

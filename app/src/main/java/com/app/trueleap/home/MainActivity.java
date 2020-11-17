@@ -140,7 +140,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     NewNotification.add(value.get(i));
                 }
             }
-            notificationDialog(NewNotification);
+            if(NewNotification.size()>0){
+                notificationDialog(NewNotification);
+            }
             invalidateOptionsMenu();
         }
     }

@@ -12,24 +12,18 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import okhttp3.ResponseBody;
-
 import com.app.trueleap.R;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -47,6 +41,8 @@ import java.util.Iterator;
 public class CommonFunctions {
     public static String NO_INTERNET = "No Internet";
     private static String CACHE_FILE = "classes.srl";
+    private static String NOTIFICATION_CACHE_FILE = "notification.srl";
+    private static String CHAT_HISTORY_CACHE_FILE = "chat_history.srl";
     final static long MAX_FILE_AGE = 1000 * 60 * 60 * 24 * 2;
     public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -423,5 +419,10 @@ public class CommonFunctions {
             extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mime_type);
         }
         return extension;
+    }
+
+    public static void setErrorInputLayout(TextInputEditText editText, String msg) {
+        editText.requestFocus();
+        editText.setError(msg);
     }
 }

@@ -22,7 +22,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".auth.SetupOfflineLoginActivity"></activity>
+        <activity android:name=".MessagingModule.chatHistoryActivity"></activity>
+        <activity android:name=".auth.SetupOfflineLoginActivity" />
         <activity android:name=".auth.OfflineLoginActivity" />
         <activity android:name=".notification.NotificationActivity" />
         <activity android:name=".localization.ChangeLanguageActivity" />
@@ -49,6 +50,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".service.documentuploadService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
+        <receiver
+            android:name=".service.RestartService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="RestartServiceWhenStopped"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="RestartService" />
+            </intent-filter>
+        </receiver>
+
         <activity android:name=".Assignmentmodule.AssignmentActivity" />
         <activity android:name=".Classnotemodule.ClassNotesActivity" />
         <activity android:name=".MessagingModule.MessagingFragment" />

@@ -11,4 +11,5 @@ public class Utils {
     public static final String Assignment_fragment = "assignment_fragment";
     public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static final String Notification_dialog_fragment = "Notification_dialog_fragment";
+    public static final String timeout_dialog_fragment = "timeout_dialog_fragment";
 }

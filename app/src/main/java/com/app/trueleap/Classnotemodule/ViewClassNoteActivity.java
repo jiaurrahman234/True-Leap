@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
@@ -18,9 +21,14 @@ import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.ApiClientFile;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityViewClassNoteBinding;
+import com.app.trueleap.external.Converter;
+import com.app.trueleap.interfaces.responseCallback;
+import com.app.trueleap.notification.NotificationActivity;
+import com.app.trueleap.notification.NotificationModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -31,7 +39,7 @@ import static com.app.trueleap.external.CommonFunctions.hasPermissionToDownload;
 import static com.app.trueleap.external.CommonFunctions.parse_date;
 import static com.app.trueleap.external.CommonFunctions.writeResponseBodyToDisk;
 
-public class ViewClassNoteActivity extends BaseActivity {
+public class ViewClassNoteActivity extends BaseActivity implements responseCallback {
 
     ActivityViewClassNoteBinding binding;
     Intent intent;
@@ -49,6 +57,7 @@ public class ViewClassNoteActivity extends BaseActivity {
         initToolbar();
         initData();
         initListeners();
+        getNotifications(this);
     }
 
     private void initData() {
@@ -159,6 +168,32 @@ public class ViewClassNoteActivity extends BaseActivity {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_notification);
+        menuItem.setIcon(Converter.convertLayoutToImage(this, localStorage.getNotificationCount(), R.drawable.ic_baseline_notifications_24));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_notification:
+                startActivity(new Intent(this, NotificationActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSuccess(@NonNull ArrayList<NotificationModel> value) {
+        if(value.size()>0) {
+            invalidateOptionsMenu();
         }
     }
 }

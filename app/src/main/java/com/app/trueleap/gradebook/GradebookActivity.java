@@ -2,18 +2,25 @@ package com.app.trueleap.gradebook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityGradebookBinding;
+import com.app.trueleap.external.Converter;
 import com.app.trueleap.gradebook.adapter.grade_book_adapter;
 import com.app.trueleap.gradebook.model.GradeItem;
 import com.app.trueleap.interfaces.recyclerviewClickListener;
+import com.app.trueleap.interfaces.responseCallback;
+import com.app.trueleap.notification.NotificationActivity;
+import com.app.trueleap.notification.NotificationModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,7 +28,7 @@ import java.util.ArrayList;
 
 import static com.app.trueleap.external.CommonFunctions.loadAssetsJsonArray;
 
-public class GradebookActivity extends BaseActivity implements recyclerviewClickListener {
+public class GradebookActivity extends BaseActivity implements recyclerviewClickListener, responseCallback {
 
     ActivityGradebookBinding binding;
     Intent intent;
@@ -36,6 +43,7 @@ public class GradebookActivity extends BaseActivity implements recyclerviewClick
         context = GradebookActivity.this;
         initToolbar();
         initdata();
+        getNotifications(this);
     }
 
 
@@ -136,5 +144,31 @@ public class GradebookActivity extends BaseActivity implements recyclerviewClick
     @Override
     public void onClicked(int position) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_notification);
+        menuItem.setIcon(Converter.convertLayoutToImage(this, localStorage.getNotificationCount(), R.drawable.ic_baseline_notifications_24));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_notification:
+                startActivity(new Intent(this, NotificationActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSuccess(@NonNull ArrayList<NotificationModel> value) {
+        if(value.size()>0) {
+            invalidateOptionsMenu();
+        }
     }
 }

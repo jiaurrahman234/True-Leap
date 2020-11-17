@@ -53,11 +53,10 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                app:passwordToggleEnabled="true">
+                android:layout_marginTop="7dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/login_password"
+                    android:id="@+id/answer"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
@@ -71,8 +70,29 @@
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/conf_answer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/confirm_answer"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color_grey"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/loginBtn"
+                android:id="@+id/set_secret_question"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

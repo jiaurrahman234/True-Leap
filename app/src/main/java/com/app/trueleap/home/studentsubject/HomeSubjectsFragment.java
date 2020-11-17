@@ -252,7 +252,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
         binding.studentSection.setText(localStorage.getSectionId());
         Subjects = new ArrayList<>();
 
-        if (!isInternetOn(context)){
+        if (!isInternetOn(context)||localStorage.IsOfflineLoggedin()){
             try {
                 JSONArray jsonArray = getJSONFromCache(getActivity());
                 Log.d(TAG, "subject response: " + jsonArray.length());
@@ -303,7 +303,7 @@ public class HomeSubjectsFragment extends BaseFragment implements subjectlickLis
                         try {
                             Log.d(TAG, "hkghkf: " + call.request());
                             hideProgressView();
-                            if (response.code() == 200) {
+                            if (response.isSuccessful()) {
                                 String response_data = response.body().string();
                                 saveJSONToCache(getActivity(), response_data);
                                 JSONArray jsonArray = new JSONArray(response_data);

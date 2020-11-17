@@ -13,9 +13,16 @@ public class LocalStorage {
     private static final String ROLL_NUMBER = "ROLL_NUMBER";
     private static final String CLASS_ID = "CLASS_ID";
     private static final String SECTION_ID = "SECTION_ID";
+    private static final String SEMESTER = "SEMESTER";
     private static final String AUTODOWNLOAD = "AUTODOWNLOAD";
     private static final String SELECTED_LANGUAGE = "selected_language";
     private static final String NOTIFICATION_COUNT = "notification_count";
+    private static final String SECRET_QUESTION = "s_question";
+    private static final String SECRET_ANSWER = "s_ans";
+    private static final String IS_QUESTION_SET = "is_set";
+    private static final String IS_OFFLINE_LOGGEDIN = "is_logged_offline";
+    private static final String FULL_NAME = "full_name";
+
     private static LocalStorage instance = null;
     SharedPreferences sharedPreferences;
     Editor editor;
@@ -55,15 +62,17 @@ public class LocalStorage {
         return sharedPreferences.getBoolean(AUTODOWNLOAD, false);
     }
 
-    public void createUserLoginSession(String token,String id ,String rollNumber,String phoneNumber,String classid,String section,boolean isLogin) {
+    public void createUserLoginSession(String token,String id ,String rollNumber,String phoneNumber, String fullname, String classid,String section,String semester, boolean isLogin) {
         editor = sharedPreferences.edit();
         editor.putBoolean(IS_USER_LOGIN, isLogin);
         editor.putString(TOKEN, token);
         editor.putString(ID, id);
         editor.putString(ROLL_NUMBER, rollNumber);
         editor.putString(USER_PHONE, phoneNumber);
+        editor.putString(FULL_NAME, fullname);
         editor.putString(CLASS_ID, classid);
         editor.putString(SECTION_ID, section);
+        editor.putString(SEMESTER, semester);
         editor.commit();
     }
 
@@ -94,6 +103,9 @@ public class LocalStorage {
     public String getSectionId() {
         return sharedPreferences.getString(SECTION_ID, "");
     }
+    public String getSemester() {
+        return sharedPreferences.getString(SEMESTER, "");
+    }
 
     public int getNotificationCount() {
         return sharedPreferences.getInt(NOTIFICATION_COUNT, 0);
@@ -118,6 +130,46 @@ public class LocalStorage {
     public void setSelectedLanguage(String lang) {
         editor = sharedPreferences.edit();
         editor.putString(SELECTED_LANGUAGE, lang);
+        editor.commit();
+    }
+
+    public String getSecretQuestion() {
+        return sharedPreferences.getString(SECRET_QUESTION, null);
+    }
+
+    public void setSecretQuestion(String lang) {
+        editor = sharedPreferences.edit();
+        editor.putString(SECRET_QUESTION, lang);
+        editor.commit();
+    }
+
+    public String getSecretAnswer() {
+        return sharedPreferences.getString(SECRET_ANSWER, null);
+    }
+
+    public void setSecretAnswer(String lang) {
+        editor = sharedPreferences.edit();
+        editor.putString(SECRET_ANSWER, lang);
+        editor.commit();
+    }
+
+    public boolean isQuestionSet() {
+        return sharedPreferences.getBoolean(IS_QUESTION_SET, false);
+    }
+
+    public void setQuestionSet(Boolean status) {
+        editor = sharedPreferences.edit();
+        editor.putBoolean(IS_QUESTION_SET, status);
+        editor.commit();
+    }
+
+    public boolean IsOfflineLoggedin() {
+        return sharedPreferences.getBoolean(IS_OFFLINE_LOGGEDIN, false);
+    }
+
+    public void setIsOfflineLoggedin(Boolean status) {
+        editor = sharedPreferences.edit();
+        editor.putBoolean(IS_OFFLINE_LOGGEDIN, status);
         editor.commit();
     }
 }

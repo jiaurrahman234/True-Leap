@@ -4,14 +4,22 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityCalenderviewBinding;
+import com.app.trueleap.external.Converter;
 import com.app.trueleap.home.ClassMaterialTypeActivity;
 import com.app.trueleap.home.studentsubject.model.CalendarModel;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
 import com.app.trueleap.home.studentsubject.model.DocumentsModel;
+import com.app.trueleap.interfaces.responseCallback;
+import com.app.trueleap.notification.NotificationActivity;
+import com.app.trueleap.notification.NotificationModel;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
@@ -29,7 +37,7 @@ import static com.app.trueleap.external.CommonFunctions.getJSONFromCache;
 import static com.app.trueleap.external.CommonFunctions.getdateValue;
 import static com.app.trueleap.external.CommonFunctions.simpleDateFormat;
 
-public class CalenderViewActivity extends BaseActivity {
+public class CalenderViewActivity extends BaseActivity implements responseCallback {
     Intent intent;
     ArrayList<ClassModel> Subjects;
     String Subject_name;
@@ -45,6 +53,7 @@ public class CalenderViewActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_calenderview);
         initToolbar();
         initData();
+        getNotifications(this);
     }
 
     private void initData() {
@@ -241,5 +250,31 @@ public class CalenderViewActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_notification);
+        menuItem.setIcon(Converter.convertLayoutToImage(this, localStorage.getNotificationCount(), R.drawable.ic_baseline_notifications_24));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_notification:
+                startActivity(new Intent(this, NotificationActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSuccess(@NonNull ArrayList<NotificationModel> value) {
+        if(value.size()>0) {
+            invalidateOptionsMenu();
+        }
     }
 }

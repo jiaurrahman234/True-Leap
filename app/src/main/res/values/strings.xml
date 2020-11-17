@@ -78,6 +78,13 @@
     <string name="ConfigureOfflinelogin">Set Your Secret Question</string>
     <string name="Offlinelogin">Offline Login</string>
     <string name="answer">Answer</string>
+    <string name="confirm_answer">Confirm Answer</string>
     <string name="set">Confirm</string>
+    <string name="err_empty_answer">Enter Your Answer</string>
+    <string name="err_empty_c_answer">Enter Confirm Answer</string>
+    <string name="err_invalid_answer_confirm">Confirm Answer doesnot matched.</string>
+    <string name="session_timeout">Session Timeout</string>
+    <string name="go_to_login">Login Using Internet</string>
+    <string name="access_offline">Access Offline</string>
 
 </resources>

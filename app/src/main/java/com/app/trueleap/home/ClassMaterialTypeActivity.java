@@ -12,19 +12,25 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import com.app.trueleap.Assignmentmodule.AssignmentActivity;
 import com.app.trueleap.Classnotemodule.ClassNotesActivity;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
+import com.app.trueleap.MessagingModule.chatHistoryActivity;
 import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.FragmentClassmaterialtypeBinding;
+import com.app.trueleap.external.Converter;
 import com.app.trueleap.gradebook.GradebookActivity;
 import com.app.trueleap.home.studentsubject.model.CalendarModel;
 import com.app.trueleap.home.studentsubject.model.ClassModel;
 import com.app.trueleap.home.studentsubject.model.DocumentsModel;
+import com.app.trueleap.interfaces.responseCallback;
+import com.app.trueleap.notification.NotificationActivity;
+import com.app.trueleap.notification.NotificationModel;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -32,7 +38,7 @@ import java.util.ArrayList;
 
 import static com.app.trueleap.external.CommonFunctions.parse_date;
 
-public class ClassMaterialTypeActivity extends BaseActivity {
+public class ClassMaterialTypeActivity extends BaseActivity implements responseCallback {
     FragmentClassmaterialtypeBinding binding;
     String sujectName = "", classDate = "";
     ArrayList<ClassModel> classModelArrayList;
@@ -45,6 +51,7 @@ public class ClassMaterialTypeActivity extends BaseActivity {
         initToolbar();
         initdata();
         initListeners();
+        getNotifications(this);
     }
 
     private void initListeners() {
@@ -144,6 +151,33 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                 startActivity(new Intent(context, GradebookActivity.class).putExtra("subject_name",sujectName));
             }
         });
+        binding.actionMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    ArrayList<ClassnoteModel> AssignmentModelArrayList = new ArrayList<>();
+                    for (int i = 0; i < calendarModelArrayList.size(); i++) {
+                        if (classDate.equalsIgnoreCase(calendarModelArrayList.get(i).getDate())) {
+                            for (int j = 0; j < classModelArrayList.size(); j++) {
+                                ClassModel classModel = classModelArrayList.get(j);
+                                if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {
+                                        startActivity(new Intent(context, chatHistoryActivity.class)
+                                                .putExtra("subject_name",sujectName)
+                                                .putExtra("period_id", classModel.getUniqueperiodid())
+                                                .putExtra("subject_name", sujectName)
+                                                .putExtra("class_date", binding.classDate.getText().toString()));
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initdata() {
@@ -178,7 +212,6 @@ public class ClassMaterialTypeActivity extends BaseActivity {
                     break;
                 }
             }
-
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
 
@@ -187,6 +220,31 @@ public class ClassMaterialTypeActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_notification);
+        menuItem.setIcon(Converter.convertLayoutToImage(this, localStorage.getNotificationCount(), R.drawable.ic_baseline_notifications_24));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_notification:
+                startActivity(new Intent(this, NotificationActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSuccess(@NonNull ArrayList<NotificationModel> value) {
+        if(value.size()>0) {
+            invalidateOptionsMenu();
+        }
     }
 }

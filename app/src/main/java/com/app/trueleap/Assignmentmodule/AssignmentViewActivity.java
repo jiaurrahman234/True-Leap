@@ -6,7 +6,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,12 +20,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.FileUtils;
 import android.os.StrictMode;
-import android.provider.OpenableColumns;
+import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
@@ -30,6 +33,8 @@ import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.ApiClientFile;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityAssignmentViewBinding;
+import com.app.trueleap.external.DBhelper;
+import com.app.trueleap.service.documentuploadService;
 import com.google.android.material.snackbar.Snackbar;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -38,7 +43,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
+import java.security.PrivilegedAction;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -47,6 +54,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.app.trueleap.external.CommonFunctions.getExtensionType;
 import static com.app.trueleap.external.CommonFunctions.hasPermissionToDownload;
 import static com.app.trueleap.external.CommonFunctions.parse_date;
 import static com.app.trueleap.external.CommonFunctions.writeResponseBodyToDisk;
@@ -67,6 +76,7 @@ public class AssignmentViewActivity extends BaseActivity {
     Snackbar snackbar;
     Uri uridata = null;
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    DBhelper dBhelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +88,16 @@ public class AssignmentViewActivity extends BaseActivity {
         initToolbar();
         initdata();
         initListener();
+        initialiseDbHelper();
+    }
+
+    private void initialiseDbHelper() {
+        dBhelper = new DBhelper(this);
+        try {
+            dBhelper.createDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initListener() {
@@ -240,6 +260,7 @@ public class AssignmentViewActivity extends BaseActivity {
                 subject_name = (String) intent.getStringExtra("subject_name");
                 class_date = (String) intent.getStringExtra("class_date");
                 period_id = intent.getStringExtra("period_id");
+                Log.e("BaseActivity", "Period Id Actiivty: " + period_id);
             }
             binding.studentClass.setText(localStorage.getClassId());
             binding.studentSection.setText(localStorage.getSectionId());
@@ -295,6 +316,7 @@ public class AssignmentViewActivity extends BaseActivity {
                     binding.imageView.setImageBitmap(uplaod_image);
                     binding.docName.setText("");
                 } catch (Exception e) {
+                    Log.e("BaseActivity", "Save Upload Image Error" +  e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -318,20 +340,64 @@ public class AssignmentViewActivity extends BaseActivity {
 
         if (requestCode == REQUEST_DOCUMENT) {
             if (!(data == null)) {
-                uridata = data.getData();
-                String uriString = uridata.getPath();
-                File myFile = new File(uriString);
-                String path = myFile.getAbsolutePath();
-                Log.d(TAG, "jkhkj: " + path);
-                imagepath = uridata.getPath();
-                String displayName = uridata.getLastPathSegment();
-                Log.d(TAG, "name" + displayName);
-                saveDocument(displayName, myFile);
+                Uri selectedImage = data.getData();
+
+                String extension = selectedImage.getPath().substring(selectedImage.getPath().lastIndexOf("."));
+                imagepath = saveFromURI(selectedImage, extension);
+                Log.e("BaseActivity", "Document File Path: " + imagepath);
                 binding.imagesToUpload.setVisibility(View.VISIBLE);
                 binding.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_picture_as_pdf_24));
-                binding.docName.setText(displayName);
+                //binding.docName.setText(displayName);
             }
         }
+    }
+
+    private String saveFromURI(Uri selectedImage , String extension) {
+        try {
+            File billFile;
+            File billDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap");
+            if(!billDirectory.isDirectory()) {
+                billDirectory.mkdir();
+            }
+
+            billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+"upload"+File.separator+"file"+extension);
+            File myfile = new File(selectedImage.getPath());
+
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+                inputStream = getContentResolver().openInputStream(selectedImage);
+                byte[] fileReader = new byte[4096];
+                long fileSize = myfile.length();
+                long fileSizeDownloaded = 0;
+                outputStream = new FileOutputStream(billFile);
+
+                while (true) {
+                    int read = inputStream.read(fileReader);
+                    if (read == -1) {
+                        break;
+                    }
+                    outputStream.write(fileReader, 0, read);
+                    fileSizeDownloaded += read;
+                    Log.d("TAG", "file download: " + fileSizeDownloaded + " of " + fileSize);
+                }
+                outputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+                return billFile.getAbsolutePath();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     @Override
@@ -362,7 +428,7 @@ public class AssignmentViewActivity extends BaseActivity {
         try {
             File uploadDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + "upload");
             if (!uploadDirectory.isDirectory()) {
-                uploadDirectory.mkdir();
+                uploadDirectory.mkdirs();
             }
             File uploadablefile = new File(uploadDirectory, "asssign" + ".jpg");
             if (uploadablefile.exists()) {
@@ -376,7 +442,8 @@ public class AssignmentViewActivity extends BaseActivity {
                     new String[]{"image/jpeg"}, null);*/
             fo.close();
             return uploadablefile.getAbsolutePath();
-        } catch (IOException e1) {
+        } catch (Exception e1) {
+            Log.e("BaseActivity", "File Image Uplaod Exception: " + e1.getMessage());
             e1.printStackTrace();
         }
         return "";
@@ -393,20 +460,22 @@ public class AssignmentViewActivity extends BaseActivity {
                 uploadablefile.delete();
             }
 
-                FileChannel in = new FileInputStream(file).getChannel();
-                FileChannel out = new FileOutputStream(uploadablefile).getChannel();
+            FileChannel in = new FileInputStream(file).getChannel();
+            FileChannel out = new FileOutputStream(uploadablefile).getChannel();
 
-                try {
-                    in.transferTo(0, in.size(), out);
-                } catch(Exception e){
-                    e.printStackTrace();
-                } finally {
-                    if (in != null)
-                        in.close();
-                    if (out != null)
-                        out.close();
-                }
+            try {
+                in.transferTo(0, in.size(), out);
+            } catch(Exception e){
+                Log.d(TAG, "First Exception: " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                if (in != null)
+                    in.close();
+                if (out != null)
+                    out.close();
+            }
         } catch (Exception e) {
+            Log.d(TAG, "Second Exception: " + e.getMessage());
             e.printStackTrace();
         }
         return "";
@@ -448,7 +517,7 @@ public class AssignmentViewActivity extends BaseActivity {
                     snackbar.show();
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -464,6 +533,7 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     public void uploadFile(String imagepath) {
+//        startService();
         String name="Manoj";
         RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), name);
         String upload_param = localStorage.getClassId() + ":AS" + ":" + localStorage.getId();
@@ -503,6 +573,16 @@ public class AssignmentViewActivity extends BaseActivity {
                         snackbar = Snackbar.make(binding.getRoot(), R.string.uploaded_successfully, Snackbar.LENGTH_LONG);
                         snackbar.show();
                     } else {
+                        dBhelper.insertData(
+                                class_note.getNote_title(),
+                                class_note.getNote_title(),
+                                upload_param,
+                                "",
+                                localStorage.getSectionId(),
+                                class_note.getId(),
+                                period_id,
+                                imagepath
+                        );
                         Log.d(TAG, "server contact failed");
                         snackbar = Snackbar.make(binding.getRoot(), "upload Failed", Snackbar.LENGTH_LONG);
                         snackbar.show();
@@ -514,8 +594,42 @@ public class AssignmentViewActivity extends BaseActivity {
                     hideProgressBar();
                     snackbar = Snackbar.make(binding.getRoot(), "upload Failed", Snackbar.LENGTH_LONG);
                     snackbar.show();
+                    dBhelper.insertData(
+                            "",
+                            "",
+                            upload_param,
+                            "",
+                            localStorage.getSectionId(),
+                            class_note.getId(),
+                            period_id,
+                            imagepath
+                    );
+                    startService();
                 }
             });
         }
+    }
+
+
+    public void startService(){
+       /* AlarmManager alarmManager;
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);*/
+        Intent upload = new Intent(context, documentuploadService.class);
+        context.startService(upload);
+
+           /* if(((MainActivity)getActivity()).CheckGpsStatus()) {
+                session.setKeyUserStatus(true);
+                ((MainActivity)getActivity()).sendUserLocation(session.getKeyAddrLatitude(), session.getKeyAddrLongitude(), session.getKeyLocationName(), true);
+                Intent intent = new Intent(context, LocationSenderCommandReceiver.class);
+                intent.putExtra("command",1);
+                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+                Log.d(TAG,"broadcast 1 called");
+            }else {
+                provider_status.setChecked(false);
+                ((MainActivity)getActivity()).showBookingGpsInternetError("gpsdisbaled");
+            }*/
+
+
     }
 }

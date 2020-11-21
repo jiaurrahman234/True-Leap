@@ -55,7 +55,6 @@ public class chatHistoryActivity extends BaseActivity implements recyclerviewCli
         binding.studentSection.setText(localStorage.getSectionId());
         binding.classDate.setText(class_date);
         binding.sujectName.setText(subject_name +" Chat History");
-
         chat = new ArrayList<>();
         getchatHistory(this,subject_name, period_id );
     }
@@ -83,7 +82,6 @@ public class chatHistoryActivity extends BaseActivity implements recyclerviewCli
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_notification);
         menuItem.setIcon(Converter.convertLayoutToImage(this, localStorage.getNotificationCount(), R.drawable.ic_baseline_notifications_24));

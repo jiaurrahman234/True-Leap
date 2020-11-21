@@ -5,7 +5,7 @@
     <string name="module_quiz">Quiz</string>
     <string name="module_classnote">Class Notes</string>
     <string name="module_gradebook">Grade Book</string>
-    <string name="module_message">Message</string>
+    <string name="module_message">Chat History</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -50,7 +50,7 @@
     <string name="exit_msg">Do you really want to logout?</string>
 
     <string name="downloaded_successfully">Downloaded Successfully</string>
-    <string name="uploaded_successfully">">Uploaded Successfully</string>
+    <string name="uploaded_successfully">"Uploaded Successfully</string>
     <string name="submit_assignment">Submit Assignment</string>
 
     <!--- Grade Book -->
@@ -86,5 +86,10 @@
     <string name="session_timeout">Session Timeout</string>
     <string name="go_to_login">Login Using Internet</string>
     <string name="access_offline">Access Offline</string>
+
+    <!---  Messaging -->
+    <string name="send_notification">Send Notification</string>
+    <string name="action_send_notification">Send Notification</string>
+
 
 </resources>

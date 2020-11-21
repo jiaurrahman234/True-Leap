@@ -22,7 +22,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MessagingModule.chatHistoryActivity"></activity>
+        <activity android:name=".MessagingModule.SendNotificationActivity"></activity>
+        <activity android:name=".MessagingModule.chatHistoryActivity" />
         <activity android:name=".auth.SetupOfflineLoginActivity" />
         <activity android:name=".auth.OfflineLoginActivity" />
         <activity android:name=".notification.NotificationActivity" />
@@ -51,10 +52,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.documentuploadService"
+        <service
+            android:name=".service.documentuploadService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"></service>
 
         <receiver
             android:name=".service.RestartService"
@@ -69,11 +70,10 @@
 
         <activity android:name=".Assignmentmodule.AssignmentActivity" />
         <activity android:name=".Classnotemodule.ClassNotesActivity" />
-        <activity android:name=".MessagingModule.MessagingFragment" />
         <activity android:name=".auth.LoginActivity" />
         <activity android:name=".home.MainActivity" />
         <activity android:name=".base.BaseActivity" />
-        <activity android:name=".home.ClassMaterialTypeActivity" /> <!-- <activity android:name=".classcalenderview.AsynchronousActivity"></activity> -->
+        <activity android:name=".home.ClassMaterialTypeActivity" />
         <activity android:name=".classcalenderview.CalenderViewActivity" />
     </application>
 

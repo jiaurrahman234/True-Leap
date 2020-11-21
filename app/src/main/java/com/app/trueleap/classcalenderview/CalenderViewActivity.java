@@ -184,8 +184,6 @@ public class CalenderViewActivity extends BaseActivity implements responseCallba
                 classModelArrayList.add(Subjects.get(i));
                 count++;
             }
-            //String[] time = (Subjects.get(0).getStarttime().split("[:.]"));
-
 
         } catch (JSONException e) {
             e.printStackTrace();

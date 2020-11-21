@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 import static com.app.trueleap.external.CommonFunctions.loadAssetsJsonArray;
 
-public class GradebookActivity extends BaseActivity implements recyclerviewClickListener, responseCallback {
+public class GradebookActivity extends BaseActivity implements recyclerviewClickListener, responseCallback, gradeResponseCallback {
 
     ActivityGradebookBinding binding;
     Intent intent;
@@ -44,6 +44,7 @@ public class GradebookActivity extends BaseActivity implements recyclerviewClick
         initToolbar();
         initdata();
         getNotifications(this);
+        getGrades(intent.getStringExtra("subject_name"), this);
     }
 
 
@@ -170,5 +171,13 @@ public class GradebookActivity extends BaseActivity implements recyclerviewClick
         if(value.size()>0) {
             invalidateOptionsMenu();
         }
+    }
+
+    @Override
+    public void onSuccesGrade(@NonNull ArrayList<GradeItem> value) {
+        /*if(value.size()>0){
+            gradeItems = value;
+            populateGradbook();
+        }*/
     }
 }

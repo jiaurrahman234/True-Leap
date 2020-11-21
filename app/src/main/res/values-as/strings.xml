@@ -34,7 +34,7 @@
         <string name="logout_msg">আপুনি নিশ্চিতভাৱে প্ৰস্থান কৰিব বিচাৰিছেনে?</string>
         <string name="exit_msg">আপুনি নিশ্চিতভাৱে লগআউট কৰিব বিচাৰিছেনে?</string>
         <string name="downloaded_successfully">সফলতাপূৰ্বক ডাউনলোড হৈছে</string>
-        <string name="uploaded_successfully">">সফলতাপূৰ্বক আপলোড হৈছে</string>
+        <string name="uploaded_successfully">"সফলতাপূৰ্বক আপলোড হৈছে</string>
         <string name="submit_assignment">কাম দাখিল কৰক</string>
 
         <!--- Grade Book -->

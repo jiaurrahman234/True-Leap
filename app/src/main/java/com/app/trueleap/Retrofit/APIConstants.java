@@ -9,5 +9,8 @@ public class APIConstants {
     public static final String NOTIFICATION = "fetch/notification";
     public static final String CHAT_HISTORY = "room/chatHistory";
     public static final String UPDATENOTIFICATION = "update/notification";
-    public static final String GRADE = "fetch/grade";
+    public static final String FETCH_GRADE = "fetch/roaster/student/all";
+    public static final String FETCH_TEACHER= "config/fetch/teachers";
+    public static final String NOTIFY_TEACHER= "notify";
+
 }

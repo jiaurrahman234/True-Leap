@@ -106,6 +106,9 @@ public class LocalStorage {
     public String getSemester() {
         return sharedPreferences.getString(SEMESTER, "");
     }
+    public String getFullName() {
+        return sharedPreferences.getString(FULL_NAME, "");
+    }
 
     public int getNotificationCount() {
         return sharedPreferences.getInt(NOTIFICATION_COUNT, 0);

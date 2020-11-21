@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClientFile {
     public static final String BASE_URL = "https://35.164.171.15:9000/"; //production
+   // public static final String BASE_URL = "https://api.trueleap.in/file-service/"; //production
     public static ApiClientFile mInstance;
     private static Retrofit retrofit = null;
     private static HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

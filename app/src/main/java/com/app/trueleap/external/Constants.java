@@ -1,6 +1,5 @@
 package com.app.trueleap.external;
 import com.daimajia.androidanimations.library.BuildConfig;
-
 import java.text.SimpleDateFormat;
 
 public class Constants {
@@ -21,5 +20,7 @@ public class Constants {
 
     public static final int LANG_INDIAN = 1;
     public static final int LANG_FOREIGN = 2;
+
+    public static final String INITIATOR = "S";
 
 }

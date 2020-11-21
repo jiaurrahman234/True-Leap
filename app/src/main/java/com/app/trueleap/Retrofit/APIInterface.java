@@ -15,9 +15,12 @@ import retrofit2.http.Query;
 
 import static com.app.trueleap.Retrofit.APIConstants.CHAT_HISTORY;
 import static com.app.trueleap.Retrofit.APIConstants.DOCUMENT;
+import static com.app.trueleap.Retrofit.APIConstants.FETCH_GRADE;
+import static com.app.trueleap.Retrofit.APIConstants.FETCH_TEACHER;
 import static com.app.trueleap.Retrofit.APIConstants.GLOBALSEARCH;
 import static com.app.trueleap.Retrofit.APIConstants.LOGIN;
 import static com.app.trueleap.Retrofit.APIConstants.NOTIFICATION;
+import static com.app.trueleap.Retrofit.APIConstants.NOTIFY_TEACHER;
 import static com.app.trueleap.Retrofit.APIConstants.SUBJECTS;
 import static com.app.trueleap.Retrofit.APIConstants.UPDATENOTIFICATION;
 import static com.app.trueleap.Retrofit.APIConstants.UPLOAD;
@@ -60,5 +63,18 @@ public interface APIInterface {
     @Headers("Content-Type: application/json")
     @POST(CHAT_HISTORY)
     Call<ResponseBody> chatHistory(@Header("Authorization") String token, @Body RequestBody body);
+
+    @Headers("Content-Type: application/json")
+    @POST(FETCH_GRADE)
+    Call<ResponseBody> getGrades(@Header("Authorization") String token, @Body RequestBody body);
+
+    @Headers("Content-Type: application/json")
+    @GET(FETCH_TEACHER)
+    Call<ResponseBody> getTeacher(@Header("Authorization") String token);
+
+    @Headers("Content-Type: application/json")
+    @POST(NOTIFY_TEACHER)
+    Call<ResponseBody> notify(@Header("Authorization") String token, @Body RequestBody body);
+
 
 }

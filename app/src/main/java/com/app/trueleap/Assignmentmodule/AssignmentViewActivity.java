@@ -437,9 +437,6 @@ public class AssignmentViewActivity extends BaseActivity {
             uploadablefile.createNewFile();
             FileOutputStream fo = new FileOutputStream(uploadablefile);
             fo.write(bytes.toByteArray());
-            /*MediaScannerConnection.scanFile(context,
-                    new String[]{uploadablefile.getPath()},
-                    new String[]{"image/jpeg"}, null);*/
             fo.close();
             return uploadablefile.getAbsolutePath();
         } catch (Exception e1) {
@@ -533,9 +530,8 @@ public class AssignmentViewActivity extends BaseActivity {
     }
 
     public void uploadFile(String imagepath) {
-//        startService();
-        String name="Manoj";
-        RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), name);
+
+        RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), localStorage.getFullName());
         String upload_param = localStorage.getClassId() + ":AS" + ":" + localStorage.getId();
         RequestBody coverRequestFile = null;
         MultipartBody.Part photo1 = null;
@@ -577,7 +573,7 @@ public class AssignmentViewActivity extends BaseActivity {
                                 class_note.getNote_title(),
                                 class_note.getNote_title(),
                                 upload_param,
-                                "",
+                                localStorage.getFullName(),
                                 localStorage.getSectionId(),
                                 class_note.getId(),
                                 period_id,
@@ -609,7 +605,6 @@ public class AssignmentViewActivity extends BaseActivity {
             });
         }
     }
-
 
     public void startService(){
        /* AlarmManager alarmManager;

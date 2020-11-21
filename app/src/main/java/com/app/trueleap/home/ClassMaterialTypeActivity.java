@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil;
 import com.app.trueleap.Assignmentmodule.AssignmentActivity;
 import com.app.trueleap.Classnotemodule.ClassNotesActivity;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
+import com.app.trueleap.MessagingModule.SendNotificationActivity;
 import com.app.trueleap.MessagingModule.chatHistoryActivity;
 import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
@@ -176,6 +177,13 @@ public class ClassMaterialTypeActivity extends BaseActivity implements responseC
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        binding.actionNotify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, SendNotificationActivity.class));
             }
         });
     }

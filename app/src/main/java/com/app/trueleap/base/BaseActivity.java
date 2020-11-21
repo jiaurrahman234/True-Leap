@@ -25,7 +25,10 @@ import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieFrameInfo;
 import com.airbnb.lottie.value.SimpleLottieValueCallback;
 import com.app.trueleap.MessagingModule.chatResponseCallback;
+import com.app.trueleap.MessagingModule.model.TeacherModel;
 import com.app.trueleap.MessagingModule.model.messageModel;
+import com.app.trueleap.MessagingModule.notifyResponseCallback;
+import com.app.trueleap.MessagingModule.teacherListResponseCallback;
 import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.Retrofit.ApiClientChat;
@@ -35,6 +38,8 @@ import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.Constants;
 import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.external.Utils;
+import com.app.trueleap.gradebook.gradeResponseCallback;
+import com.app.trueleap.gradebook.model.GradeItem;
 import com.app.trueleap.interfaces.responseCallback;
 import com.app.trueleap.localization.ChangeLanguageActivity;
 import com.app.trueleap.notification.NotificationModel;
@@ -56,8 +61,6 @@ import retrofit2.Callback;
 
 public class BaseActivity extends AppCompatActivity {
     public static final String TAG = BaseActivity.class.getSimpleName();
-    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 10;
-    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 20;
     public Gson gson;
     public LocalStorage localStorage;
     ProgressDialog progressDialog;
@@ -117,7 +120,6 @@ public class BaseActivity extends AppCompatActivity {
     public void showLanguageDialog(){
         startActivity(new Intent(this, ChangeLanguageActivity.class));
     }
-
 
     private void addColorFilterToLottieView(LottieAnimationView view) {
         view.addValueCallback(
@@ -390,4 +392,185 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void getTeacherList(teacherListResponseCallback teacherListResponseCallback) {
+        ArrayList<TeacherModel> teacherList = new ArrayList<>();
+        try {
+
+            Call<ResponseBody> call = APIClient
+                    .getInstance()
+                    .getApiInterface()
+                    .getTeacher(localStorage.getKeyUserToken());
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+
+                    if(response.isSuccessful()) {
+                        try {
+                            String response_data = response.body().string();
+                            JSONArray jsonArray = new JSONArray(response_data);
+                            if (jsonArray.length() > 0) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject resultObject = jsonArray.getJSONObject(i);
+                                    teacherList.add(
+                                            new TeacherModel(
+                                                    resultObject.getString("_id"),
+                                                    resultObject.getJSONObject("profile").getString("fullname") ));
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if (teacherListResponseCallback != null) {
+                            teacherListResponseCallback.onSuccessteacherList(teacherList);
+                        }
+                    }else {
+                        try {
+                            String errorBody = response.errorBody().string();
+                            Log.d(TAG, "error data: " + errorBody);
+                            JSONObject jsonObject = new JSONObject(errorBody);
+                            if(jsonObject.getString("code").equals("402-AUTH-001")){
+                                showSesstionTimeout();
+                            }else {
+
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void notifyTeacher(String teacher_id, String note , notifyResponseCallback notifyResponseCallback) {
+        JSONObject userObj = new JSONObject();
+        try {
+            userObj.put("teacherid", teacher_id);
+            JSONObject notification = new JSONObject();
+            notification.put("note",note);
+            notification.put("document","");
+            userObj.put("notification",notification);
+
+            JSONObject Class = new JSONObject();
+            Class.put("grade",localStorage.getClassId());
+            Class.put("section",localStorage.getSectionId());
+            userObj.put("class",Class);
+            userObj.put("notificationby", localStorage.getFullName());
+            userObj.put("initiatortype", Constants.INITIATOR);
+
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                    (userObj.toString()));
+
+            Call<ResponseBody> call = APIClient
+                    .getInstance()
+                    .getApiInterface()
+                    .notify(localStorage.getKeyUserToken(), body);
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    try {
+                        String response_data = response.body().string();
+                        JSONObject responseObj = new JSONObject(response_data);
+                        if(responseObj.getInt("ok")==1){
+                            Log.d(TAG,"success");
+                            if (notifyResponseCallback != null) {
+                                notifyResponseCallback.onSuccessfullNotify();
+                            }
+                        }
+                       /* responseObj.getInt("nModified");
+                        responseObj.getInt("n");*/
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getGrades(String subject, gradeResponseCallback graderesponseCallback) {
+        ArrayList<GradeItem> Gradelist = new ArrayList<>();
+        try {
+            JSONObject Class = new JSONObject();
+            Class.put("class",localStorage.getClassId());
+            Class.put("section",localStorage.getSectionId());
+            Class.put("semester",localStorage.getSemester());
+            Class.put("subject", subject);
+
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                    (Class.toString()));
+
+            Call<ResponseBody> call = APIClient
+                    .getInstance()
+                    .getApiInterface()
+                    .getGrades(localStorage.getKeyUserToken(),body);
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    if(response.isSuccessful()) {
+                        try {
+                            String response_data = response.body().string();
+                            JSONArray jsonArray = new JSONArray(response_data);
+                            JSONArray gradesArray = jsonArray.getJSONObject(0).getJSONArray("grades");
+
+                            if (gradesArray.length() > 0) {
+                                for (int i = 0; i < gradesArray.length(); i++) {
+                                    JSONObject resultObject = jsonArray.getJSONObject(i);
+                                    /*Gradelist.add(
+                                            new GradeItem(
+                                                    resultObject.getString("gradetype"),
+                                                    Double.parseDouble(resultObject.getString("gradeweight")),
+                                                    resultObject.getString("gradename"),
+                                                    resultObject.getString("compulsary"),
+                                                    Double.parseDouble(resultObject.getString("compulsarypassmark")),
+                                                    resultObject.getString("assessmentdate"),
+                                                    Double.parseDouble(resultObject.getString("outof")),
+                                                    Double.parseDouble(resultObject.getString("bestoutof")),
+                                                    resultObject.getString("partofmidtermgrade"));*/
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if (graderesponseCallback != null) {
+                            graderesponseCallback.onSuccesGrade(Gradelist);
+                        }
+                    }else {
+                        try {
+                            String errorBody = response.errorBody().string();
+                            Log.d(TAG, "error data: " + errorBody);
+                            JSONObject jsonObject = new JSONObject(errorBody);
+                            if(jsonObject.getString("code").equals("402-AUTH-001")){
+                                showSesstionTimeout();
+                            }else {
+
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

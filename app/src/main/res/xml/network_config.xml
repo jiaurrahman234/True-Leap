@@ -3,5 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
             <domain includeSubdomains="true">35.164.171.15</domain>
         <domain includeSubdomains="true">35.164.171.15:9001</domain>
+        <domain includeSubdomains="true">https://api.trueleap.in/</domain>
     </domain-config>
 </network-security-config>

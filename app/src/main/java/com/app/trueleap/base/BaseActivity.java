@@ -12,18 +12,22 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieProperty;
 import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieFrameInfo;
 import com.airbnb.lottie.value.SimpleLottieValueCallback;
+import com.app.trueleap.Assignmentmodule.interfaces.uploadResponseCallback;
 import com.app.trueleap.MessagingModule.chatResponseCallback;
 import com.app.trueleap.MessagingModule.model.TeacherModel;
 import com.app.trueleap.MessagingModule.model.messageModel;
@@ -31,18 +35,19 @@ import com.app.trueleap.MessagingModule.notifyResponseCallback;
 import com.app.trueleap.MessagingModule.teacherListResponseCallback;
 import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.APIClient;
-import com.app.trueleap.Retrofit.ApiClientChat;
-import com.app.trueleap.dialogFragment.NotifiactionDialogFragment;
 import com.app.trueleap.dialogFragment.sessionTimeoutFragment;
-import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.Constants;
+import com.app.trueleap.external.DBhelper;
 import com.app.trueleap.external.LocalStorage;
 import com.app.trueleap.external.Utils;
 import com.app.trueleap.gradebook.gradeResponseCallback;
 import com.app.trueleap.gradebook.model.GradeItem;
+import com.app.trueleap.home.subject.interfaces.subjectResponseCallback;
+import com.app.trueleap.home.subject.model.ClassModel;
 import com.app.trueleap.interfaces.responseCallback;
-import com.app.trueleap.localization.ChangeLanguageActivity;
+import com.app.trueleap.model.ErrorResponse;
 import com.app.trueleap.notification.NotificationModel;
+import com.app.trueleap.service.documentuploadService;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -52,12 +57,19 @@ import com.google.android.play.core.tasks.Task;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.io.File;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
+import retrofit2.Response;
+import static com.app.trueleap.external.CommonFunctions.saveJSONToCache;
 
 public class BaseActivity extends AppCompatActivity {
     public static final String TAG = BaseActivity.class.getSimpleName();
@@ -68,6 +80,7 @@ public class BaseActivity extends AppCompatActivity {
     Dialog dialog = null;
     private int REQUEST_CODE_UPDATE = 1201;
     public FragmentManager fragmentManager;
+    DBhelper dBhelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +91,6 @@ public class BaseActivity extends AppCompatActivity {
             fragmentManager = getSupportFragmentManager();
             localStorage = new LocalStorage(getApplicationContext());
             progressDialog = new ProgressDialog(BaseActivity.this);
-            //NetworkCheck.isNetworkAvailable(getApplicationContext());
 
             AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(context);
             Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
@@ -117,8 +129,13 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void showLanguageDialog(){
-        startActivity(new Intent(this, ChangeLanguageActivity.class));
+    private void initialiseDbHelper() {
+        dBhelper = new DBhelper(this);
+        try {
+            dBhelper.createDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addColorFilterToLottieView(LottieAnimationView view) {
@@ -209,9 +226,16 @@ public class BaseActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     public void getNotifications(responseCallback responsecallback) {
+        showProgressBar();
         ArrayList<NotificationModel> notificationlist = new ArrayList<>();
         JSONObject userObj = new JSONObject();
         try {
@@ -220,14 +244,14 @@ public class BaseActivity extends AppCompatActivity {
                     (userObj.toString()));
 
             Call<ResponseBody> call = APIClient
-                    .getInstance()
+                    .getInstance(localStorage.getSelectedCountry())
                     .getApiInterface()
                     .notification(localStorage.getKeyUserToken(), body);
 
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-
+                    hideProgressBar();
                     if(response.isSuccessful()) {
                         try {
                             String response_data = response.body().string();
@@ -250,41 +274,54 @@ public class BaseActivity extends AppCompatActivity {
                                     }
                                 }
                                 localStorage.setNotificationCount(count);
-                            } else {
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                         if (responsecallback != null) {
                             responsecallback.onSuccess(notificationlist);
                         }
                     }else {
-                        try {
-                            String errorBody = response.errorBody().string();
+                            String errorBody = response.errorBody().toString();
                             Log.d(TAG, "error data: " + errorBody);
-                            JSONObject jsonObject = new JSONObject(errorBody);
-                            if(jsonObject.getString("code").equals("402-AUTH-001")){
-                                showSesstionTimeout();
-                            }else {
-
+                            Response<?> errorResponse = response;
+                            ResponseBody errorbody = errorResponse.errorBody();
+                            Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
+                            try {
+                                ErrorResponse errorObject = converter.convert(errorbody);
+                                Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                                if (errorObject.getError_code().equals(Constants.ERR_INVALID_TOKEN) || errorObject.getError_code().equals(Constants.ERR_SESSION_TIMEOUT)) {
+                                    showSesstionTimeout();
+                                } else {
+                                    // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
                             }
-                        }catch (Exception e) {
-                            e.printStackTrace();
-                        }
                     }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressBar();
+                    hideProgressBar();
+                    if (t instanceof IOException) {
+                        Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_SHORT).show();
+                        showSesstionTimeout();
+                    }
+                    else {
 
+                    }
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
+            hideProgressBar();
         }
     }
 
     public void getchatHistory(chatResponseCallback chatresponsecallback, String subject, String peroid_id ) {
+        showProgressBar();
         ArrayList<messageModel> chatlist = new ArrayList<>();
         JSONObject userObj = new JSONObject();
         try {
@@ -293,19 +330,20 @@ public class BaseActivity extends AppCompatActivity {
             userObj.put("section", localStorage.getSectionId());
             userObj.put("semester", localStorage.getSemester());
             userObj.put("period", peroid_id);
-            userObj.put("user", localStorage.getId());
+            userObj.put("user", localStorage.getFullName());
 
             RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                     (userObj.toString()));
 
-            Call<ResponseBody> call = ApiClientChat
-                    .getInstance()
+            Call<ResponseBody> call = APIClient
+                    .getInstance(localStorage.getSelectedCountry())
                     .getApiInterface()
                     .chatHistory(localStorage.getKeyUserToken(), body);
 
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    hideProgressBar();
 
                     if (response.isSuccessful()){
                         Log.d(TAG,"chat"+response.toString());
@@ -331,24 +369,43 @@ public class BaseActivity extends AppCompatActivity {
                     if (chatresponsecallback != null) {
                         chatresponsecallback.onSucceschat(chatlist);
                     }
+                    } else {
+                        String errorBody = response.errorBody().toString();
+                        Log.d(TAG, "error data: " + errorBody);
+                        Response<?> errorResponse = response;
+                        ResponseBody errorbody = errorResponse.errorBody();
+                        Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
+                        try {
+                            ErrorResponse errorObject = converter.convert(errorbody);
+                            Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                            if (errorObject.getError_code().equals(Constants.ERR_INVALID_TOKEN) || errorObject.getError_code().equals(Constants.ERR_SESSION_TIMEOUT)) {
+                                showSesstionTimeout();
+                            } else {
+                                // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressBar();
+                    if (t instanceof IOException) {
+                        Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_SHORT).show();
+                        showSesstionTimeout();
+                    }
+                    else {
 
+                    }
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
+            hideProgressBar();
         }
-    }
-
-    private void showSesstionTimeout() {
-        sessionTimeoutFragment alert = new sessionTimeoutFragment();
-        FragmentManager transaction = getSupportFragmentManager();
-        alert.show(transaction, Utils.timeout_dialog_fragment);
-        alert.setCancelable(false);
     }
 
     public void readNotifications(String notificationid) {
@@ -361,7 +418,7 @@ public class BaseActivity extends AppCompatActivity {
                     (userObj.toString()));
 
             Call<ResponseBody> call = APIClient
-                    .getInstance()
+                    .getInstance(localStorage.getSelectedCountry())
                     .getApiInterface()
                     .updatenotification(localStorage.getKeyUserToken(), body);
 
@@ -384,6 +441,14 @@ public class BaseActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressBar();
+                    if (t instanceof IOException) {
+                        Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_SHORT).show();
+                        showSesstionTimeout();
+                    }
+                    else {
+
+                    }
 
                 }
             });
@@ -393,11 +458,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void getTeacherList(teacherListResponseCallback teacherListResponseCallback) {
+        showProgressBar();
         ArrayList<TeacherModel> teacherList = new ArrayList<>();
         try {
-
             Call<ResponseBody> call = APIClient
-                    .getInstance()
+                    .getInstance(localStorage.getSelectedCountry())
                     .getApiInterface()
                     .getTeacher(localStorage.getKeyUserToken());
 
@@ -405,9 +470,12 @@ public class BaseActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
 
+                    hideProgressBar();
+
                     if(response.isSuccessful()) {
                         try {
                             String response_data = response.body().string();
+                            Log.d(TAG,"fcsef "+ response_data);
                             JSONArray jsonArray = new JSONArray(response_data);
                             if (jsonArray.length() > 0) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -425,31 +493,47 @@ public class BaseActivity extends AppCompatActivity {
                             teacherListResponseCallback.onSuccessteacherList(teacherList);
                         }
                     }else {
+                        String errorBody = response.errorBody().toString();
+                        Log.d(TAG, "error data: " + errorBody);
+                        Response<?> errorResponse = response;
+                        ResponseBody errorbody = errorResponse.errorBody();
+                        Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
                         try {
-                            String errorBody = response.errorBody().string();
-                            Log.d(TAG, "error data: " + errorBody);
-                            JSONObject jsonObject = new JSONObject(errorBody);
-                            if(jsonObject.getString("code").equals("402-AUTH-001")){
+                            ErrorResponse errorObject = converter.convert(errorbody);
+                            Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                            if (errorObject.getError_code().equals(Constants.ERR_INVALID_TOKEN) || errorObject.getError_code().equals(Constants.ERR_SESSION_TIMEOUT)) {
                                 showSesstionTimeout();
-                            }else {
-
+                            } else {
+                                // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
                             }
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
+                            // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
                         }
                     }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressBar();
+                    hideProgressBar();
+                    if (t instanceof IOException) {
+                        Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_SHORT).show();
+                        showSesstionTimeout();
+                    }
+                    else {
+
+                    }
 
                 }
             });
         } catch (Exception e) {
+            hideProgressBar();
             e.printStackTrace();
         }
     }
 
     public void notifyTeacher(String teacher_id, String note , notifyResponseCallback notifyResponseCallback) {
+        showProgressBar();
         JSONObject userObj = new JSONObject();
         try {
             userObj.put("teacherid", teacher_id);
@@ -462,46 +546,82 @@ public class BaseActivity extends AppCompatActivity {
             Class.put("grade",localStorage.getClassId());
             Class.put("section",localStorage.getSectionId());
             userObj.put("class",Class);
+
             userObj.put("notificationby", localStorage.getFullName());
+            Log.d(TAG,"teacher id " + localStorage.getFullName());
+            Log.d(TAG,"teacher id " + Constants.INITIATOR);
             userObj.put("initiatortype", Constants.INITIATOR);
+            Log.d(TAG, " body obj " +userObj.toString(4));
 
             RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                     (userObj.toString()));
 
             Call<ResponseBody> call = APIClient
-                    .getInstance()
+                    .getInstance(localStorage.getSelectedCountry())
                     .getApiInterface()
                     .notify(localStorage.getKeyUserToken(), body);
 
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                    try {
-                        String response_data = response.body().string();
-                        JSONObject responseObj = new JSONObject(response_data);
-                        if(responseObj.getInt("ok")==1){
-                            Log.d(TAG,"success");
-                            if (notifyResponseCallback != null) {
-                                notifyResponseCallback.onSuccessfullNotify();
+                    hideProgressBar();
+                    if(response.isSuccessful()) {
+                        try {
+                            String response_data = response.body().string();
+                            JSONObject responseObj = new JSONObject(response_data);
+                            if (responseObj.getInt("ok") == 1) {
+                                Log.d(TAG, "successfully notified");
+                                if (notifyResponseCallback != null) {
+                                    notifyResponseCallback.onSuccessfullNotify();
+                                }
                             }
+                            //responseObj.getInt("nModified");
+                            //responseObj.getInt("n");
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                       /* responseObj.getInt("nModified");
-                        responseObj.getInt("n");*/
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    }else {
+                        String errorBody = response.errorBody().toString();
+                        Log.d(TAG, "error data: " + errorBody);
+                        Response<?> errorResponse = response;
+                        ResponseBody errorbody = errorResponse.errorBody();
+                        Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
+                        try {
+                            ErrorResponse errorObject = converter.convert(errorbody);
+                            Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                            if (errorObject.getError_code().equals(Constants.ERR_INVALID_TOKEN) || errorObject.getError_code().equals(Constants.ERR_SESSION_TIMEOUT)) {
+                                showSesstionTimeout();
+                            } else {
+                                // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
+                        }
                     }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressBar();
+                    if (t instanceof IOException) {
+                        Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_SHORT).show();
+                        showSesstionTimeout();
+                    }
+                    else {
 
+                    }
                 }
             });
+
         } catch (Exception e) {
+            hideProgressBar();
             e.printStackTrace();
+
         }
     }
 
     public void getGrades(String subject, gradeResponseCallback graderesponseCallback) {
+        showProgressBar();
         ArrayList<GradeItem> Gradelist = new ArrayList<>();
         try {
             JSONObject Class = new JSONObject();
@@ -514,13 +634,15 @@ public class BaseActivity extends AppCompatActivity {
                     (Class.toString()));
 
             Call<ResponseBody> call = APIClient
-                    .getInstance()
+                    .getInstance(localStorage.getSelectedCountry())
                     .getApiInterface()
                     .getGrades(localStorage.getKeyUserToken(),body);
 
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+
+                    hideProgressBar();
                     if(response.isSuccessful()) {
                         try {
                             String response_data = response.body().string();
@@ -550,27 +672,265 @@ public class BaseActivity extends AppCompatActivity {
                             graderesponseCallback.onSuccesGrade(Gradelist);
                         }
                     }else {
+                        String errorBody = response.errorBody().toString();
+                        Log.d(TAG, "error data: " + errorBody);
+                        Response<?> errorResponse = response;
+                        ResponseBody errorbody = errorResponse.errorBody();
+                        Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
                         try {
-                            String errorBody = response.errorBody().string();
-                            Log.d(TAG, "error data: " + errorBody);
-                            JSONObject jsonObject = new JSONObject(errorBody);
-                            if(jsonObject.getString("code").equals("402-AUTH-001")){
+                            ErrorResponse errorObject = converter.convert(errorbody);
+                            Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                            if (errorObject.getError_code().equals(Constants.ERR_INVALID_TOKEN) || errorObject.getError_code().equals(Constants.ERR_SESSION_TIMEOUT)) {
                                 showSesstionTimeout();
-                            }else {
-
+                            } else {
+                                // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
                             }
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
+                            // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
                         }
                     }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    hideProgressBar();
+                    if (t instanceof IOException) {
+                        Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_SHORT).show();
+                        showSesstionTimeout();
+                    }
+                    else {
 
+                    }
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
+            hideProgressBar();
+        }
+    }
+
+    public void getclasses(subjectResponseCallback subjectResponseCallback) {
+        ArrayList<ClassModel> Subjects = new ArrayList<>();
+        try {
+            showProgressBar();
+            Call<ResponseBody> call = APIClient
+                    .getInstance(localStorage.getSelectedCountry())
+                    .getApiInterface()
+                    .getSubjects(localStorage.getKeyUserToken(), true);
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    try {
+                        Log.d(TAG, "call request: " + call.request());
+                        hideProgressBar();
+                        if (response.isSuccessful()) {
+                            String response_data = response.body().string();
+                            saveJSONToCache(BaseActivity.this, response_data);
+                            JSONArray jsonArray = new JSONArray(response_data);
+                            Log.d(TAG, "subject response: " + jsonArray.length());
+                            if (jsonArray.length() > 0) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONArray json_array_at_level_1 = jsonArray.getJSONArray(i);
+                                    if (json_array_at_level_1.length() > 0) {
+                                        JSONObject classJsonObject = json_array_at_level_1.getJSONObject(0);
+
+                                        ArrayList<String> daysArraylist = new ArrayList<>();
+                                        JSONArray days = classJsonObject.getJSONArray("days");
+                                        for (int j = 0; j < days.length(); j++) {
+                                            daysArraylist.add(days.getString(j));
+                                        }
+
+                                        Subjects.add(new ClassModel(classJsonObject.getString("uniqueperiodid"),
+                                                classJsonObject.getString("teacher"),
+                                                classJsonObject.getString("uniqueteacherid"),
+                                                classJsonObject.getString("startdate"),
+                                                classJsonObject.getString("enddate"),
+                                                classJsonObject.getString("starttime"),
+                                                classJsonObject.getString("endtime"), daysArraylist,
+                                                classJsonObject.getString("class"),
+                                                classJsonObject.getString("section"),
+                                                classJsonObject.getString("subject"), null, null));
+                                    }
+                                }
+                            }
+                            if (subjectResponseCallback != null) {
+                                subjectResponseCallback.onSuccesSubject(Subjects);
+                            }
+                        } else {
+                            String errorBody = response.errorBody().toString();
+                            Log.d(TAG, "error data: " + errorBody);
+                            Response<?> errorResponse = response;
+                            ResponseBody errorbody = errorResponse.errorBody();
+                            Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
+                            try {
+                                ErrorResponse errorObject = converter.convert(errorbody);
+                                Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                                if (errorObject.getError_code().equals(Constants.ERR_INVALID_TOKEN) || errorObject.getError_code().equals(Constants.ERR_SESSION_TIMEOUT)) {
+                                    showSesstionTimeout();
+                                } else {
+                                  // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        hideProgressBar();
+                        // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    hideProgressBar();
+                    if (t instanceof IOException) {
+                        Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_SHORT).show();
+                        showSesstionTimeout();
+                    }
+                    else {
+
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void uploadFile(uploadResponseCallback uploadResponseCallback, String imagepath , String document_id , String period_id ) {
+
+        initialiseDbHelper();
+
+        RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), localStorage.getFullName());
+        String upload_param = localStorage.getClassId() + ":AS" + ":" + localStorage.getId();
+        RequestBody RequestBodyFile = null;
+        MultipartBody.Part assignment_file = null;
+        File file = new File(imagepath);
+        RequestBodyFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        assignment_file = MultipartBody.Part.createFormData("file", file.getName(), RequestBodyFile);
+        if (imagepath.length() == 0) {
+            if (uploadResponseCallback != null) {
+                uploadResponseCallback.uploadresponse(getResources().getString(R.string.select_one_file));
+            }
+        } else {
+            RequestBody note = RequestBody.create(MediaType.parse("text/plain"),
+                    "");
+            RequestBody title = RequestBody.create(MediaType.parse("text/plain"),
+                    "");
+            RequestBody sectionBody = RequestBody.create(MediaType.parse("text/plain"),
+                    localStorage.getSectionId());
+            RequestBody documentnumberBody = RequestBody.create(MediaType.parse("text/plain"),
+                    document_id);
+            RequestBody uniqueperiodidBody = RequestBody.create(MediaType.parse("text/plain"),
+                    period_id);
+            RequestBody uploadparam = RequestBody.create(MediaType.parse("text/plain"),
+                    upload_param);
+
+            showProgressBar();
+            Call<ResponseBody> call = null;
+            call =   APIClient
+                    .getInstance(localStorage.getSelectedCountry())
+                    .getApiInterface()
+                    .uploadDoc(localStorage.getKeyUserToken(), assignment_file, title, note, uploadparam, nameBody, sectionBody, documentnumberBody, uniqueperiodidBody);
+
+            Log.d(TAG, "request:" + call.request());
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    hideProgressBar();
+                    Log.d(TAG, "log response:" + response.toString());
+                        if (response.isSuccessful()) {
+                            dBhelper.insertData("", "", upload_param, localStorage.getFullName(), localStorage.getSectionId(), document_id, period_id, imagepath,1);
+                            Log.d(TAG, "server contact failed");
+                            String errorBody = response.body().toString();
+                            Log.d(TAG, "error data: " + errorBody);
+                            Response<?> errorResponse = response;
+                            ResponseBody errorbody = errorResponse.errorBody();
+                            Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
+                            try {
+                                ErrorResponse errorObject = converter.convert(errorbody);
+                                Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                                Log.d(TAG, " Error_message : " + errorObject.getError_message());
+                                if (uploadResponseCallback != null) {
+                                        uploadResponseCallback.uploadresponse(errorObject.getError_message());
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                if (uploadResponseCallback != null) {
+                                    uploadResponseCallback.uploadresponse(getResources().getString(R.string.uploaded_successfully));
+                                }
+                            }
+                        }
+                        else {
+                        dBhelper.insertData("", "", upload_param, localStorage.getFullName(), localStorage.getSectionId(), document_id, period_id, imagepath,0 );
+
+                        Log.d(TAG, "server contact failed");
+                        String errorBody = response.errorBody().toString();
+                        Log.d(TAG, "error data: " + errorBody);
+                        Response<?> errorResponse = response;
+                        ResponseBody errorbody = errorResponse.errorBody();
+                        Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
+                        try {
+                            ErrorResponse errorObject = converter.convert(errorbody);
+                            Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                            Log.d(TAG, " Error_message : " + errorObject.getError_message());
+                            if (errorObject.getError_code().equals(Constants.ERR_INVALID_TOKEN) || errorObject.getError_code().equals(Constants.ERR_SESSION_TIMEOUT)) {
+                                showSesstionTimeout();
+                            } else {
+                                if (uploadResponseCallback != null) {
+                                    uploadResponseCallback.uploadresponse(errorObject.getError_message());
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            if (uploadResponseCallback != null) {
+                                uploadResponseCallback.uploadresponse(getResources().getString(R.string.upload_failed));
+                            }
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e(TAG, "error internet");
+                    hideProgressBar();
+                    if (uploadResponseCallback != null) {
+                        uploadResponseCallback.uploadresponse(getResources().getString(R.string.upload_failed));
+                    }
+                    if (localStorage.getAutoupload()) {
+                        dBhelper.insertData("", "", upload_param, localStorage.getFullName(), localStorage.getSectionId(), document_id, period_id, imagepath, 0 );
+                        startService(document_id);
+                    }
+                }
+            });
+        }
+    }
+
+    public void startService(String document_id){
+        Log.d(TAG,"starting Service");
+        Intent upload = new Intent(context, documentuploadService.class);
+        upload.putExtra("document_id",document_id);
+        context.startService(upload);
+    }
+
+    public void showSesstionTimeout() {
+
+        Fragment timeout_dialog = getSupportFragmentManager().findFragmentByTag( Utils.timeout_dialog_fragment);
+        DialogFragment timeoutDialog = (DialogFragment) timeout_dialog;
+        if (timeoutDialog != null
+                && timeoutDialog.getDialog() != null
+                && timeoutDialog.getDialog().isShowing()
+                && !timeoutDialog.isRemoving()) {
+
+        } else {
+            Log.d(TAG, "session timeout !");
+            sessionTimeoutFragment alert = new sessionTimeoutFragment();
+            FragmentManager transaction = getSupportFragmentManager();
+            alert.show(transaction, Utils.timeout_dialog_fragment);
+            alert.setCancelable(false);
         }
     }
 }

@@ -84,8 +84,6 @@ public class ChangeLanguageActivity extends BaseActivity {
         }
     }
 
-
-
     public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
         private Context mContext;

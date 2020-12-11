@@ -18,8 +18,8 @@ import com.app.trueleap.interfaces.responseCallback;
 import com.app.trueleap.notification.NotificationActivity;
 import com.app.trueleap.notification.NotificationModel;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
+
 public class SendNotificationActivity extends BaseActivity implements teacherListResponseCallback, responseCallback, notifyResponseCallback {
 
     ActivitySendNotificationBinding binding;
@@ -46,11 +46,12 @@ public class SendNotificationActivity extends BaseActivity implements teacherLis
             @Override
             public void onClick(View v) {
                 if(!binding.messageTxt.getText().toString().isEmpty()){
-                    notifyTeacher(binding.messageTxt.getText().toString(),teacherArrayList.get(selected).getTeacher_id() , SendNotificationActivity.this );
+                    notifyTeacher(teacherArrayList.get(selected).getTeacher_id(), binding.messageTxt.getText().toString(), SendNotificationActivity.this );
+                } else {
+                    binding.messageTxt.setError(getString(R.string.required_field));
                 }
             }
         });
-
         binding.selectTeacher.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -119,5 +120,6 @@ public class SendNotificationActivity extends BaseActivity implements teacherLis
         Snackbar snackbar = Snackbar
                 .make(binding.rootlayout,"Teacher Notified Successfully", Snackbar.LENGTH_LONG);
         snackbar.show();
+        binding.messageTxt.setText("");
     }
 }

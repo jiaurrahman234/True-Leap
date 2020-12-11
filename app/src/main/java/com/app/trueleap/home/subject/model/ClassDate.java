@@ -1,4 +1,4 @@
-package com.app.trueleap.home.studentsubject;
+package com.app.trueleap.home.subject.model;
 
 public class ClassDate {
     String startDate;

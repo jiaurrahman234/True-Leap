@@ -1,5 +1,6 @@
 package com.app.trueleap.Retrofit;
 import com.app.trueleap.BuildConfig;
+import com.app.trueleap.external.LocalStorage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,19 +21,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class APIClient {
-    public static final String BASE_URL = "https://35.164.171.15:9001/"; //production
-   // public static final String BASE_URL = "https://api.trueleap.in/service/"; //production
+    //public static final String BASE_URL = "https://api.trueleap.io/";
     public static APIClient mInstance;
     private static Retrofit retrofit = null;
     private static HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
 
-    private APIClient() {
+    private APIClient(String base_url) {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(base_url)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(getUnsafeOkHttpClient())
                     .build();
@@ -81,9 +82,9 @@ public class APIClient {
         }
     }
 
-    public static synchronized APIClient getInstance() {
+    public static synchronized APIClient getInstance(String base_url) {
         if (mInstance == null) {
-            mInstance = new APIClient();
+            mInstance = new APIClient(base_url);
         }
         return mInstance;
     }
@@ -96,7 +97,7 @@ public class APIClient {
         return retrofit.create(APIInterface.class);
     }
 
-    public static Retrofit getClient() {
+    public static Retrofit getClient(String base_url) {
 
         if (BuildConfig.DEBUG)
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -113,7 +114,7 @@ public class APIClient {
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(base_url)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(getUnsafeOkHttpClient())

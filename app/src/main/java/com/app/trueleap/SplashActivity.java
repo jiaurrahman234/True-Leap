@@ -15,6 +15,7 @@ import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivitySplashBinding;
 import com.app.trueleap.home.MainActivity;
 import com.app.trueleap.localization.ChangeLanguageActivity;
+import com.app.trueleap.localization.SelectCountryActivity;
 
 public class SplashActivity extends BaseActivity {
     String TAG = SplashActivity.class.getSimpleName();
@@ -33,17 +34,22 @@ public class SplashActivity extends BaseActivity {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             binding.versionName.setText(pInfo.versionName);
             initListener();
-            if(localStorage.getSelectedLanguage()!=null) {
-               binding.animationView.setVisibility(View.VISIBLE);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mainMethod();
-                    }
-                }, 3000);
+            if(localStorage.getSelectedCountry().equals("notset")){
+                startActivity(new Intent(getApplicationContext(), SelectCountryActivity.class));
+                finish();
             }else {
-                binding.languageBox.setVisibility(View.VISIBLE);
-                binding.animationView.setVisibility(View.GONE);
+                if(localStorage.getSelectedLanguage()!="notset") {
+                    binding.animationView.setVisibility(View.VISIBLE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mainMethod();
+                        }
+                    }, 3000);
+                }else {
+                    binding.languageBox.setVisibility(View.VISIBLE);
+                    binding.animationView.setVisibility(View.GONE);
+                }
             }
 
         } catch (Exception e) {

@@ -18,7 +18,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
-import com.app.trueleap.Retrofit.ApiClientFile;
+import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityViewClassNoteBinding;
 import com.app.trueleap.external.Converter;
@@ -127,8 +127,8 @@ public class ViewClassNoteActivity extends BaseActivity implements responseCallb
     private void download_file() {
         showProgressBar();
         Call<ResponseBody> call = null;
-        call = ApiClientFile
-                .getInstance()
+        call = APIClient
+                .getInstance(localStorage.getSelectedCountry())
                 .getApiInterface()
                 .getDocument(localStorage.getKeyUserToken(), period_id, class_note.getId());
         call.enqueue(new Callback<ResponseBody>() {

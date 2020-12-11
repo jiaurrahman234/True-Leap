@@ -14,9 +14,12 @@ import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.FragmentNotifiactionDialogBinding;
 import com.app.trueleap.external.LocalStorage;
+import com.app.trueleap.home.MainActivity;
 import com.app.trueleap.interfaces.recyclerviewClickListener;
 import com.app.trueleap.notification.NotificationModel;
 import com.app.trueleap.notification.adapter.notification_adapter;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import java.util.ArrayList;
 public class NotifiactionDialogFragment extends DialogFragment implements recyclerviewClickListener {
 
@@ -85,20 +88,24 @@ public class NotifiactionDialogFragment extends DialogFragment implements recycl
     @Override
     public void onClicked(int position) {
         ((BaseActivity) getActivity()).readNotifications(notificationlist.get(position).getNotificationid());
+        notificationlist.get(position).setViewed(true);
         ViewNotification(notificationlist.get(position).getNote());
+        notificationAdapter.notifyDataSetChanged();
     }
 
     public void ViewNotification(String content) {
         try {
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
-            builder.setTitle(R.string.message)
-                    .setMessage(content)
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context, R.style.MyAlertDialogStyle);
+            View titleView = getLayoutInflater().inflate(R.layout.alerdialog_title, null);
+            builder.setCustomTitle(titleView);
+            builder.setMessage(content)
                     .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.dismiss();
+                            ((MainActivity)context).onResume();
                         }
                     });
-            android.app.AlertDialog alertDialog = builder.create();
+            AlertDialog alertDialog = builder.create();
             alertDialog.show();
         } catch (Exception e) {
             e.printStackTrace();

@@ -23,4 +23,7 @@ public class Constants {
 
     public static final String INITIATOR = "S";
 
+    public static final String ERR_SESSION_TIMEOUT = "402-AUTH-001";
+    public static final String ERR_INVALID_TOKEN = "401-AUTH-001";
+
 }

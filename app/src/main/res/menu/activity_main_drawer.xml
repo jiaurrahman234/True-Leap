@@ -12,19 +12,9 @@
                 android:title="@string/home" />
 
             <item
-                android:id="@+id/nav_changeLanguage"
-                android:icon="@drawable/ic_baseline_language_24"
-                android:title="@string/action_change_lang" />
-            <item
-                android:id="@+id/auto_download"
-                android:icon="@drawable/ic_download"
-                android:title="@string/auto_download_doc"
-                app:actionLayout="@layout/widget_check"/>
-            <item
-                android:id="@+id/auto_upload"
-                android:icon="@drawable/ic_upload"
-                android:title="@string/auto_upload_doc"
-                app:actionLayout="@layout/widget_check"/>
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="@string/action_settings" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_baseline_power_settings_new_24"

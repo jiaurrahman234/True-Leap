@@ -16,7 +16,7 @@ import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityClassNotesBinding;
 import com.app.trueleap.external.Converter;
-import com.app.trueleap.home.studentsubject.model.ClassModel;
+import com.app.trueleap.home.subject.model.ClassModel;
 import com.app.trueleap.interfaces.responseCallback;
 import com.app.trueleap.notification.NotificationActivity;
 import com.app.trueleap.notification.NotificationModel;

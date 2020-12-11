@@ -1,27 +1,37 @@
 package com.app.trueleap.external;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-
 public class LocalStorage {
-    public static final String TOKEN = "user_token";
-    public static final String ID = "id";
-    private static final String IS_USER_LOGIN = "IsUserLoggedIn";
+
+    //profile Keys
+    public static final String  ID = "id";
     private static final String USER_PHONE = "user_phone";
     private static final String ROLL_NUMBER = "ROLL_NUMBER";
     private static final String CLASS_ID = "CLASS_ID";
     private static final String SECTION_ID = "SECTION_ID";
     private static final String SEMESTER = "SEMESTER";
-    private static final String AUTODOWNLOAD = "AUTODOWNLOAD";
-    private static final String SELECTED_LANGUAGE = "selected_language";
-    private static final String NOTIFICATION_COUNT = "notification_count";
+    private static final String FULL_NAME = "full_name";
+
+
+    //Auth Keys
+    private static final String IS_USER_LOGIN = "IsUserLoggedIn";
+    public static final String TOKEN = "user_token";
     private static final String SECRET_QUESTION = "s_question";
     private static final String SECRET_ANSWER = "s_ans";
     private static final String IS_QUESTION_SET = "is_set";
     private static final String IS_OFFLINE_LOGGEDIN = "is_logged_offline";
-    private static final String FULL_NAME = "full_name";
+
+    //settings keys
+    private static final String AUTODOWNLOAD = "AUTODOWNLOAD";
+    private static final String AUTOUPLOAD = "AUTOUPLOAD";
+    private static final String SELECTED_LANGUAGE = "selected_language";
+    private static final String SELECTED_COUNTRY = "selected_country";
+
+    // Extra helper
+    private static final String NOTIFICATION_COUNT = "notification_count";
+
 
     private static LocalStorage instance = null;
     SharedPreferences sharedPreferences;
@@ -41,26 +51,9 @@ public class LocalStorage {
         }
         return instance;
     }
-    public void setClass(String classData) {
-        Editor editor = sharedPreferences.edit();
-        editor.putString("class", classData);
-        editor.commit();
-    }
 
-    public String getClassData() {
-        if (sharedPreferences.contains("class"))
-            return sharedPreferences.getString("class", null);
-        else return null;
-    }
-    public void setAutodownload(Boolean data) {
-        editor = sharedPreferences.edit();
-        editor.putBoolean(AUTODOWNLOAD, data);
-        editor.commit();
-    }
+    //profile
 
-    public Boolean getAutodownload() {
-        return sharedPreferences.getBoolean(AUTODOWNLOAD, false);
-    }
 
     public void createUserLoginSession(String token,String id ,String rollNumber,String phoneNumber, String fullname, String classid,String section,String semester, boolean isLogin) {
         editor = sharedPreferences.edit();
@@ -73,16 +66,13 @@ public class LocalStorage {
         editor.putString(CLASS_ID, classid);
         editor.putString(SECTION_ID, section);
         editor.putString(SEMESTER, semester);
+        editor.putBoolean(AUTODOWNLOAD, true);
+        editor.putBoolean(AUTOUPLOAD, true );
+        editor.putBoolean(IS_QUESTION_SET, false );
+        editor.putBoolean(IS_OFFLINE_LOGGEDIN, false );
         editor.commit();
     }
 
-    public boolean isUserLoggedIn() {
-        return sharedPreferences.getBoolean(IS_USER_LOGIN, false);
-    }
-
-    public String getKeyUserToken() {
-        return sharedPreferences.getString(TOKEN, "");
-    }
 
     public String getId() {
         return sharedPreferences.getString(ID, "");
@@ -103,36 +93,29 @@ public class LocalStorage {
     public String getSectionId() {
         return sharedPreferences.getString(SECTION_ID, "");
     }
+
     public String getSemester() {
         return sharedPreferences.getString(SEMESTER, "");
     }
+
     public String getFullName() {
         return sharedPreferences.getString(FULL_NAME, "");
     }
 
-    public int getNotificationCount() {
-        return sharedPreferences.getInt(NOTIFICATION_COUNT, 0);
+
+    //Auth
+
+    public boolean isUserLoggedIn() {
+        return sharedPreferences.getBoolean(IS_USER_LOGIN, false);
     }
 
-    public void setNotificationCount(int count) {
-        editor = sharedPreferences.edit();
-        editor.putInt(NOTIFICATION_COUNT, count);
-        editor.commit();
+    public String getKeyUserToken() {
+        return sharedPreferences.getString(TOKEN, "");
     }
 
     public void logoutUser() {
         editor = sharedPreferences.edit();
         editor.clear();
-        editor.commit();
-    }
-
-    public String getSelectedLanguage() {
-        return sharedPreferences.getString(SELECTED_LANGUAGE, null);
-    }
-
-    public void setSelectedLanguage(String lang) {
-        editor = sharedPreferences.edit();
-        editor.putString(SELECTED_LANGUAGE, lang);
         editor.commit();
     }
 
@@ -175,4 +158,74 @@ public class LocalStorage {
         editor.putBoolean(IS_OFFLINE_LOGGEDIN, status);
         editor.commit();
     }
+
+
+
+    //Settings
+
+    public String getSelectedLanguage() {
+        return sharedPreferences.getString(SELECTED_LANGUAGE, "notset");
+    }
+
+    public void setSelectedLanguage(String lang) {
+        editor = sharedPreferences.edit();
+        editor.putString(SELECTED_LANGUAGE, lang);
+        editor.commit();
+    }
+
+    public String getSelectedCountry() {
+        return sharedPreferences.getString(SELECTED_COUNTRY, "notset");
+    }
+
+    public void setSelectedCountry(String country) {
+        editor = sharedPreferences.edit();
+        editor.putString(SELECTED_COUNTRY, country);
+        editor.commit();
+    }
+
+    public void setAutodownload(Boolean data) {
+        editor = sharedPreferences.edit();
+        editor.putBoolean(AUTODOWNLOAD, data);
+        editor.commit();
+    }
+
+    public Boolean getAutodownload() {
+        return sharedPreferences.getBoolean(AUTODOWNLOAD, false);
+    }
+
+    public void setAutoupload(Boolean data) {
+        editor = sharedPreferences.edit();
+        editor.putBoolean(AUTOUPLOAD, data);
+        editor.commit();
+    }
+
+    public Boolean getAutoupload() {
+        return sharedPreferences.getBoolean(AUTOUPLOAD, false);
+    }
+
+
+    // Extra helper
+
+    public void setClass(String classData) {
+        Editor editor = sharedPreferences.edit();
+        editor.putString("class", classData);
+        editor.commit();
+    }
+
+    public String getClassData() {
+        if (sharedPreferences.contains("class"))
+            return sharedPreferences.getString("class", null);
+        else return null;
+    }
+
+    public int getNotificationCount() {
+        return sharedPreferences.getInt(NOTIFICATION_COUNT, 0);
+    }
+
+    public void setNotificationCount(int count) {
+        editor = sharedPreferences.edit();
+        editor.putInt(NOTIFICATION_COUNT, count);
+        editor.commit();
+    }
+
 }

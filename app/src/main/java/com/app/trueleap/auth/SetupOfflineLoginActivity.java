@@ -68,11 +68,11 @@ public class SetupOfflineLoginActivity extends BaseActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-
         });
 
         binding.setSecretQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
                 String answer =  binding.answer.getText().toString().trim();
                 String conf_answer =  binding.confAnswer.getText().toString().trim();
@@ -80,13 +80,11 @@ public class SetupOfflineLoginActivity extends BaseActivity {
             }
 
             private void validate(String answer,String conf_answer ) {
-
                 if(answer.isEmpty()){
                     setErrorInputLayout(binding.answer, getString(R.string.err_empty_answer));
                     validate = false;
                     return;
                 }
-
                 if( conf_answer.isEmpty()) {
                     setErrorInputLayout(binding.confAnswer, getString(R.string.err_empty_c_answer));
                     validate = false;
@@ -108,7 +106,7 @@ public class SetupOfflineLoginActivity extends BaseActivity {
                     finish();
                 } else {
                     snackbar = Snackbar
-                            .make(binding.rootlayout, "Please Enter Valid  Details", Snackbar.LENGTH_LONG);
+                            .make(binding.rootlayout, "Please Enter Valid Details", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }

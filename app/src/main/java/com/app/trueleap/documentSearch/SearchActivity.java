@@ -1,47 +1,44 @@
 package com.app.trueleap.documentSearch;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.app.trueleap.Assignmentmodule.AssignmentActivity;
 import com.app.trueleap.R;
 import com.app.trueleap.Retrofit.APIClient;
-import com.app.trueleap.Retrofit.ApiClientFile;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivitySearchBinding;
 import com.app.trueleap.documentSearch.adapter.search_result_adapter;
 import com.app.trueleap.documentSearch.model.SresultItem;
+import com.app.trueleap.external.CommonFunctions;
+import com.app.trueleap.external.Constants;
 import com.app.trueleap.external.Converter;
-import com.app.trueleap.home.studentsubject.adapter.subject_adapter;
-import com.app.trueleap.home.studentsubject.model.ClassModel;
 import com.app.trueleap.interfaces.recyclerviewClickListener;
 import com.app.trueleap.interfaces.responseCallback;
+import com.app.trueleap.model.ErrorResponse;
 import com.app.trueleap.notification.NotificationActivity;
 import com.app.trueleap.notification.NotificationModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchActivity extends BaseActivity implements recyclerviewClickListener , responseCallback {
 
@@ -74,8 +71,9 @@ public class SearchActivity extends BaseActivity implements recyclerviewClickLis
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if (binding.searchTerm.getText().toString().trim().length()>2){
                         searchCall(binding.searchTerm.getText().toString());
-                    }else{
-                        Toast.makeText(context, "Minimum search text length is 3", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        CommonFunctions.showSnackView(binding.getRoot(), "Minimum search text length is 3");
                     }
                     return true;
                 }
@@ -89,20 +87,21 @@ public class SearchActivity extends BaseActivity implements recyclerviewClickLis
         try {
             showProgressBar();
             Call<ResponseBody> call = APIClient
-                    .getInstance()
+                    .getInstance(localStorage.getSelectedCountry())
                     .getApiInterface()
                     .globalsearch(localStorage.getKeyUserToken(), data);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    if(response.isSuccessful()) {
                     try {
                         hideProgressBar();
                         String response_data = response.body().string();
                         JSONArray jsonArray = new JSONArray(response_data);
-                        int count=0 ;
+                        int count = 0;
                         count = jsonArray.getJSONObject(0).getInt("count");
-                        binding.searchCount.setText(Integer.toString(count)+" records found");
-                        if (count>0) {
+                        binding.searchCount.setText(Integer.toString(count) + " records found");
+                        if (count > 0) {
                             binding.rvSearchresult.setVisibility(View.VISIBLE);
                             for (int i = 1; i < jsonArray.length(); i++) {
                                 JSONObject resultObject = jsonArray.getJSONObject(i);
@@ -112,14 +111,33 @@ public class SearchActivity extends BaseActivity implements recyclerviewClickLis
                             populateSearchResult();
                         } else {
                             binding.rvSearchresult.setVisibility(View.GONE);
-                            Toast.makeText(SearchActivity.this, "No data found", Toast.LENGTH_SHORT).show();
+                            CommonFunctions.showSnackView(binding.getRoot(), "No data found");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                         hideProgressBar();
+                        CommonFunctions.showSnackView(binding.getRoot(), "No data found");
+                      }
+                    }else {
+                        String errorBody = response.errorBody().toString();
+                        Log.d(TAG, "error data: " + errorBody);
+                        Response<?> errorResponse = response;
+                        ResponseBody errorbody = errorResponse.errorBody();
+                        retrofit2.Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
+                        try {
+                            ErrorResponse errorObject = converter.convert(errorbody);
+                            Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                            if (errorObject.getError_code().equals(Constants.ERR_INVALID_TOKEN) || errorObject.getError_code().equals(Constants.ERR_SESSION_TIMEOUT)) {
+                                showSesstionTimeout();
+                            } else {
+                                CommonFunctions.showSnackView(binding.getRoot(), errorObject.getError_message());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            // CommonFunctions.showSnackView(rootlayout, errorObject.getError_message());
+                        }
                     }
                 }
-
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {

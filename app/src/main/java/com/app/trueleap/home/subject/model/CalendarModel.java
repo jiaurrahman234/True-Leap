@@ -1,4 +1,4 @@
-package com.app.trueleap.home.studentsubject.model;
+package com.app.trueleap.home.subject.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,17 +8,10 @@ import java.util.Calendar;
 public class CalendarModel  implements Parcelable {
     String date;
     String periodId;
-    Calendar calendar;
 
     public CalendarModel(String date, String periodId) {
         this.date = date;
         this.periodId = periodId;
-    }
-
-    public CalendarModel(String date, String periodId, Calendar calendar) {
-        this.date = date;
-        this.periodId = periodId;
-        this.calendar = calendar;
     }
 
     protected CalendarModel(Parcel in) {

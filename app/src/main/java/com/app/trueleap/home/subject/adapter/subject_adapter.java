@@ -1,4 +1,4 @@
-package com.app.trueleap.home.studentsubject.adapter;
+package com.app.trueleap.home.subject.adapter;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.app.trueleap.R;
-import com.app.trueleap.home.studentsubject.model.ClassModel;
-import com.app.trueleap.home.studentsubject.interfaces.subjectlickListener;
+import com.app.trueleap.home.subject.model.ClassModel;
+import com.app.trueleap.home.subject.interfaces.subjectlickListener;
 import java.util.ArrayList;
 
 public class subject_adapter extends RecyclerView.Adapter<subject_adapter.ViewHolder> {

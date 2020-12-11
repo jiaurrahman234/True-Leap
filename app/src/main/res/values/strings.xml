@@ -40,6 +40,7 @@
     <string name="open_gallery">Open Gallery</string>
     <string name="add_document">Add Document</string>
     <string name="auto_download">Auto Download</string>
+    <string name="auto_upload">Auto Upload</string>
 
     <string name="english">English</string>
     <string name="hindi">Hindi</string>
@@ -51,7 +52,10 @@
 
     <string name="downloaded_successfully">Downloaded Successfully</string>
     <string name="uploaded_successfully">"Uploaded Successfully</string>
+    <string name="select_one_file">Please select one file to upload !</string>
     <string name="submit_assignment">Submit Assignment</string>
+    <string name="assignment_not_submitted">Assignment not Submitted yet !</string>
+    <string name="assignment_submitted">Assignment Already Submitted !</string>
 
     <!--- Grade Book -->
     <string name="grade_type">Grade Type</string>
@@ -90,6 +94,16 @@
     <!---  Messaging -->
     <string name="send_notification">Send Notification</string>
     <string name="action_send_notification">Send Notification</string>
+
+    <string name="no_classes_found">No Classes found !</string>
+
+    <string name="upload_failed">Upload failed!</string>
+    <string name="title_activity_select_country">SelectCountry</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 
 </resources>

@@ -1,0 +1,12 @@
+[
+  {
+    "id" : 1,
+    "base_url" : "https://api.trueleap.io/",
+    "name" : "Trueleap IO"
+  },
+  {
+    "id" : 2,
+    "base_url" : "https://api.trueleap.in/",
+    "name" : "Trueleap IN"
+  }
+]

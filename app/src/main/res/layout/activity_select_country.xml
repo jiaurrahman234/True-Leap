@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingVertical="@dimen/spacing_xl"
+    android:gravity="center"
+    android:paddingHorizontal="@dimen/spacing_xl"
+    tools:context=".localization.SelectCountryActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:paddingVertical="@dimen/margin_5dp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:text="Choose Your School"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/spacing_xl"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/textsize_l" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/country_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+</RelativeLayout>
+</layout>

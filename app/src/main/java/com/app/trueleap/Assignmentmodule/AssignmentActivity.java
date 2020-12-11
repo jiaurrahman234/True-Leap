@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.app.trueleap.Assignmentmodule.adapter.Asssignment_adapter;
 import com.app.trueleap.Assignmentmodule.interfaces.assignmentClickListener;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
@@ -16,11 +14,10 @@ import com.app.trueleap.R;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityAssignmentBinding;
 import com.app.trueleap.external.Converter;
-import com.app.trueleap.home.studentsubject.model.ClassModel;
+import com.app.trueleap.home.subject.model.ClassModel;
 import com.app.trueleap.interfaces.responseCallback;
 import com.app.trueleap.notification.NotificationActivity;
 import com.app.trueleap.notification.NotificationModel;
-
 import java.util.ArrayList;
 
 public class AssignmentActivity extends BaseActivity implements assignmentClickListener, responseCallback {
@@ -108,6 +105,4 @@ public class AssignmentActivity extends BaseActivity implements assignmentClickL
             invalidateOptionsMenu();
         }
     }
-
-
 }

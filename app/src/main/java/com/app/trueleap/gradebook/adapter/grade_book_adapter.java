@@ -1,5 +1,4 @@
 package com.app.trueleap.gradebook.adapter;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,13 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.app.trueleap.R;
 import com.app.trueleap.gradebook.model.GradeItem;
 import com.app.trueleap.interfaces.recyclerviewClickListener;
-
 import java.util.ArrayList;
 
 public class grade_book_adapter extends RecyclerView.Adapter<grade_book_adapter.ViewHolder> {
@@ -62,6 +58,7 @@ public class grade_book_adapter extends RecyclerView.Adapter<grade_book_adapter.
             bestoutof.setText(Double.toString(item.getBestoutof()));
             partofmidtermgrade.setText((item.isPartofmidtermgrade()==true)? "Yes" : "No");
         }
+
         @Override
         public void onClick(View view) {
             /*if (mListener != null) {

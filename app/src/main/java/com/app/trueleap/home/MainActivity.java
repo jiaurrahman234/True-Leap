@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,11 +23,12 @@ import com.app.trueleap.databinding.ActivityMainBinding;
 import com.app.trueleap.dialogFragment.NotifiactionDialogFragment;
 import com.app.trueleap.external.Converter;
 import com.app.trueleap.external.Utils;
-import com.app.trueleap.home.studentsubject.HomeSubjectsFragment;
+import com.app.trueleap.home.subject.SubjectsFragment;
 import com.app.trueleap.interfaces.responseCallback;
 import com.app.trueleap.localization.ChangeLanguageActivity;
 import com.app.trueleap.notification.NotificationActivity;
 import com.app.trueleap.notification.NotificationModel;
+import com.app.trueleap.settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
@@ -42,10 +44,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         instance = this;
-        loadFragment(new HomeSubjectsFragment());
+        loadFragment(new SubjectsFragment());
         initNavigation();
+    }
+
+    private void initData() {
         getNotifications(this);
     }
+
     private void initNavigation() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,8 +88,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (itemId) {
             case R.id.nav_home:
                 break;
-            case R.id.nav_changeLanguage:
-                startActivity(new Intent(MainActivity.this, ChangeLanguageActivity.class));
+            case R.id.nav_setting:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
             case R.id.nav_logout:
                 try {
@@ -107,14 +113,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     e.printStackTrace();
                 }
                 break;
-
         }
         drawer.closeDrawer(GravityCompat.START);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_notification);
         menuItem.setIcon(Converter.convertLayoutToImage(this, localStorage.getNotificationCount(), R.drawable.ic_baseline_notifications_24));
@@ -148,13 +152,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void notificationDialog(ArrayList<NotificationModel> notificationArrayList){
-        NotifiactionDialogFragment alert = new NotifiactionDialogFragment();
+
+        Fragment timeout_dialog = getSupportFragmentManager().findFragmentByTag( Utils.Notification_dialog_fragment);
+        DialogFragment timeoutDialog = (DialogFragment) timeout_dialog;
+        if (timeoutDialog != null
+                && timeoutDialog.getDialog() != null
+                && timeoutDialog.getDialog().isShowing()
+                && !timeoutDialog.isRemoving()) {
+
+        }else {
+            NotifiactionDialogFragment alert = new NotifiactionDialogFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("notificationlist",notificationArrayList);
+            alert.setArguments(bundle);
+            FragmentManager transaction = getSupportFragmentManager();
+            alert.show(transaction,Utils.Notification_dialog_fragment);
+            alert.setCancelable(false);
+        }
+
+        /*NotifiactionDialogFragment alert = new NotifiactionDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("notificationlist",notificationArrayList);
         alert.setArguments(bundle);
         FragmentManager transaction = getSupportFragmentManager();
         alert.show(transaction,Utils.Notification_dialog_fragment);
-        alert.setCancelable(false);
+        alert.setCancelable(false);*/
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
 
 }

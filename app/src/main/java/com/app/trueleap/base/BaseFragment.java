@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 
 public class BaseFragment extends Fragment {
     String TAG = BaseFragment.class.getSimpleName();
-    public static Animation shakeAnimation;
     public static View view;
     public static LocalStorage localStorage;
     public static ProgressDialog progressDialog;
@@ -26,7 +25,6 @@ public class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         localStorage = new LocalStorage(getContext());
         progressDialog = new ProgressDialog(getContext());
         fragmentManager = getActivity().getSupportFragmentManager();
@@ -39,13 +37,10 @@ public class BaseFragment extends Fragment {
 
     public void showProgressView() {
         ((BaseActivity)getActivity()).showProgressBar();
-
     }
 
     public void hideProgressView() {
         ((BaseActivity)getActivity()).hideProgressBar();
     }
-
-
 
 }

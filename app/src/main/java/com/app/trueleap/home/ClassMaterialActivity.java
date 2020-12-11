@@ -24,11 +24,12 @@ import com.app.trueleap.R;
 import com.app.trueleap.auth.LoginActivity;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.FragmentClassmaterialtypeBinding;
+import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.Converter;
 import com.app.trueleap.gradebook.GradebookActivity;
-import com.app.trueleap.home.studentsubject.model.CalendarModel;
-import com.app.trueleap.home.studentsubject.model.ClassModel;
-import com.app.trueleap.home.studentsubject.model.DocumentsModel;
+import com.app.trueleap.home.subject.model.CalendarModel;
+import com.app.trueleap.home.subject.model.ClassModel;
+import com.app.trueleap.home.subject.model.DocumentsModel;
 import com.app.trueleap.interfaces.responseCallback;
 import com.app.trueleap.notification.NotificationActivity;
 import com.app.trueleap.notification.NotificationModel;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 
 import static com.app.trueleap.external.CommonFunctions.parse_date;
 
-public class ClassMaterialTypeActivity extends BaseActivity implements responseCallback {
+public class ClassMaterialActivity extends BaseActivity implements responseCallback {
     FragmentClassmaterialtypeBinding binding;
     String sujectName = "", classDate = "";
     ArrayList<ClassModel> classModelArrayList;
@@ -78,14 +79,14 @@ public class ClassMaterialTypeActivity extends BaseActivity implements responseC
                                                     documentsModel.getFilename(),
                                                     documentsModel.getType(),documentsModel.getValidupto()));
                                         }
-                                        startActivity(new Intent(ClassMaterialTypeActivity.this, ClassNotesActivity.class)
+                                        startActivity(new Intent(ClassMaterialActivity.this, ClassNotesActivity.class)
                                                 .putExtra("period_id", classModel.getUniqueperiodid())
                                                 .putExtra("subject_name", sujectName)
                                                 .putExtra("class_date", binding.classDate.getText().toString())
                                                 .putExtra("class_note", classnoteModelArrayList));
 
                                     }else{
-                                        Toast.makeText(context,"Class notes not found!",Toast.LENGTH_SHORT).show();
+                                        CommonFunctions.showSnackView(binding.getRoot(),"No Class notes uploaded !");
                                     }
                                     break;
                                 }
@@ -99,14 +100,13 @@ public class ClassMaterialTypeActivity extends BaseActivity implements responseC
 
             }
         });
-
         binding.actionAssignment.setOnClickListener(new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
                                                             try {
                                                                 ArrayList<ClassnoteModel> AssignmentModelArrayList = new ArrayList<>();
                                                                 for (int i = 0; i < calendarModelArrayList.size(); i++) {
-                                                                   if (classDate.equalsIgnoreCase(calendarModelArrayList.get(i).getDate())) {
+                                                                    if (classDate.equalsIgnoreCase(calendarModelArrayList.get(i).getDate())) {
                                                                         for (int j = 0; j < classModelArrayList.size(); j++) {
                                                                             ClassModel classModel = classModelArrayList.get(j);
                                                                             if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {
@@ -123,14 +123,14 @@ public class ClassMaterialTypeActivity extends BaseActivity implements responseC
                                                                                                 documentsModel.getType(),documentsModel.getValidupto()));
                                                                                     }
 
-                                                                                    startActivity(new Intent(ClassMaterialTypeActivity.this, AssignmentActivity.class)
+                                                                                    startActivity(new Intent(ClassMaterialActivity.this, AssignmentActivity.class)
                                                                                             .putExtra("period_id", classModel.getUniqueperiodid())
                                                                                             .putExtra("subject_name", sujectName)
                                                                                             .putExtra("class_date", binding.classDate.getText().toString())
                                                                                             .putExtra("assignment", AssignmentModelArrayList));
                                                                                 }
                                                                                 else{
-                                                                                    Toast.makeText(context,"No Asssignment uploaded!",Toast.LENGTH_SHORT).show();
+                                                                                    CommonFunctions.showSnackView(binding.getRoot(),"No Asssignment uploaded !");
                                                                                 }
                                                                                 break;
                                                                             }
@@ -144,8 +144,7 @@ public class ClassMaterialTypeActivity extends BaseActivity implements responseC
                                                             }
 
                                                         }
-                                                    }
-        );
+                                                    });
         binding.actionGradebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,11 +161,11 @@ public class ClassMaterialTypeActivity extends BaseActivity implements responseC
                             for (int j = 0; j < classModelArrayList.size(); j++) {
                                 ClassModel classModel = classModelArrayList.get(j);
                                 if (calendarModelArrayList.get(i).getPeriodId().equalsIgnoreCase(classModel.getUniqueperiodid())) {
-                                        startActivity(new Intent(context, chatHistoryActivity.class)
-                                                .putExtra("subject_name",sujectName)
-                                                .putExtra("period_id", classModel.getUniqueperiodid())
-                                                .putExtra("subject_name", sujectName)
-                                                .putExtra("class_date", binding.classDate.getText().toString()));
+                                    startActivity(new Intent(context, chatHistoryActivity.class)
+                                            .putExtra("subject_name",sujectName)
+                                            .putExtra("period_id", classModel.getUniqueperiodid())
+                                            .putExtra("subject_name", sujectName)
+                                            .putExtra("class_date", binding.classDate.getText().toString()));
                                     break;
                                 }
                             }
@@ -179,7 +178,6 @@ public class ClassMaterialTypeActivity extends BaseActivity implements responseC
                 }
             }
         });
-
         binding.actionNotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,9 +194,7 @@ public class ClassMaterialTypeActivity extends BaseActivity implements responseC
                 calendarModelArrayList = new ArrayList<>();
                 classDate = intent.getStringExtra("classDate");
                 sujectName = intent.getStringExtra("subject_name");
-                //classModelArrayList = (ArrayList<ClassModel>) intent.getExtras().getSerializable("class_data");
                 calendarModelArrayList = (ArrayList<CalendarModel>) intent.getExtras().getSerializable("calendar_data");
-
             }
 
             if (localStorage.getClassData() != null) {

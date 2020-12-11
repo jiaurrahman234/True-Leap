@@ -6,16 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+import static android.content.ContentValues.TAG;
 
 public class DBhelper extends SQLiteOpenHelper {
-
     private static String DB_NAME = "assignment.db";
     private SQLiteDatabase db;
     private final Context context;
@@ -29,17 +27,17 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
     public void createDataBase() throws IOException {
-
+        copyDataBase();
         boolean dbExist = checkDataBase();
         if (dbExist) {
-
+            Log.d(TAG,"message : database exist !");
         } else {
             this.getReadableDatabase();
             try {
                 copyDataBase();
             } catch (IOException e) {
                 Log.e("BaseActivity", "Helper Create Database Exception:" + e.getMessage());
-//                throw new Error("Error copying database");
+//              throw new Error("Error copying database");
             }
         }
 
@@ -54,7 +52,6 @@ public class DBhelper extends SQLiteOpenHelper {
 
         File databaseFile = new File(context.getFilesDir().getAbsolutePath()
                 .replace("files", "databases"));
-
         // check if databases folder exists, if not create it.
         if (!databaseFile.exists()){
             Log.e("BaseActivity", "Database Folder Dont EXIST");
@@ -69,8 +66,6 @@ public class DBhelper extends SQLiteOpenHelper {
         while ((length = myInput.read(buffer)) > 0) {
             myOutput.write(buffer, 0, length);
         }
-
-        // Close the streams
         myOutput.flush();
         myOutput.close();
         myInput.close();
@@ -86,8 +81,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return c;
     }
 
-    public void insertData(String title, String note, String uploadParam, String submittedBy, String section, String documentnumber, String assignmentperiod, String filePath) {
-
+    public void insertData(String title, String note, String uploadParam, String submittedBy, String section, String documentnumber, String assignmentperiod, String filePath, int status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("title", title);
@@ -98,6 +92,8 @@ public class DBhelper extends SQLiteOpenHelper {
         contentValues.put("documentnumber", documentnumber);
         contentValues.put("assignmentperoid", assignmentperiod);
         contentValues.put("filePath", filePath);
+        contentValues.put("status", status);
+
         try {
             long i = db.insertOrThrow("assignment_status", null, contentValues);
             if (i < 0) {
@@ -109,6 +105,18 @@ public class DBhelper extends SQLiteOpenHelper {
             Log.e("BaseActivity", "Insert Exception: " + e.getMessage());
         }
 
+    }
+
+    public  boolean update(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("status",1);
+        int i = db.update("assignment_status", cv, "id = ?", new String[] { Integer.toString(id)});
+        if (i < 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean deleteData(int id) {
@@ -123,12 +131,12 @@ public class DBhelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase arg0) {
-        // TODO Auto-generated method stub
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
+
     }
 
 }

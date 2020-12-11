@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.app.trueleap">
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.NETWORK" />
@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -22,15 +21,18 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MessagingModule.SendNotificationActivity"></activity>
+
+        <activity android:name=".MessagingModule.SendNotificationActivity" />
         <activity android:name=".MessagingModule.chatHistoryActivity" />
         <activity android:name=".auth.SetupOfflineLoginActivity" />
         <activity android:name=".auth.OfflineLoginActivity" />
         <activity android:name=".notification.NotificationActivity" />
         <activity android:name=".localization.ChangeLanguageActivity" />
+        <activity android:name=".localization.SelectCountryActivity" />
         <activity android:name=".gradebook.GradebookActivity" />
         <activity android:name=".documentSearch.SearchDetailActivity" />
         <activity android:name=".documentSearch.SearchActivity" />
+        <activity android:name=".settings.SettingsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -55,7 +57,7 @@
         <service
             android:name=".service.documentuploadService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <receiver
             android:name=".service.RestartService"
@@ -73,7 +75,7 @@
         <activity android:name=".auth.LoginActivity" />
         <activity android:name=".home.MainActivity" />
         <activity android:name=".base.BaseActivity" />
-        <activity android:name=".home.ClassMaterialTypeActivity" />
+        <activity android:name=".home.ClassMaterialActivity" />
         <activity android:name=".classcalenderview.CalenderViewActivity" />
     </application>
 

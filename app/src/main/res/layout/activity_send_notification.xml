@@ -89,7 +89,7 @@
         app:layout_constraintTop_toTopOf="@+id/divider"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_xl"
-        android:layout_marginVertical="@dimen/spacing_m"
+        android:layout_marginVertical="@dimen/spacing_xl"
         android:paddingTop="@dimen/spacing_xl"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="15dp"

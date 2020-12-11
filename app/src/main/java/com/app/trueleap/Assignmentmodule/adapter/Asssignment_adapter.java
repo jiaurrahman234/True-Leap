@@ -1,5 +1,4 @@
 package com.app.trueleap.Assignmentmodule.adapter;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.trueleap.Assignmentmodule.interfaces.assignmentClickListener;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
-
 import java.util.ArrayList;
-
 import static com.app.trueleap.external.CommonFunctions.parse_date;
 
 public class Asssignment_adapter extends RecyclerView.Adapter<Asssignment_adapter.ViewHolder> {

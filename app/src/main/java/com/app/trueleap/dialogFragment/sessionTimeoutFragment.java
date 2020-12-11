@@ -23,6 +23,7 @@ import com.app.trueleap.auth.OfflineLoginActivity;
 import com.app.trueleap.auth.SetupOfflineLoginActivity;
 import com.app.trueleap.databinding.FragmentLanguageDialogBinding;
 import com.app.trueleap.databinding.FragmentSessionTimoutBinding;
+import com.app.trueleap.external.CommonFunctions;
 import com.app.trueleap.external.LocalStorage;
 import com.google.android.material.chip.ChipGroup;
 
@@ -63,10 +64,18 @@ public class sessionTimeoutFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         final AlertDialog d = (AlertDialog) getDialog();
+
             /*if (d != null) {
                 Button positiveButton = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
                 positiveButton.setEnabled(false);
             }*/
+
+            if(CommonFunctions.isInternetOn(context)) {
+                binding.offlineLogin.setVisibility(View.GONE);
+            }else {
+                binding.loginBtn.setVisibility(View.GONE);
+            }
+
             binding.offlineLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

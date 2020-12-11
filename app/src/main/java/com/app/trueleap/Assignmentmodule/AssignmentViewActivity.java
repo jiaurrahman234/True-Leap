@@ -6,58 +6,52 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.app.trueleap.Assignmentmodule.interfaces.uploadResponseCallback;
 import com.app.trueleap.Classnotemodule.model.ClassnoteModel;
 import com.app.trueleap.R;
-import com.app.trueleap.Retrofit.ApiClientFile;
+import com.app.trueleap.Retrofit.APIClient;
 import com.app.trueleap.base.BaseActivity;
 import com.app.trueleap.databinding.ActivityAssignmentViewBinding;
+import com.app.trueleap.external.CommonFunctions;
+import com.app.trueleap.external.Constants;
 import com.app.trueleap.external.DBhelper;
-import com.app.trueleap.service.documentuploadService;
+import com.app.trueleap.model.ErrorResponse;
 import com.google.android.material.snackbar.Snackbar;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.channels.FileChannel;
-import java.security.PrivilegedAction;
+import java.lang.annotation.Annotation;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
 
-import static com.app.trueleap.external.CommonFunctions.getExtensionType;
 import static com.app.trueleap.external.CommonFunctions.hasPermissionToDownload;
 import static com.app.trueleap.external.CommonFunctions.parse_date;
+import static com.app.trueleap.external.CommonFunctions.showSnackView;
 import static com.app.trueleap.external.CommonFunctions.writeResponseBodyToDisk;
 import static com.app.trueleap.external.Constants.CAMERA_REQUEST;
 import static com.app.trueleap.external.Constants.MY_CAMERA_PERMISSION_CODE;
@@ -65,7 +59,7 @@ import static com.app.trueleap.external.Constants.PICK_IMAGE;
 import static com.app.trueleap.external.Constants.REQUEST_DOCUMENT;
 import static com.app.trueleap.external.Constants.TAKE_IMAGE;
 
-public class AssignmentViewActivity extends BaseActivity {
+public class AssignmentViewActivity extends BaseActivity implements uploadResponseCallback {
     Intent intent;
     ActivityAssignmentViewBinding binding;
     Bitmap uplaod_image;
@@ -86,9 +80,9 @@ public class AssignmentViewActivity extends BaseActivity {
         StrictMode.setVmPolicy(builder.build());
         IMAGE_DIRECTORY = "/" + getString(R.string.app_name);
         initToolbar();
+        initialiseDbHelper();
         initdata();
         initListener();
-        initialiseDbHelper();
     }
 
     private void initialiseDbHelper() {
@@ -131,15 +125,6 @@ public class AssignmentViewActivity extends BaseActivity {
                             download_file();
                         }
                     }
-
-                }
-            });
-            binding.submitAssignment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (hasPermissionToDownload(((Activity) context))) {
-                        uploadFile(imagepath);
-                    }
                 }
             });
             binding.download.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +157,14 @@ public class AssignmentViewActivity extends BaseActivity {
                         startActivity(browserIntent);
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+                }
+            });
+            binding.submitAssignment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (hasPermissionToDownload(((Activity) context))) {
+                        uploadFile(AssignmentViewActivity.this, imagepath , class_note.getId(), period_id );
                     }
                 }
             });
@@ -298,6 +291,11 @@ public class AssignmentViewActivity extends BaseActivity {
                 binding.openDocument.setVisibility(View.GONE);
                 binding.download.setVisibility(View.GONE);
             }
+            if(getAssignmentStatus()==1){
+                binding.status.setText(getResources().getString(R.string.assignment_submitted));
+            }else {
+                binding.status.setText(getResources().getString(R.string.assignment_not_submitted));
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -321,7 +319,6 @@ public class AssignmentViewActivity extends BaseActivity {
                 }
             }
         }
-
         if (requestCode == PICK_IMAGE) {
             if (!(data == null)) {
                 try {
@@ -340,14 +337,15 @@ public class AssignmentViewActivity extends BaseActivity {
 
         if (requestCode == REQUEST_DOCUMENT) {
             if (!(data == null)) {
-                Uri selectedImage = data.getData();
-
-                String extension = selectedImage.getPath().substring(selectedImage.getPath().lastIndexOf("."));
-                imagepath = saveFromURI(selectedImage, extension);
+                Uri selectedfile = data.getData();
+                String extension = selectedfile.getPath().substring(selectedfile.getPath().lastIndexOf("."));
+                Log.d(TAG,"extension: "+extension);
+               // String fileneme = selectedfile.getPathSegments().lastIndexOf();
+                imagepath = saveFromURI(selectedfile, extension);
                 Log.e("BaseActivity", "Document File Path: " + imagepath);
                 binding.imagesToUpload.setVisibility(View.VISIBLE);
                 binding.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_picture_as_pdf_24));
-                //binding.docName.setText(displayName);
+               // binding.docName.setText(fileneme);
             }
         }
     }
@@ -360,7 +358,7 @@ public class AssignmentViewActivity extends BaseActivity {
                 billDirectory.mkdir();
             }
 
-            billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+"upload"+File.separator+"file"+extension);
+            billFile  = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" +File.separator+"upload"+File.separator+"document_"+class_note.getId()+extension);
             File myfile = new File(selectedImage.getPath());
 
             InputStream inputStream = null;
@@ -400,6 +398,30 @@ public class AssignmentViewActivity extends BaseActivity {
         return "";
     }
 
+    public String saveImage(Bitmap myBitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        try {
+            File uploadDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + "upload");
+            if (!uploadDirectory.isDirectory()) {
+                uploadDirectory.mkdirs();
+            }
+            File uploadablefile = new File(uploadDirectory, "document_"+class_note.getId()+ ".jpg");
+            if (uploadablefile.exists()) {
+                uploadablefile.delete();
+            }
+            uploadablefile.createNewFile();
+            FileOutputStream fo = new FileOutputStream(uploadablefile);
+            fo.write(bytes.toByteArray());
+            fo.close();
+            return uploadablefile.getAbsolutePath();
+        } catch (Exception e1) {
+            Log.e("BaseActivity", "File Image Uplaod Exception: " + e1.getMessage());
+            e1.printStackTrace();
+        }
+        return "";
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -422,68 +444,12 @@ public class AssignmentViewActivity extends BaseActivity {
         }
     }
 
-    public String saveImage(Bitmap myBitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        try {
-            File uploadDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + "upload");
-            if (!uploadDirectory.isDirectory()) {
-                uploadDirectory.mkdirs();
-            }
-            File uploadablefile = new File(uploadDirectory, "asssign" + ".jpg");
-            if (uploadablefile.exists()) {
-                uploadablefile.delete();
-            }
-            uploadablefile.createNewFile();
-            FileOutputStream fo = new FileOutputStream(uploadablefile);
-            fo.write(bytes.toByteArray());
-            fo.close();
-            return uploadablefile.getAbsolutePath();
-        } catch (Exception e1) {
-            Log.e("BaseActivity", "File Image Uplaod Exception: " + e1.getMessage());
-            e1.printStackTrace();
-        }
-        return "";
-    }
-
-    public String saveDocument(String filename, File file) {
-        try {
-            File uploadDirectory = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "trueleap" + File.separator + "upload");
-            if (!uploadDirectory.isDirectory()) {
-                uploadDirectory.mkdir();
-            }
-            File uploadablefile = new File(uploadDirectory, filename);
-            if (uploadablefile.exists()) {
-                uploadablefile.delete();
-            }
-
-            FileChannel in = new FileInputStream(file).getChannel();
-            FileChannel out = new FileOutputStream(uploadablefile).getChannel();
-
-            try {
-                in.transferTo(0, in.size(), out);
-            } catch(Exception e){
-                Log.d(TAG, "First Exception: " + e.getMessage());
-                e.printStackTrace();
-            } finally {
-                if (in != null)
-                    in.close();
-                if (out != null)
-                    out.close();
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "Second Exception: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return "";
-    }
-
     private void download_file() {
         try{
             showProgressBar();
             Call<ResponseBody> call = null;
-            call =   ApiClientFile
-                    .getInstance()
+            call =   APIClient
+                    .getInstance(localStorage.getSelectedCountry())
                     .getApiInterface()
                     .getDocument(localStorage.getKeyUserToken(), period_id, class_note.getId());
 
@@ -503,14 +469,32 @@ public class AssignmentViewActivity extends BaseActivity {
                                 });
                         snackbar.show();
                     } else {
-                        snackbar = Snackbar.make(binding.getRoot(), "Download Failed 1", Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                        String errorBody = response.errorBody().toString();
+                        Log.d(TAG, "error data: " + errorBody);
+                        Response<?> errorResponse = response;
+                        ResponseBody errorbody = errorResponse.errorBody();
+                        Converter<ResponseBody, ErrorResponse> converter = APIClient.getRetrofit().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
+                        try {
+                            ErrorResponse errorObject = converter.convert(errorbody);
+                            Log.d(TAG, " Error_code : " + errorObject.getError_code());
+                            Log.d(TAG, " Error_messeage : " + errorObject.getError_message());
+                            if (errorObject.getError_code().equals(Constants.ERR_INVALID_TOKEN) || errorObject.getError_code().equals(Constants.ERR_SESSION_TIMEOUT)) {
+                                showSesstionTimeout();
+                            } else {
+                                CommonFunctions.showSnackView(binding.getRoot(), errorObject.getError_message());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            snackbar = Snackbar.make(binding.getRoot(), "Download Failed!", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }
+
                     }
                 }
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     hideProgressBar();
-                    snackbar = Snackbar.make(binding.getRoot(), "Download Failed 2", Snackbar.LENGTH_LONG);
+                    snackbar = Snackbar.make(binding.getRoot(), "Download Failed!", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             });
@@ -529,102 +513,32 @@ public class AssignmentViewActivity extends BaseActivity {
         }
     }
 
-    public void uploadFile(String imagepath) {
-
-        RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), localStorage.getFullName());
-        String upload_param = localStorage.getClassId() + ":AS" + ":" + localStorage.getId();
-        RequestBody coverRequestFile = null;
-        MultipartBody.Part photo1 = null;
-        File file1 = new File(imagepath);
-        coverRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file1);
-        photo1 = MultipartBody.Part.createFormData("file", file1.getName(), coverRequestFile);
-        if (imagepath.length() == 0) {
-            Toast.makeText(context, "Please select one file", Toast.LENGTH_SHORT).show();
-        } else {
-            RequestBody note = RequestBody.create(MediaType.parse("text/plain"),
-                    class_note.getNote_title());
-            RequestBody title = RequestBody.create(MediaType.parse("text/plain"),
-                    class_note.getNote_title());
-            RequestBody sectionBody = RequestBody.create(MediaType.parse("text/plain"),
-                    localStorage.getSectionId());
-            RequestBody documentnumberBody = RequestBody.create(MediaType.parse("text/plain"),
-                    class_note.getId());
-            RequestBody uniqueperiodidBody = RequestBody.create(MediaType.parse("text/plain"),
-                    period_id);
-            RequestBody uploadparam = RequestBody.create(MediaType.parse("text/plain"),
-                    upload_param);
-            showProgressBar();
-            Call<ResponseBody> call = null;
-            call = ApiClientFile
-                    .getInstance()
-                    .getApiInterface()
-                    .uploadDoc(localStorage.getKeyUserToken(), photo1, title, note, uploadparam,nameBody,sectionBody,documentnumberBody,uniqueperiodidBody);
-            Log.d(TAG, "khhkjhkh:" + call.request());
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    hideProgressBar();
-                    Log.d(TAG, "jljl:" + response.toString());
-                    if (response.isSuccessful()) {
-                        snackbar = Snackbar.make(binding.getRoot(), R.string.uploaded_successfully, Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                    } else {
-                        dBhelper.insertData(
-                                class_note.getNote_title(),
-                                class_note.getNote_title(),
-                                upload_param,
-                                localStorage.getFullName(),
-                                localStorage.getSectionId(),
-                                class_note.getId(),
-                                period_id,
-                                imagepath
-                        );
-                        Log.d(TAG, "server contact failed");
-                        snackbar = Snackbar.make(binding.getRoot(), "upload Failed", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.e(TAG, "error");
-                    hideProgressBar();
-                    snackbar = Snackbar.make(binding.getRoot(), "upload Failed", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    dBhelper.insertData(
-                            "",
-                            "",
-                            upload_param,
-                            "",
-                            localStorage.getSectionId(),
-                            class_note.getId(),
-                            period_id,
-                            imagepath
-                    );
-                    startService();
-                }
-            });
-        }
+    @Override
+    public void uploadresponse(String message) {
+        initdata();
+        showSnackView(binding.getRoot(), message);
     }
 
-    public void startService(){
-       /* AlarmManager alarmManager;
-        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);*/
-        Intent upload = new Intent(context, documentuploadService.class);
-        context.startService(upload);
+    public int getAssignmentStatus(){
+        int assignment_status=0;
+        final Cursor cursor = dBhelper.getData();
+        Log.e(TAG, "Cursor Count: " + cursor.getCount());
+        if(cursor.getCount()>0) {
+            while (cursor.moveToNext()) {
+                String documentString = cursor.getString(cursor.getColumnIndex("documentnumber"));
+                Log.e(TAG, "documentString Id Service: " + documentString);
+                if(documentString.equals(class_note.getId())) {
+                    assignment_status = cursor.getInt(cursor.getColumnIndex("status"));
+                    Log.e(TAG, "document status: " + assignment_status);
+                }
+            }
+        }
+        return assignment_status;
+    }
 
-           /* if(((MainActivity)getActivity()).CheckGpsStatus()) {
-                session.setKeyUserStatus(true);
-                ((MainActivity)getActivity()).sendUserLocation(session.getKeyAddrLatitude(), session.getKeyAddrLongitude(), session.getKeyLocationName(), true);
-                Intent intent = new Intent(context, LocationSenderCommandReceiver.class);
-                intent.putExtra("command",1);
-                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-                Log.d(TAG,"broadcast 1 called");
-            }else {
-                provider_status.setChecked(false);
-                ((MainActivity)getActivity()).showBookingGpsInternetError("gpsdisbaled");
-            }*/
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initdata();
     }
 }

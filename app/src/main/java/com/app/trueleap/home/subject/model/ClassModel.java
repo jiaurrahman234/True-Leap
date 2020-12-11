@@ -1,4 +1,4 @@
-package com.app.trueleap.home.studentsubject.model;
+package com.app.trueleap.home.subject.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
